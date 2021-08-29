@@ -10,4 +10,8 @@
       <PackageReference Include="Figgle" Version="0.4.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Web\Web.csproj" />
+    </ItemGroup>
+
 </Project>
