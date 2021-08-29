@@ -17,10 +17,9 @@ foreach (var figgleLine in figgleLines)
 }
 ConsoleUtils.WriteCentered("Project by StrateimTech (https://Strateim.tech)");
 
-ConsoleUtils.WriteCentered($"Starting web interface. (Port: {port}, https://localhost:{port})");
-new Thread(() =>
-{
-    Web.Program.Main(new []{port.ToString()});
-}).Start();
+// ConsoleUtils.WriteCentered($"Starting web interface. (Port: {port}, https://localhost:{port})");
+// new Thread(() =>
+// {
+// }).Start();
 
 // var hidHandler = new HidHandler();
