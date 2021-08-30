@@ -5,19 +5,19 @@ using System.Threading;
 
 namespace Main.Utils
 {
-    public class FileUtils
+    public static class FileUtils
     {
-        private readonly ReaderWriterLockSlim _mouseWriteLock = new();
-        private readonly ReaderWriterLockSlim _keyboardWriteLock = new();
+        private static readonly ReaderWriterLockSlim MouseWriteLock = new();
+        private static readonly ReaderWriterLockSlim KeyboardWriteLock = new();
 
-        public void write_keyboard_report(FileStream fileStream)
+        public static void write_keyboard_report(FileStream fileStream)
         {
             // TODO: Implement Keyboard Interface. 
         }
         
-        public void write_mouse_report(FileStream fileStream, byte button, sbyte[] sbytes, bool leaveOpen = true)
+        public static void write_mouse_report(FileStream fileStream, byte button, sbyte[] sbytes, bool leaveOpen = true)
         {
-            _mouseWriteLock.EnterWriteLock();
+            MouseWriteLock.EnterWriteLock();
             try
             {
                 using BinaryWriter binaryWriter = new BinaryWriter(fileStream, Encoding.Default, leaveOpen);
@@ -34,7 +34,7 @@ namespace Main.Utils
             }
             finally
             {
-                _mouseWriteLock.ExitWriteLock();
+                MouseWriteLock.ExitWriteLock();
             }
         }
     }

@@ -38,7 +38,6 @@ namespace Main.Web
         
         public void Start()
         {
-            
             var project = Layout.Create()
                             .Index(Page.From("Home", File.ReadAllText(HomeHtmlPath)))
                             .Add("Settings", Page.From("Settings", File.ReadAllText(SettingsHtmlPath)))
@@ -59,6 +58,7 @@ namespace Main.Web
                             .Port(_port)
                             .Defaults()
                             .Console()
+                            .Development()
                             .Handler(website)
                             .Run();
         }

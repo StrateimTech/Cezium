@@ -11,11 +11,13 @@ namespace Main.API
     {
         private readonly ushort _port;
         private bool _running;
+        private Settings _settings;
         
         
-        public ApiHandler(ushort port)
+        public ApiHandler(ushort port, Settings settings)
         {
             _port = port;
+            _settings = settings;
         }
 
         public void Start()
