@@ -6,7 +6,9 @@ namespace Main.Utils
     {
         public static void WriteCentered(string value)
         {
-            Console.SetCursorPosition((Console.WindowWidth - value.Length) / 2, Console.CursorTop);
+            int length = (Console.WindowWidth - value.Length);
+            if(length > 2)
+                Console.SetCursorPosition(length / 2, Console.CursorTop);
             Console.WriteLine(value);
         }
         
