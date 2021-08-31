@@ -14,8 +14,12 @@
     </ItemGroup>
     
     <ItemGroup>
-        <Content Include="Web\Pages\**\*">
+        <Content Include="Web\**\**\*">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Web\Art" />
     </ItemGroup>
 </Project>

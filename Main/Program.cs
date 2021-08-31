@@ -24,17 +24,17 @@ ConsoleUtils.WriteCentered("Project by StrateimTech (https://Strateim.tech)");
 ConsoleUtils.WriteCentered("Initializing default settings.");
 var settings = new Settings();
 
-ConsoleUtils.WriteCentered($"Starting API handler. (Port: {apiPort}, https://localhost:{apiPort})");
-ApiHandler? apiHandler = null;
-var apiThreadHandler = new Thread(() =>
-{
-    apiHandler = new ApiHandler(apiPort, settings);
-    apiHandler.Start();
-})
-{ 
-                IsBackground = true
-};
-apiThreadHandler.Start();
+// ConsoleUtils.WriteCentered($"Starting API handler. (Port: {apiPort}, https://localhost:{apiPort})");
+// ApiHandler? apiHandler = null;
+// var apiThreadHandler = new Thread(() =>
+// {
+//     apiHandler = new ApiHandler(apiPort, settings);
+//     apiHandler.Start();
+// })
+// { 
+//                 IsBackground = true
+// };
+// apiThreadHandler.Start();
 
 
 ConsoleUtils.WriteCentered($"Starting web interface handler. (Port: {webPort}, https://localhost:{webPort})");
@@ -49,21 +49,21 @@ var webThreadHandler = new Thread(() =>
 };
 webThreadHandler.Start();
 
-ConsoleUtils.WriteCentered($"Starting spoofed Human Interface Device handler.");
-
-HidHandler? hidHandler = null;
-var hidThreadHandler = new Thread(() =>
-{
-    hidHandler = new HidHandler(settings);
-    hidHandler.Start();
-})
-{
-                IsBackground = true
-};
-hidThreadHandler.Start();
+// ConsoleUtils.WriteCentered($"Starting spoofed Human Interface Device handler.");
+//
+// HidHandler? hidHandler = null;
+// var hidThreadHandler = new Thread(() =>
+// {
+//     hidHandler = new HidHandler(settings);
+//     hidHandler.Start();
+// })
+// {
+//                 IsBackground = true
+// };
+// hidThreadHandler.Start();
 
 ConsoleUtils.WriteCentered("Press any key to continue...");
 Console.ReadKey(true);
 webHandler?.Stop();
-apiHandler?.Stop();
-hidHandler?.Stop();
+// apiHandler?.Stop();
+// hidHandler?.Stop();

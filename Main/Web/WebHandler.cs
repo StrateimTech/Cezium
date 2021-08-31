@@ -26,9 +26,10 @@ namespace Main.Web
         private readonly IServerHost _serverHost;
 
         private const string HomeHtmlPath = "./Web/Pages/Home/Home.html";
-        private const string ProfilesHtmlPath = "./Web/Pages/Profiles/Profiles.html";
         private const string SettingsHtmlPath = "./Web/Pages/Settings/Settings.html";
         private const string SidebarHtmlPath = "./Web/Pages/Sidebar/Sidebar.html";
+
+        private const string IconPath = "./Web/Art/Cezium_placeholder.png";
         
         public WebHandler(ushort port)
         {
@@ -40,15 +41,15 @@ namespace Main.Web
         {
             var project = Layout.Create()
                             .Index(Page.From("Home", File.ReadAllText(HomeHtmlPath)))
-                            .Add("Settings", Page.From("Settings", File.ReadAllText(SettingsHtmlPath)))
-                            .Add("Profiles", Page.From("Profiles", File.ReadAllText(ProfilesHtmlPath)));
-            
+                            .Add("Settings", Page.From("Settings", File.ReadAllText(SettingsHtmlPath)));
+
             var theme = Theme
                             .Create()
                             .Title("Cezium Panel")
-                            .FooterLeft((_, _) => "Project by Strateim (https://Strateim.tech)")
+                            .FooterLeft((_, _) => "Project by StrateimTech (https://Strateim.tech)")
                             .FooterRight((_, _) => "Version 1.0.0")
-                            .Sidebar((_, _) => File.ReadAllText(SidebarHtmlPath));
+                            .Logo(Download.From(Resource.FromFile(IconPath)))
+                            /*.Sidebar((_, _) => File.ReadAllText(SidebarHtmlPath))*/;
 
             var website = Website.Create()
                             .Theme(theme)
