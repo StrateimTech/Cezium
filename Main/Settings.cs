@@ -10,6 +10,11 @@ namespace Main
         
         public class GeneralSettings
         {
+            public enum Game
+            {
+                Rust
+            }
+            
             /// <summary>
             /// Whether to invert mouse y when sending to separate machine.
             /// </summary>
@@ -19,6 +24,11 @@ namespace Main
             /// Whether to invert mouse x when sending to separate machine.
             /// </summary>
             public bool InvertMouseX = false;
+
+            /// <summary>
+            /// Current game cheating on.
+            /// </summary>
+            public Game CurrentGame;
         }
 
         public class RustSettings

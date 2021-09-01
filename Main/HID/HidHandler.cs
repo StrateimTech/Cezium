@@ -10,15 +10,22 @@ namespace Main.HID
         private readonly Settings _settings;
         private bool _running;
         
-        private string KeyboardStreamPath = "";
+        // private string KeyboardStreamPath = "";
         private string MouseStreamPath = "/dev/input/mice";
         
         private string HumanInterfaceDeviceStreamPath = "/dev/hidg0";
 
-        public readonly FileStream KeyboardFileStream;
+        // public readonly FileStream KeyboardFileStream;
         public readonly FileStream MouseFileStream;
         
         public readonly FileStream HidFileStream;
+
+        public bool LeftButton;
+        public bool RightButton;
+        public bool MiddleButton;
+
+        public BitArray ButtonBitArray;
+        
 
         public HidHandler(Settings settings)
         {
@@ -41,18 +48,18 @@ namespace Main.HID
                     mouseSbyteArray[1] = _settings.General.InvertMouseX ? Convert.ToSByte(Convert.ToInt32(mouseSbyteArray[1]) * -1) : mouseSbyteArray[1];
                     mouseSbyteArray[2] = _settings.General.InvertMouseY ? mouseSbyteArray[2] : Convert.ToSByte(Convert.ToInt32(mouseSbyteArray[2]) * -1);
                     
-                    var leftButton = (mouseSbyteArray[0] & 0x1) > 0;
-                    var rightButton = (mouseSbyteArray[0] & 0x2) > 0;
-                    var middleButton = (mouseSbyteArray[0] & 0x4) > 0;
+                    LeftButton = (mouseSbyteArray[0] & 0x1) > 0;
+                    RightButton = (mouseSbyteArray[0] & 0x2) > 0;
+                    MiddleButton = (mouseSbyteArray[0] & 0x4) > 0;
                     var deltaX = Convert.ToInt32(mouseSbyteArray[1]);
                     var deltaY = Convert.ToInt32(mouseSbyteArray[2]);
                     var deltaWheel = mouseSbyteArray[3];
                     
-                    var buttonBitArray = new BitArray(new[]
+                    ButtonBitArray = new BitArray(new[]
                     {
-                                    leftButton, rightButton, middleButton, false, false, false, false, false
+                                    LeftButton, RightButton, MiddleButton, false, false, false, false, false
                     });
-                    FileUtils.write_mouse_report(HidFileStream, BitUtils.ToByte(buttonBitArray), new[] {Convert.ToSByte(deltaX), Convert.ToSByte(deltaY)});
+                    FileUtils.write_mouse_report(HidFileStream, BitUtils.ToByte(ButtonBitArray), new[] {Convert.ToSByte(deltaX), Convert.ToSByte(deltaY)});
                 }
             }
         }
@@ -60,7 +67,7 @@ namespace Main.HID
         public void Stop()
         {
             _running = false;
-            KeyboardFileStream.Close();
+            // KeyboardFileStream.Close();
             MouseFileStream.Close();
             HidFileStream.Close();
         }
