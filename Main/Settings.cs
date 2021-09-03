@@ -35,14 +35,31 @@ namespace Main
         {
             public enum Guns
             {
+                AssaultRifle,
+                M249,
+                Lr300,
+                Mp5,
+                Custom,
+                Thompson
             }
 
-            public enum Attachments
+            public struct Attachments
             {
+                public const double MuzzleBoost = 0.9; // This is timing
+                public const double MuzzleBrake = 0.5;
+                public const double Silencer = 0.8;
+            
+                public const double Default = 1.0;
             }
             
-            public enum Scopes
+            public struct Scopes
             {
+                public const double Zoom8Scope = 3.83721;
+                public const double Zoom16Scope = 7.65116;
+                public const double HandmadeSight = 0.8;
+                public const double HoloSight = 1.18605;
+            
+                public const double Default = 1.0;
             }
 
             public Guns CurrentGun;
