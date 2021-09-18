@@ -8,7 +8,6 @@ namespace Main.Games.Rust
 {
     public class RustAPI
     {
-        
         public RustAPI(RustHandler rustHandler, Settings settings)
         {
             TcpListener? server = null;
@@ -40,7 +39,7 @@ namespace Main.Games.Rust
                                 {
                                     case "ChangeState":
                                         Boolean.TryParse(splitData[1], out bool value);
-                                        ConsoleUtils.WriteCentered($"Updated state ({settings.Rust.State} -> {value}", GetType().Name);
+                                        ConsoleUtils.WriteCentered($"Updated state ({settings.Rust.State} -> {value})", GetType().Name);
                                         settings.Rust.State = value;
                                         break;
                                     case "ChangeFov":

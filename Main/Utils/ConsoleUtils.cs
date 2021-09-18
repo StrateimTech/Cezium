@@ -9,7 +9,8 @@ namespace Main.Utils
             int length = (Console.WindowWidth - value.Length);
             if (length < 2)
             {
-                throw new Exception("Length cannot be shorter than two.");
+                Console.WriteLine(value);
+                return;
             }
             Console.SetCursorPosition(length / 2, Console.CursorTop);
             Console.WriteLine(value);
@@ -18,11 +19,12 @@ namespace Main.Utils
         public static void WriteCentered(string value, string name)
         {
             int length = (Console.WindowWidth - value.Length);
+            Console.Write($"[{name}]");
             if (length < 2)
             {
-                throw new Exception("Length cannot be shorter than two.");
+                Console.WriteLine(value);
+                return;
             }
-            Console.Write($"{name}");
             Console.SetCursorPosition(length / 2, Console.CursorTop);
             Console.WriteLine(value);
         }
@@ -33,7 +35,8 @@ namespace Main.Utils
             int length = (Console.WindowWidth - formattedString.Length);
             if (length < 2)
             {
-                throw new Exception("Length cannot be shorter than two.");
+                Console.WriteLine(value);
+                return;
             }
             Console.SetCursorPosition((Console.WindowWidth - formattedString.Length) / 2, Console.CursorTop);
             Console.WriteLine(formattedString);
@@ -43,11 +46,12 @@ namespace Main.Utils
         {
             var formattedString = String.Format(value, args);
             int length = (Console.WindowWidth - formattedString.Length);
+            Console.Write($"[{name}]");
             if (length < 2)
             {
-                throw new Exception("Length cannot be shorter than two.");
+                Console.WriteLine(value);
+                return;
             }
-            Console.Write($"{name}");
             Console.SetCursorPosition((Console.WindowWidth - formattedString.Length) / 2, Console.CursorTop);
             Console.WriteLine(formattedString);
         }

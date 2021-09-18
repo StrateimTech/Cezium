@@ -53,22 +53,29 @@ namespace Main.Games.Rust
         /// <summary>
         /// <param name="Tuple">XY Pixel coordinates</param>
         /// </summary>
-        public List<Tuple<double, double>> PixelTable;
+        public List<Tuple<double, double>>? PixelTable;
         
         public RustHandler(Settings settings, HidHandler hidHandler)
         {
             _settings = settings;
             _hidHandler = hidHandler;
-            _bullet = 2;
         }
 
         public void Start()
         {
+            var rustApiThreadHandler = new Thread(() => new RustAPI(this, _settings))
+            {
+                            Name = "rustThreadHandler",
+                            IsBackground = true
+            };
+            rustApiThreadHandler.Start();
+            
+            SetGun(Settings.RustSettings.Guns.AssaultRifle, Settings.RustSettings.Scopes.Default, Settings.RustSettings.Attachments.Default);
+            PixelTable = CalculatePixelTables(CurrentWeapon.Item2);
             while (true)
             {
                 if(!_settings.Rust.State)
                     continue;
-                
                 if (_hidHandler.LeftButton && _hidHandler.RightButton)
                 {
                     if (PixelTable == null)
