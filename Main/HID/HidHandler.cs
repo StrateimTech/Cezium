@@ -11,13 +11,13 @@ namespace Main.HID
         private readonly Settings _settings;
         private bool _running;
         
-        private string KeyboardStreamPath = "/dev/input/event4";
+        // private string KeyboardStreamPath = "/dev/input/event4";
         private string MouseStreamPath = "/dev/input/mice";
         
         private string HumanInterfaceDeviceStreamPath = "/dev/hidg0";
 
-        public readonly FileStream KeyboardFileStream;
-        public readonly FileStream MouseFileStream;
+        // public readonly FileStream KeyboardFileStream;
+        private readonly FileStream _mouseFileStream;
         
         public readonly FileStream HidFileStream;
 
@@ -30,18 +30,18 @@ namespace Main.HID
         public HidHandler(Settings settings)
         {
             _settings = settings;
-            while (KeyboardFileStream == null)
-            {
-                try
-                {
-                    KeyboardFileStream = File.Open(KeyboardStreamPath, FileMode.Open, FileAccess.Read);
-                }
-                catch (Exception ignore)
-                {
-                    ConsoleUtils.WriteCentered("Not opened");
-                }
-            }
-            MouseFileStream = File.Open(MouseStreamPath, FileMode.Open, FileAccess.Read); 
+            // while (KeyboardFileStream == null)
+            // {
+            //     try
+            //     {
+            //         KeyboardFileStream = File.Open(KeyboardStreamPath, FileMode.Open, FileAccess.Read);
+            //     }
+            //     catch (Exception ignore)
+            //     {
+            //         ConsoleUtils.WriteCentered("Not opened");
+            //     }
+            // }
+            _mouseFileStream = File.Open(MouseStreamPath, FileMode.Open, FileAccess.Read); 
             
             HidFileStream = File.Open(HumanInterfaceDeviceStreamPath, FileMode.Open, FileAccess.Write);
         }
@@ -51,8 +51,8 @@ namespace Main.HID
             _running = true;
             while (_running)
             {
-                var mouseSbyteArray = ReadSByteFromStream(MouseFileStream);
-                var keyboardSbyteArray = ReadSByteFromStream(KeyboardFileStream, 3);
+                var mouseSbyteArray = ReadSByteFromStream(_mouseFileStream);
+                // var keyboardSbyteArray = ReadSByteFromStream(KeyboardFileStream, 3);
                 
                 if (mouseSbyteArray.Length > 0)
                 {
@@ -72,11 +72,10 @@ namespace Main.HID
                     });
                     FileUtils.write_mouse_report(HidFileStream, BitUtils.ToByte(ButtonBitArray), new[] {Convert.ToSByte(deltaX), Convert.ToSByte(deltaY)});
                 }
-
-                if (keyboardSbyteArray.Length > 0)
-                {
-                    ConsoleUtils.WriteCentered($"{keyboardSbyteArray.Length}");
-                }
+                // if (keyboardSbyteArray.Length > 0)
+                // {
+                //     ConsoleUtils.WriteCentered($"{keyboardSbyteArray.Length}");
+                // }
             }
         }
 
@@ -84,7 +83,7 @@ namespace Main.HID
         {
             _running = false;
             // KeyboardFileStream.Close();
-            MouseFileStream.Close();
+            _mouseFileStream.Close();
             HidFileStream.Close();
         }
 

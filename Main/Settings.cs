@@ -11,7 +11,8 @@ namespace Main
         public enum Game
         {
             Rust,
-            Apex
+            Apex,
+            Vanguard
         }
         
         public class GeneralSettings
