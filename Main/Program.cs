@@ -1,10 +1,13 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using System;
+using System.Runtime.Versioning;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Figgle;
 using Main;
+using Main.Games.Apex;
+using Main.Games.Rust;
 using Main.HID;
 using Main.Utils;
 
@@ -32,6 +35,38 @@ var hidThreadHandler = new Thread(() =>
 };
 hidThreadHandler.Start();
 
+ConsoleUtils.WriteCentered($"Please select and type a game ({string.Join(", ", Enum.GetNames(typeof(Settings.Game)))})");
+var selectedGame = Console.ReadLine();
+Enum.TryParse(selectedGame, out Settings.Game game);
+settings.General.CurrentGame = game;
+
+switch (game)
+{
+    case Settings.Game.Rust:
+        RustHandler rustHandler = new(settings, hidHandler);
+        var rustThreadHandler = new Thread(() =>
+        {
+            rustHandler.Start();
+        })
+        {
+                        Name = "gameThreadHandler",
+                        IsBackground = true
+        };
+        rustThreadHandler.Start();
+        break;
+    case Settings.Game.Apex:
+        ApexHandler apexHandler = new(settings, hidHandler);
+        var apexThreadHandler = new Thread(() =>
+        {
+            apexHandler.Start();
+        })
+        {
+                        Name = "gameThreadHandler",
+                        IsBackground = true
+        };
+        apexThreadHandler.Start();
+        break;
+}
 
 ConsoleUtils.WriteCentered("Press any key to continue...");
 Console.ReadKey(true);

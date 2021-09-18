@@ -8,13 +8,14 @@ namespace Main
         
         public RustSettings Rust { get; set; } = new();
         
+        public enum Game
+        {
+            Rust,
+            Apex
+        }
+        
         public class GeneralSettings
         {
-            public enum Game
-            {
-                Rust
-            }
-            
             /// <summary>
             /// Whether to invert mouse y when sending to separate machine.
             /// </summary>

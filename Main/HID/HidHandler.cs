@@ -41,8 +41,8 @@ namespace Main.HID
             _running = true;
             while (_running)
             {
-                var mouseSbyteArray = ReadSByte(MouseFileStream);
-                // var keyboardSbyteArray = ReadSByte(KeyboardFileStream);
+                var mouseSbyteArray = ReadSByteFromStream(MouseFileStream);
+                // var keyboardSbyteArray = ReadSByteFromStream(KeyboardFileStream);
                 if (mouseSbyteArray.Length > 0)
                 {
                     mouseSbyteArray[1] = _settings.General.InvertMouseX ? Convert.ToSByte(Convert.ToInt32(mouseSbyteArray[1]) * -1) : mouseSbyteArray[1];
@@ -72,7 +72,7 @@ namespace Main.HID
             HidFileStream.Close();
         }
 
-        private sbyte[] ReadSByte(FileStream fileStream, int length = 4)
+        private sbyte[] ReadSByteFromStream(FileStream fileStream, int length = 4)
         {
             var byteArray = new byte[length];
             fileStream.Read(byteArray, 0, byteArray.Length);
