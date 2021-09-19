@@ -93,7 +93,7 @@ namespace Main.Games.Rust
                         if(!_hidHandler.LeftButton || !_hidHandler.RightButton)
                             continue;
                         // Console.WriteLine($"MODDED: x={(gunPixelX / smoothing)} y={(gunPixelY / smoothing)} left={_hidHandler.LeftButton} right={_hidHandler.RightButton} middle={_hidHandler.MiddleButton} bullet={_bullet} smoothing={smoothing}");
-                        FileUtils.write_mouse_report(_hidHandler.HidFileStream, BitUtils.ToByte(_hidHandler.ButtonBitArray), new[] {Convert.ToSByte((gunPixelX / smoothing)), Convert.ToSByte((gunPixelY / smoothing))});
+                        _hidHandler.WriteMouseReport(BitUtils.ToByte(_hidHandler.ButtonBitArray), new[] {Convert.ToSByte((gunPixelX / smoothing)), Convert.ToSByte((gunPixelY / smoothing))});
                         Thread.Sleep((int)(delay / smoothing));
                     }
                     _bullet++;

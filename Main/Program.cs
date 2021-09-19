@@ -1,8 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
-
 using System;
-using System.IO;
-using System.Runtime.Versioning;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Figgle;

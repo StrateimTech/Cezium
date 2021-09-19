@@ -25,7 +25,10 @@ namespace Main.Games.Apex
             {
                 if (_hidHandler.LeftButton && _hidHandler.RightButton)
                 {
-                    FileUtils.write_mouse_report(_hidHandler.HidFileStream, BitUtils.ToByte(_hidHandler.ButtonBitArray), new[] {Convert.ToSByte(_random.Next(-128, 127)), Convert.ToSByte(_random.Next(-128, 127))});
+                    _hidHandler.WriteMouseReport(BitUtils.ToByte(_hidHandler.ButtonBitArray), new[] {Convert.ToSByte(10), Convert.ToSByte(10)});
+                    Thread.Sleep(5);
+                    _hidHandler.WriteMouseReport(BitUtils.ToByte(_hidHandler.ButtonBitArray), new[] {Convert.ToSByte(-10), Convert.ToSByte(-10)});
+                    Thread.Sleep(5);
                 }
             }
         }
