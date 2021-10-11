@@ -65,11 +65,9 @@ namespace Main.Games.Rust
         {
             var rustApiThreadHandler = new Thread(() => new RustAPI(this, _settings))
             {
-                            Name = "rustThreadHandler",
                             IsBackground = true
             };
             rustApiThreadHandler.Start();
-            
             SetGun(Settings.RustSettings.Guns.AssaultRifle, Settings.RustSettings.Scopes.Default, Settings.RustSettings.Attachments.Default);
             PixelTable = CalculatePixelTables(CurrentWeapon.Item2);
             while (true)
@@ -85,17 +83,21 @@ namespace Main.Games.Rust
                         
                     var gunPixelX = PixelTable[_bullet].Item1 * CurrentWeapon.Item5 * CurrentWeapon.Item6;
                     var gunPixelY = PixelTable[_bullet].Item2 * CurrentWeapon.Item5 * CurrentWeapon.Item6;
-
+                    
                     var delay = 60000.0 / (int)CurrentWeapon.Item3;
                     var smoothing = _settings.Rust.Smoothness;
+
+                    double count = 0;
                     for (int i = 0; i < smoothing; i++)
                     {
                         if(!_hidHandler.LeftButton || !_hidHandler.RightButton)
                             continue;
                         // Console.WriteLine($"MODDED: x={(gunPixelX / smoothing)} y={(gunPixelY / smoothing)} left={_hidHandler.LeftButton} right={_hidHandler.RightButton} middle={_hidHandler.MiddleButton} bullet={_bullet} smoothing={smoothing}");
+                             
                         _hidHandler.WriteMouseReport(BitUtils.ToByte(_hidHandler.ButtonBitArray), new[] {Convert.ToSByte((gunPixelX / smoothing)), Convert.ToSByte((gunPixelY / smoothing))});
                         Thread.Sleep((int)(delay / smoothing));
                     }
+                    ConsoleUtils.WriteCentered($"Time: {count}, Delay: {delay}");
                     _bullet++;
                 }
                 else

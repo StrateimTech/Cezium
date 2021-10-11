@@ -38,13 +38,14 @@ namespace Main.HID
         public HidHandler(Settings settings)
         {
             _settings = settings;
-            _mouseFileStream = File.Open(MouseStreamPath, FileMode.Open, FileAccess.Read); 
+            _mouseFileStream = File.Open(MouseStreamPath, FileMode.Open, FileAccess.ReadWrite); 
             
             _hidFileStream = File.Open(HumanInterfaceDeviceStreamPath, FileMode.Open, FileAccess.Write);
         }
 
         public void Start()
         {
+            WriteReport(_mouseFileStream, new byte[] {0xf3, 200, 0xf3, 100, 0xf3, 80});
             _running = true;
             while (_running)
             {
@@ -54,7 +55,8 @@ namespace Main.HID
                 {
                     mouseSbyteArray[1] = _settings.General.InvertMouseX ? Convert.ToSByte(Convert.ToInt32(mouseSbyteArray[1]) * -1) : mouseSbyteArray[1];
                     mouseSbyteArray[2] = _settings.General.InvertMouseY ? mouseSbyteArray[2] : Convert.ToSByte(Convert.ToInt32(mouseSbyteArray[2]) * -1);
-
+                    mouseSbyteArray[3] = _settings.General.InvertMouseWheel ? mouseSbyteArray[3] : Convert.ToSByte(Convert.ToInt32(mouseSbyteArray[3]) * -1);
+                    
                     LeftButton = (mouseSbyteArray[0] & 0x1) > 0;
                     RightButton = (mouseSbyteArray[0] & 0x2) > 0;
                     MiddleButton = (mouseSbyteArray[0] & 0x4) > 0;
@@ -66,7 +68,7 @@ namespace Main.HID
                     {
                                     LeftButton, RightButton, MiddleButton, false, false, false, false, false
                     });
-                    WriteMouseReport(BitUtils.ToByte(ButtonBitArray), new[] {mouseSbyteArray[1], mouseSbyteArray[2]});
+                    WriteMouseReport(BitUtils.ToByte(ButtonBitArray), new[] {mouseSbyteArray[1], mouseSbyteArray[2], mouseSbyteArray[3]});
                 }
             }
         }
@@ -107,6 +109,23 @@ namespace Main.HID
             finally
             {
                 MouseWriteLock.ExitWriteLock();
+            }
+        }
+
+        private void WriteReport(FileStream fileStream, byte[] bytes, bool leaveOpen = true)
+        {
+            try
+            {
+                using BinaryWriter binaryWriter = new(fileStream, Encoding.Default, leaveOpen);
+                foreach (var byteE in bytes)
+                {
+                    binaryWriter.Write(byteE);
+                }
+                binaryWriter.Flush();
+            }
+            catch (Exception exception)
+            {
+                ConsoleUtils.WriteCentered($"{exception.Message}");
             }
         }
     }

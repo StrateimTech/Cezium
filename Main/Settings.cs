@@ -26,6 +26,11 @@ namespace Main
             /// Whether to invert mouse x when sending to separate machine.
             /// </summary>
             public bool InvertMouseX = false;
+            
+            /// <summary>
+            /// Whether to invert mouse wheel when sending to separate machine.
+            /// </summary>
+            public bool InvertMouseWheel = false;
 
             /// <summary>
             /// Current game cheating on.
