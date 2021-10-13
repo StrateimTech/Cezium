@@ -26,7 +26,6 @@ var hidThreadHandler = new Thread(() =>
     hidHandler.Start();
 })
 {
-                Name = "HidHandlerThread",
                 IsBackground = true
 };
 hidThreadHandler.Start();
@@ -37,7 +36,6 @@ var rustThreadHandler = new Thread(() =>
     rustHandler.Start();
 })
 {
-                Name = "rustThreadHandler",
                 IsBackground = true
 };
 rustThreadHandler.Start();

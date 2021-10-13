@@ -2,14 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Main.HID;
-using Main.Utils;
 
 namespace Main.Rust
 {
     public class RustHandler
     {
-        private readonly RustTables _gunTables = new();
-        
         private readonly Settings _settings;
         
         private readonly HidHandler _hidHandler;
@@ -27,7 +24,8 @@ namespace Main.Rust
         /// <param name="scopeMultiplier">the gun's scope multiplier applied to when calculating the gun's pixel table</param>
         /// <param name="attachmentMultiplier">the gun's attachment multiplier applied to when calculating the gun's pixel table</param>
         /// </summary>
-        public (Settings.RustSettings.Guns, List<Tuple<double, double>> xyTable, Settings.RustSettings.FireRate fireRate, int maxBullets, double scopeMultiplier, double attachmentMultiplier) CurrentWeapon;
+        public (Settings.RustSettings.Guns, List<Tuple<double, double>> xyTable, Settings.RustSettings.FireRate fireRate, int maxBullets, double scopeMultiplier, double attachmentMultiplier) CurrentWeapon
+                        = new(Settings.RustSettings.Guns.ASSAULTRIFLE, RustTables.AssaultRifle, Settings.RustSettings.FireRate.ASSAULTRIFLE, Settings.RustSettings.BulletCounts.AssaultRifle, Settings.RustSettings.Scopes.Default, Settings.RustSettings.Attachments.Default);
         
         /// <summary>
         /// <param name="Tuple">XY Pixel coordinates</param>
@@ -48,12 +46,11 @@ namespace Main.Rust
             };
             rustApiThreadHandler.Start();
             
-            SetGun(Settings.RustSettings.Guns.ASSAULTRIFLE, Settings.RustSettings.Scopes.Default, Settings.RustSettings.Attachments.Default);
             PixelTable = CalculatePixelTables(CurrentWeapon.Item2);
             while (true)
             {
-                // TODO: Fix CPU Usage
-                // Thread.Sleep(1);
+                if(!_settings.Rust.State || !_hidHandler.Mouse.LeftButton || !_hidHandler.Mouse.RightButton)
+                    Thread.Sleep(1);
                 if(!_settings.Rust.State)
                     continue;
 
@@ -74,8 +71,6 @@ namespace Main.Rust
                     {
                         if(!_hidHandler.Mouse.LeftButton || !_hidHandler.Mouse.LeftButton)
                             continue;
-                        // Console.WriteLine($"MODDED: x={(gunPixelX / smoothing)} y={(gunPixelY / smoothing)} left={_hidHandler.LeftButton} right={_hidHandler.RightButton} middle={_hidHandler.MiddleButton} bullet={_bullet} smoothing={smoothing}");
-                        
                         _hidHandler.WriteMouseReport(_hidHandler.Mouse with
                         {
                                         X = Convert.ToInt32(gunPixelX / smoothing),
@@ -151,25 +146,25 @@ namespace Main.Rust
             switch (gun)
             {
                 case Settings.RustSettings.Guns.ASSAULTRIFLE:
-                    CurrentWeapon = new(Settings.RustSettings.Guns.ASSAULTRIFLE, _gunTables.AssaultRifle, Settings.RustSettings.FireRate.AssaultRifle, Settings.RustSettings.BulletCounts.AssaultRifle, scope, attachment);
+                    CurrentWeapon = new(Settings.RustSettings.Guns.ASSAULTRIFLE, RustTables.AssaultRifle, Settings.RustSettings.FireRate.ASSAULTRIFLE, Settings.RustSettings.BulletCounts.AssaultRifle, scope, attachment);
                     break;
                 case Settings.RustSettings.Guns.M249:
-                    CurrentWeapon = new(Settings.RustSettings.Guns.M249, _gunTables.M249, Settings.RustSettings.FireRate.M249, Settings.RustSettings.BulletCounts.M249, scope, attachment);
+                    CurrentWeapon = new(Settings.RustSettings.Guns.M249, RustTables.M249, Settings.RustSettings.FireRate.M249, Settings.RustSettings.BulletCounts.M249, scope, attachment);
                     break;
                 case Settings.RustSettings.Guns.LR300:
-                    CurrentWeapon = new(Settings.RustSettings.Guns.LR300, _gunTables.Lr300, Settings.RustSettings.FireRate.Lr300, Settings.RustSettings.BulletCounts.Lr300, scope, attachment);
+                    CurrentWeapon = new(Settings.RustSettings.Guns.LR300, RustTables.Lr300, Settings.RustSettings.FireRate.LR300, Settings.RustSettings.BulletCounts.Lr300, scope, attachment);
                     break;
                 case Settings.RustSettings.Guns.MP5:
-                    CurrentWeapon = new(Settings.RustSettings.Guns.MP5, _gunTables.Mp5, Settings.RustSettings.FireRate.Mp5, Settings.RustSettings.BulletCounts.Mp5, scope, attachment);
+                    CurrentWeapon = new(Settings.RustSettings.Guns.MP5, RustTables.Mp5, Settings.RustSettings.FireRate.MP5, Settings.RustSettings.BulletCounts.Mp5, scope, attachment);
                     break;
                 case Settings.RustSettings.Guns.CUSTOM:
-                    CurrentWeapon = new(Settings.RustSettings.Guns.CUSTOM, _gunTables.Custom, Settings.RustSettings.FireRate.Custom, Settings.RustSettings.BulletCounts.Custom, scope, attachment);
+                    CurrentWeapon = new(Settings.RustSettings.Guns.CUSTOM, RustTables.Custom, Settings.RustSettings.FireRate.CUSTOM, Settings.RustSettings.BulletCounts.Custom, scope, attachment);
                     break;
                 case Settings.RustSettings.Guns.THOMPSON:
-                    CurrentWeapon = new(Settings.RustSettings.Guns.THOMPSON, _gunTables.Thompson, Settings.RustSettings.FireRate.Thompson, Settings.RustSettings.BulletCounts.Thompson, scope, attachment);
+                    CurrentWeapon = new(Settings.RustSettings.Guns.THOMPSON, RustTables.Thompson, Settings.RustSettings.FireRate.THOMPSON, Settings.RustSettings.BulletCounts.Thompson, scope, attachment);
                     break;
                 default:
-                    CurrentWeapon = new(Settings.RustSettings.Guns.ASSAULTRIFLE, _gunTables.AssaultRifle, Settings.RustSettings.FireRate.AssaultRifle, Settings.RustSettings.BulletCounts.AssaultRifle, scope, attachment);
+                    CurrentWeapon = new(Settings.RustSettings.Guns.ASSAULTRIFLE, RustTables.AssaultRifle, Settings.RustSettings.FireRate.ASSAULTRIFLE, Settings.RustSettings.BulletCounts.AssaultRifle, scope, attachment);
                     break;
             }
         }

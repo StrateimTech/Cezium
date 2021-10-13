@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace Main.Rust
 {
-    public class RustTables
+    public static class RustTables
     {
         #region Tables 
-        public readonly List<Tuple<double, double>> AssaultRifle = new()
+        public static readonly List<Tuple<double, double>> AssaultRifle = new()
         {
                         new (1.390706, -2.003941), 
                         new (1.176434, -3.844176), 
@@ -39,7 +39,7 @@ namespace Main.Rust
                         new (0.6144824, -29.36766)
         };
         
-        public readonly List<Tuple<double, double>> Custom = new()
+        public static readonly List<Tuple<double, double>> Custom = new()
         {
                         new (0.6512542, -1.305408), 
                         new (0.9681615, -2.599905), 
@@ -66,7 +66,7 @@ namespace Main.Rust
                         new (-0.1487077, -14.74965)
         };
         
-        public readonly List<Tuple<double, double>> Lr300 = new()
+        public static readonly List<Tuple<double, double>> Lr300 = new()
         {
                         new (0.09836517, -1.004928), 
                         new (0.3469534, -2.248523), 
@@ -99,7 +99,7 @@ namespace Main.Rust
                         new (0.5057687, -11.84584)
         };
         
-        public readonly List<Tuple<double, double>> M249 = new() //STANDING
+        public static readonly List<Tuple<double, double>> M249 = new() //STANDING
         {
                         new (0.0, -2.75), 
                         new (0.0, -5.5),
@@ -204,7 +204,7 @@ namespace Main.Rust
                         new (0.0, -277.75)
         };
         
-        public readonly List<Tuple<double, double>> Mp5 = new()
+        public static readonly List<Tuple<double, double>> Mp5 = new()
         {
                         new (0, -0.8688382), 
                         new (0, -2.042219), 
@@ -237,7 +237,7 @@ namespace Main.Rust
                         new (-0.08568263, -10.00412)
         };
         
-        public readonly List<Tuple<double, double>> Thompson = new()
+        public static readonly List<Tuple<double, double>> Thompson = new()
         {
                         new (0.7399524, -1.565956), 
                         new (1.011324, -3.109221), 

@@ -68,12 +68,12 @@ namespace Main
             
             public enum FireRate
             {
-                AssaultRifle = 450,
-                Custom = 600,
-                Lr300 = 500,
+                ASSAULTRIFLE = 450,
+                CUSTOM = 600,
+                LR300 = 500,
                 M249 = 500,
-                Mp5 = 600,
-                Thompson = 462
+                MP5 = 600,
+                THOMPSON = 462
             }
 
             public Guns CurrentGun;
