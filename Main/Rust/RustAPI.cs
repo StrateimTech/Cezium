@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using Main.Utils;
 
-namespace Main.Games.Rust
+namespace Main.Rust
 {
     public class RustAPI
     {

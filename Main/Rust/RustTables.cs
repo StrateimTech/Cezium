@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace Main.Games.Rust
+namespace Main.Rust
 {
     public class RustTables
     {
+        #region Tables 
         public readonly List<Tuple<double, double>> AssaultRifle = new()
         {
                         new (1.390706, -2.003941), 
@@ -258,5 +259,6 @@ namespace Main.Games.Rust
                         new (-0.5397906, -14.40368),
                         new (-0.1962007, -14.70013)
         };
+        #endregion
     }
 }

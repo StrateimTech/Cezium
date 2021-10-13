@@ -1,19 +1,11 @@
-using System;
 
 namespace Main
 {
     public class Settings
     {
-        public GeneralSettings General { get; set; } = new();
+        public GeneralSettings General { get; } = new();
         
-        public RustSettings Rust { get; set; } = new();
-        
-        public enum Game
-        {
-            Rust,
-            Apex,
-            Vanguard
-        }
+        public RustSettings Rust { get; } = new();
         
         public class GeneralSettings
         {
@@ -31,23 +23,18 @@ namespace Main
             /// Whether to invert mouse wheel when sending to separate machine.
             /// </summary>
             public bool InvertMouseWheel = false;
-
-            /// <summary>
-            /// Current game cheating on.
-            /// </summary>
-            public Game CurrentGame;
         }
 
         public class RustSettings
         {
             public enum Guns
             {
-                AssaultRifle,
+                ASSAULTRIFLE,
                 M249,
-                Lr300,
-                Mp5,
-                Custom,
-                Thompson
+                LR300,
+                MP5,
+                CUSTOM,
+                THOMPSON
             }
 
             public struct Attachments
@@ -68,6 +55,26 @@ namespace Main
             
                 public const double Default = 1.0;
             }
+            
+            public struct BulletCounts
+            {
+                public const int AssaultRifle = 30;
+                public const int Custom = 24;
+                public const int Lr300 = 30;
+                public const int M249 = 100;
+                public const int Mp5 = 30;
+                public const int Thompson = 20;
+            }
+            
+            public enum FireRate
+            {
+                AssaultRifle = 450,
+                Custom = 600,
+                Lr300 = 500,
+                M249 = 500,
+                Mp5 = 600,
+                Thompson = 462
+            }
 
             public Guns CurrentGun;
 
@@ -81,7 +88,7 @@ namespace Main
 
             public int Fov = 90;
 
-            public bool State = false;
+            public bool State = true;
         }
     }
 }

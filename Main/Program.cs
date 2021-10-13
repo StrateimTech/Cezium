@@ -1,13 +1,10 @@
-﻿// See https://aka.ms/new-console-template for more information
-using System;
+﻿using System;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Figgle;
 using Main;
-using Main.Games.Apex;
-using Main.Games.Rust;
-using Main.Games.Vanguard;
 using Main.HID;
+using Main.Rust;
 using Main.Utils;
 
 var figgleText = FiggleFonts.Isometric3.Render("CEZIUM");
@@ -34,50 +31,16 @@ var hidThreadHandler = new Thread(() =>
 };
 hidThreadHandler.Start();
 
-ConsoleUtils.WriteCentered($"Please select and type a game ({string.Join(", ", Enum.GetNames(typeof(Settings.Game)))})");
-var selectedGame = Console.ReadLine();
-Enum.TryParse(selectedGame, out Settings.Game game);
-settings.General.CurrentGame = game;
-
-switch (game)
+RustHandler rustHandler = new(settings, hidHandler);
+var rustThreadHandler = new Thread(() =>
 {
-    case Settings.Game.Rust:
-        RustHandler rustHandler = new(settings, hidHandler);
-        var rustThreadHandler = new Thread(() =>
-        {
-            rustHandler.Start();
-        })
-        {
-                        Name = "rustThreadHandler",
-                        IsBackground = true
-        };
-        rustThreadHandler.Start();
-        break;
-    case Settings.Game.Apex:
-        ApexHandler apexHandler = new(settings, hidHandler);
-        var apexThreadHandler = new Thread(() =>
-        {
-            apexHandler.Start();
-        })
-        {
-                        Name = "apexThreadHandler",
-                        IsBackground = true
-        };
-        apexThreadHandler.Start();
-        break;
-    case Settings.Game.Vanguard:
-        VanguardHandler vanguardHandler = new(settings, hidHandler);
-        var vanguardThreadHandler = new Thread(() =>
-        {
-            vanguardHandler.Start();
-        })
-        {
-                        Name = "vanguardThreadHandler",
-                        IsBackground = true
-        };
-        vanguardThreadHandler.Start();
-        break;
-}
+    rustHandler.Start();
+})
+{
+                Name = "rustThreadHandler",
+                IsBackground = true
+};
+rustThreadHandler.Start();
 
 ConsoleUtils.WriteCentered("Press any key to continue...");
 Console.ReadKey(true);
