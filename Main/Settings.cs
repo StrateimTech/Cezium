@@ -31,7 +31,7 @@ namespace Main
         {
             public enum Guns
             {
-                ASSAULTTIFLE,
+                ASSAULTRIFLE,
                 M249,
                 LR300,
                 MP5,
@@ -41,11 +41,13 @@ namespace Main
 
             public struct Attachments
             {
-                public const double MuzzleBoost = 0.9; // This is timing
-                public const double MuzzleBrake = 0.5;
-                public const double Silencer = 0.8;
-            
-                public const double Default = 1.0;
+                /// <summary>
+                /// <returns>Multiplier</returns>
+                /// <returns>Timings</returns>
+                /// </summary>
+                public static readonly (double, double) MuzzleBoost = (1, 0.9);
+                public static readonly (double, double) MuzzleBrake = (0.5, 1);
+                public static readonly (double, double) Silencer = (0.8, 1);
             }
             
             public struct Scopes
@@ -54,18 +56,16 @@ namespace Main
                 public const double Zoom16Scope = 7.65116;
                 public const double HandmadeSight = 0.8;
                 public const double HoloSight = 1.18605;
-            
-                public const double Default = 1.0;
             }
             
-            public struct BulletCounts
+            public enum BulletCounts
             {
-                public const int ASSAULTRIFLE = 30;
-                public const int CUSTOM = 24;
-                public const int LR300 = 30;
-                public const int M249 = 100;
-                public const int MP5 = 30;
-                public const int THOMPSON = 20;
+                ASSAULTRIFLE = 30,
+                CUSTOM = 24,
+                LR300 = 30,
+                M249 = 100,
+                MP5 = 30,
+                THOMPSON = 20,
             }
             
             public enum FireRate

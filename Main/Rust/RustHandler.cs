@@ -21,14 +21,14 @@ namespace Main.Rust
         /// <param name="xyTable">xy movement table of the current weapon</param>
         /// <param name="fireRate">the current gun's fire rate in rounds per minute</param>
         /// <param name="maxBullets">the current gun's maximum bullets in a magazine</param>
-        /// <param name="scopeMultiplier">the gun's scope multiplier applied to when calculating the gun's pixel table</param>
-        /// <param name="attachmentMultiplier">the gun's attachment multiplier applied to when calculating the gun's pixel table</param>
+        /// <param name="scope">the gun's scope multiplier applied to when calculating the gun's pixel table</param>
+        /// <param name="attachment">the gun's attachment (multiplier, and timings) applied to when calculating the gun's pixel table and delays between shots</param>
         /// </summary>
-        public (Settings.RustSettings.Guns, List<Tuple<double, double>> xyTable, Settings.RustSettings.FireRate fireRate, int maxBullets, double scopeMultiplier, double attachmentMultiplier) CurrentWeapon
-                        = new(Settings.RustSettings.Guns.ASSAULTTIFLE, RustTables.AssaultRifle, Settings.RustSettings.FireRate.ASSAULTRIFLE, Settings.RustSettings.BulletCounts.ASSAULTRIFLE, Settings.RustSettings.Scopes.Default, Settings.RustSettings.Attachments.Default);
+        public (Settings.RustSettings.Guns, List<Tuple<double, double>> xyTable, Settings.RustSettings.FireRate fireRate, int maxBullets, double scope, (double, double) attachment) CurrentWeapon
+                        = new(Settings.RustSettings.Guns.ASSAULTRIFLE, RustTables.AssaultRifle, Settings.RustSettings.FireRate.ASSAULTRIFLE, (int)Settings.RustSettings.BulletCounts.ASSAULTRIFLE, 1, (1, 1));
 
         /// <summary>
-        /// <param name="Tuple">XY Pixel coordinates</param>
+        /// <param name="Tuple">Pixels coordinates for each relative mouse movement for every bullet</param>
         /// </summary>
         public List<Tuple<double, double>>? PixelTable;
         
@@ -61,13 +61,14 @@ namespace Main.Rust
                         continue;
                     if (_bullet >= CurrentWeapon.Item4 - 1)
                         _bullet = 0;
-                        
-                    var gunPixelX = PixelTable[_bullet].Item1 * CurrentWeapon.Item5 * CurrentWeapon.Item6;
-                    var gunPixelY = PixelTable[_bullet].Item2 * CurrentWeapon.Item5 * CurrentWeapon.Item6;
+
+                    var gunPixelX = PixelTable[_bullet].Item1 * CurrentWeapon.Item5 * CurrentWeapon.Item6.Item1;
+                    var gunPixelY = PixelTable[_bullet].Item2 * CurrentWeapon.Item5 * CurrentWeapon.Item6.Item1;
                     
                     var delay = 60000.0 / (int)CurrentWeapon.Item3;
                     var smoothing = _settings.Rust.Smoothness;
-
+                    var sleep = (delay / smoothing) * CurrentWeapon.Item6.Item2;
+                    
                     for (int i = 0; i < smoothing; i++)
                     {
                         if(!_hidHandler.Mouse.LeftButton || !_hidHandler.Mouse.LeftButton)
@@ -78,7 +79,7 @@ namespace Main.Rust
                                         Y = Convert.ToInt32(gunPixelY / smoothing),
                                         Wheel = 0
                         });
-                        Thread.Sleep((int)(delay / smoothing));
+                        Thread.Sleep(Convert.ToInt32(sleep));
                     }
                     _bullet++;
                 }
@@ -117,8 +118,8 @@ namespace Main.Rust
         
         public void UpdateGun(string gunString, string scopeString, string attachmentString)
         {
-            double scopeValue = 0;
-            double attachmentValue = 0;
+            double scopeValue = 1;
+            (double, double) attachmentValue = (1, 1);
             var gunEnum = (Settings.RustSettings.Guns)Enum.Parse(typeof(Settings.RustSettings.Guns), gunString.ToUpper());
             foreach (var field in typeof(Settings.RustSettings.Scopes).GetFields())
             {
@@ -127,17 +128,13 @@ namespace Main.Rust
                     scopeValue = (double)field.GetValue(null)!;
                 }
             }
-            if (scopeValue == 0)
-                scopeValue = 1;
             foreach (var field in typeof(Settings.RustSettings.Attachments).GetFields())
             {
                 if (attachmentString.Equals(field.Name, StringComparison.OrdinalIgnoreCase))
                 {
-                    attachmentValue = (double)field.GetValue(null)!;
+                    attachmentValue = ((double, double))field.GetValue(null)!;
                 }
             }
-            if (attachmentValue == 0)
-                attachmentValue = 1;
 
             List<Tuple<double, double>> recoilTable = RustTables.AssaultRifle;
             foreach (var field in typeof(RustTables).GetFields())
