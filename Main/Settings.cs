@@ -1,4 +1,6 @@
 
+// ReSharper disable InconsistentNaming
+// ReSharper disable IdentifierTypo
 namespace Main
 {
     public class Settings
@@ -29,7 +31,7 @@ namespace Main
         {
             public enum Guns
             {
-                ASSAULTRIFLE,
+                ASSAULTTIFLE,
                 M249,
                 LR300,
                 MP5,
@@ -58,12 +60,12 @@ namespace Main
             
             public struct BulletCounts
             {
-                public const int AssaultRifle = 30;
-                public const int Custom = 24;
-                public const int Lr300 = 30;
+                public const int ASSAULTRIFLE = 30;
+                public const int CUSTOM = 24;
+                public const int LR300 = 30;
                 public const int M249 = 100;
-                public const int Mp5 = 30;
-                public const int Thompson = 20;
+                public const int MP5 = 30;
+                public const int THOMPSON = 20;
             }
             
             public enum FireRate

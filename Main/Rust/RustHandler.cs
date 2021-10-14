@@ -25,8 +25,8 @@ namespace Main.Rust
         /// <param name="attachmentMultiplier">the gun's attachment multiplier applied to when calculating the gun's pixel table</param>
         /// </summary>
         public (Settings.RustSettings.Guns, List<Tuple<double, double>> xyTable, Settings.RustSettings.FireRate fireRate, int maxBullets, double scopeMultiplier, double attachmentMultiplier) CurrentWeapon
-                        = new(Settings.RustSettings.Guns.ASSAULTRIFLE, RustTables.AssaultRifle, Settings.RustSettings.FireRate.ASSAULTRIFLE, Settings.RustSettings.BulletCounts.AssaultRifle, Settings.RustSettings.Scopes.Default, Settings.RustSettings.Attachments.Default);
-        
+                        = new(Settings.RustSettings.Guns.ASSAULTTIFLE, RustTables.AssaultRifle, Settings.RustSettings.FireRate.ASSAULTRIFLE, Settings.RustSettings.BulletCounts.ASSAULTRIFLE, Settings.RustSettings.Scopes.Default, Settings.RustSettings.Attachments.Default);
+
         /// <summary>
         /// <param name="Tuple">XY Pixel coordinates</param>
         /// </summary>
@@ -36,6 +36,8 @@ namespace Main.Rust
         {
             _settings = settings;
             _hidHandler = hidHandler;
+            
+            PixelTable = CalculatePixelTables(CurrentWeapon.Item2);
         }
 
         public void Start()
@@ -46,7 +48,6 @@ namespace Main.Rust
             };
             rustApiThreadHandler.Start();
             
-            PixelTable = CalculatePixelTables(CurrentWeapon.Item2);
             while (true)
             {
                 if(!_settings.Rust.State || !_hidHandler.Mouse.LeftButton || !_hidHandler.Mouse.RightButton)
@@ -137,36 +138,27 @@ namespace Main.Rust
             }
             if (attachmentValue == 0)
                 attachmentValue = 1;
-            SetGun(gunEnum, scopeValue, attachmentValue);
-            PixelTable = CalculatePixelTables(CurrentWeapon.Item2);
-        }
-        
-        private void SetGun(Settings.RustSettings.Guns gun, double scope, double attachment)
-        {
-            switch (gun)
+
+            List<Tuple<double, double>> recoilTable = RustTables.AssaultRifle;
+            foreach (var field in typeof(RustTables).GetFields())
             {
-                case Settings.RustSettings.Guns.ASSAULTRIFLE:
-                    CurrentWeapon = new(Settings.RustSettings.Guns.ASSAULTRIFLE, RustTables.AssaultRifle, Settings.RustSettings.FireRate.ASSAULTRIFLE, Settings.RustSettings.BulletCounts.AssaultRifle, scope, attachment);
-                    break;
-                case Settings.RustSettings.Guns.M249:
-                    CurrentWeapon = new(Settings.RustSettings.Guns.M249, RustTables.M249, Settings.RustSettings.FireRate.M249, Settings.RustSettings.BulletCounts.M249, scope, attachment);
-                    break;
-                case Settings.RustSettings.Guns.LR300:
-                    CurrentWeapon = new(Settings.RustSettings.Guns.LR300, RustTables.Lr300, Settings.RustSettings.FireRate.LR300, Settings.RustSettings.BulletCounts.Lr300, scope, attachment);
-                    break;
-                case Settings.RustSettings.Guns.MP5:
-                    CurrentWeapon = new(Settings.RustSettings.Guns.MP5, RustTables.Mp5, Settings.RustSettings.FireRate.MP5, Settings.RustSettings.BulletCounts.Mp5, scope, attachment);
-                    break;
-                case Settings.RustSettings.Guns.CUSTOM:
-                    CurrentWeapon = new(Settings.RustSettings.Guns.CUSTOM, RustTables.Custom, Settings.RustSettings.FireRate.CUSTOM, Settings.RustSettings.BulletCounts.Custom, scope, attachment);
-                    break;
-                case Settings.RustSettings.Guns.THOMPSON:
-                    CurrentWeapon = new(Settings.RustSettings.Guns.THOMPSON, RustTables.Thompson, Settings.RustSettings.FireRate.THOMPSON, Settings.RustSettings.BulletCounts.Thompson, scope, attachment);
-                    break;
-                default:
-                    CurrentWeapon = new(Settings.RustSettings.Guns.ASSAULTRIFLE, RustTables.AssaultRifle, Settings.RustSettings.FireRate.ASSAULTRIFLE, Settings.RustSettings.BulletCounts.AssaultRifle, scope, attachment);
-                    break;
+                if (gunString.Equals(field.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    recoilTable = (List<Tuple<double, double>>)field.GetValue(null)!;
+                }
             }
+
+            var fireRate = (Settings.RustSettings.FireRate)Enum.Parse(typeof(Settings.RustSettings.FireRate), gunString.ToUpper());
+            var bulletCount = (int)Enum.Parse(typeof(Settings.RustSettings.BulletCounts), gunString.ToUpper());
+            
+            CurrentWeapon = new(
+                            gunEnum, 
+                            recoilTable,
+                            fireRate,
+                            bulletCount,
+                            scopeValue, 
+                            attachmentValue);
+            PixelTable = CalculatePixelTables(recoilTable);
         }
     }
 }
