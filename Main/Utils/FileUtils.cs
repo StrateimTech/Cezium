@@ -38,5 +38,20 @@ namespace Main.Utils
             }
             binaryWriter.Flush();
         }
+        
+        public static void WriteReport(FileStream fileStream, sbyte reportID,  byte[] bytes, sbyte[] sbytes, bool leaveOpen = true)
+        {
+            using BinaryWriter binaryWriter = new(fileStream, Encoding.Default, leaveOpen);
+            binaryWriter.Write(reportID);
+            foreach (var unsignedByte in bytes)
+            {
+                binaryWriter.Write(unsignedByte);
+            }
+            foreach (var signedByte in sbytes)
+            {
+                binaryWriter.Write(signedByte);
+            }
+            binaryWriter.Flush();
+        }
     }
 }
