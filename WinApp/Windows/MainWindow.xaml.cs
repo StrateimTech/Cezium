@@ -1,17 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using WinApp.Windows.Home;
 
-namespace WinApp
+namespace WinApp.Windows
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : INotifyPropertyChanged
     {
         public MainWindow()
@@ -19,6 +16,11 @@ namespace WinApp
             InitializeComponent();
             DataContext = this;
             SidebarWidth = 75;
+            TopContentHeight = 24;
+            
+            MainControl.Content = new HomeControl();
+            MainControl.Width = Width - SidebarWidth;
+            MainControl.Height = Height - TopContentHeight;
         }
         
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
@@ -36,6 +38,9 @@ namespace WinApp
         private void MainWindow_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             TopContentWidth = e.NewSize.Width - SidebarWidth - 2;
+            
+            MainControl.Width = e.NewSize.Width - SidebarWidth;
+            MainControl.Height = e.NewSize.Height - TopContentHeight;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -56,6 +61,19 @@ namespace WinApp
                 NotifyPropertyChanged(Name);
             }
         }
+        
+        private double _topContentHeight;
+
+        public double TopContentHeight
+        {  
+            get => _topContentHeight;
+            set
+            {
+                _topContentHeight = value;
+                NotifyPropertyChanged(Name);
+            }
+        }
+        
         
         private int _sidebarWidth;
 
