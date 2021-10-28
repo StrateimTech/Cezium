@@ -6,6 +6,9 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using WinApp.Windows.Home;
+using WinApp.Windows.Keyboard;
+using WinApp.Windows.Mouse;
+using WinApp.Windows.Rust;
 
 namespace WinApp.Windows
 {
@@ -91,6 +94,49 @@ namespace WinApp.Windows
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void HomeButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (MainControl.Content is not HomeControl)
+            {
+                MainControl.Content = new HomeControl();
+            }
+        }
+
+        private void MouseButtonPanel_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (MainControl.Content is not MouseControl)
+            {
+                MainControl.Content = new MouseControl();
+            }
+        }
+
+        private void KeyboardButtonPanel_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (MainControl.Content is not KeyboardControl)
+            {
+                MainControl.Content = new KeyboardControl();
+            }
+        }
+
+        private void RustButtonPanel_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (MainControl.Content is not RustControl)
+            {
+                MainControl.Content = new RustControl();
+            }
+        }
+
+        private void MinimizeButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void CloseButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+            Application.Current.Shutdown();
         }
     }
 }

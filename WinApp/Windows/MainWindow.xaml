@@ -30,7 +30,8 @@
                                 Margin="13.5, 1, 0, 0"
                                 Height="48"
                                 Width="48"
-                                BorderThickness="0">
+                                BorderThickness="0"
+                                Click="HomeButton_OnClick">
                                 <Button.Background>
                                     <ImageBrush ImageSource="../Assets/Home-button-white-48.png" />
                                 </Button.Background>
@@ -44,7 +45,8 @@
                             Margin="13.5, 0 0, 16"
                             Height="48"
                             Width="48"
-                            BorderThickness="0">
+                            BorderThickness="0"
+                            Click="MouseButtonPanel_OnClick">
                             <Button.Background>
                                 <ImageBrush ImageSource="../Assets/Mouse-button-48.png" />
                             </Button.Background>
@@ -56,7 +58,8 @@
                             Margin="13.5, 1, 0, 16"
                             Height="48"
                             Width="48"
-                            BorderThickness="0">
+                            BorderThickness="0"
+                            Click="KeyboardButtonPanel_OnClick">
                             <Button.Background>
                                 <ImageBrush ImageSource="../Assets/Keyboard-button-48.png" />
                             </Button.Background>
@@ -68,7 +71,8 @@
                             Margin="13.5, 1, 0, 16"
                             Height="48"
                             Width="48"
-                            BorderThickness="0">
+                            BorderThickness="0"
+                            Click="RustButtonPanel_OnClick">
                             <Button.Background>
                                 <ImageBrush ImageSource="../Assets/Rust-game-button-48.png" />
                             </Button.Background>
@@ -103,7 +107,8 @@
                                         Margin="0, 0, 6, 0"
                                         Height="16"
                                         Width="16"
-                                        BorderThickness="0">
+                                        BorderThickness="0"
+                                        Click="MinimizeButton_OnClick">
                                         <Button.Background>
                                             <ImageBrush ImageSource="../Assets/Minimize-button-48.png" />
                                         </Button.Background>
@@ -117,7 +122,8 @@
                                         Margin="0, 0, 6, 0"
                                         Height="16"
                                         Width="16"
-                                        BorderThickness="0">
+                                        BorderThickness="0"
+                                        Click="CloseButton_OnClick">
                                         <Button.Background>
                                             <ImageBrush ImageSource="../Assets/Close-button-48.png" />
                                         </Button.Background>
