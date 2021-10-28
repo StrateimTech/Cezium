@@ -16,11 +16,8 @@ namespace WinApp.Windows.Mouse
             InitializeComponent();
         }
 
-        private bool _state = true;
-
         private void StateButton_OnChecked(object sender, RoutedEventArgs e)
         {
-            _state = true;
             Application.Current.Dispatcher.Invoke(() =>
             {
                 MainGrid.Opacity = 1;
@@ -34,7 +31,6 @@ namespace WinApp.Windows.Mouse
 
         private void StateButton_OnUnchecked(object sender, RoutedEventArgs e)
         {
-            _state = false;
             Application.Current.Dispatcher.Invoke(() =>
             {
                 MainGrid.Opacity = 0.4;
