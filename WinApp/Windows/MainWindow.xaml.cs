@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using WinApp.Windows.Home;
@@ -14,6 +15,11 @@ namespace WinApp.Windows
 {
     public partial class MainWindow : INotifyPropertyChanged
     {
+        private readonly UserControl _homeControl = new HomeControl();
+        private readonly UserControl _mouseControl = new MouseControl();
+        private readonly UserControl _keyboardControl = new KeyboardControl();
+        private readonly UserControl _rustControl = new RustControl();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -21,7 +27,7 @@ namespace WinApp.Windows
             SidebarWidth = 75;
             TopContentHeight = 24;
             
-            MainControl.Content = new HomeControl();
+            MainControl.Content = _homeControl;
             MainControl.Width = Width - SidebarWidth;
             MainControl.Height = Height - TopContentHeight;
         }
@@ -44,6 +50,8 @@ namespace WinApp.Windows
             
             MainControl.Width = e.NewSize.Width - SidebarWidth;
             MainControl.Height = e.NewSize.Height - TopContentHeight;
+            MinWidth = MainControl.Width;
+            MinHeight = MainControl.Height;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -100,7 +108,7 @@ namespace WinApp.Windows
         {
             if (MainControl.Content is not HomeControl)
             {
-                MainControl.Content = new HomeControl();
+                MainControl.Content = _homeControl;
             }
         }
 
@@ -108,7 +116,7 @@ namespace WinApp.Windows
         {
             if (MainControl.Content is not MouseControl)
             {
-                MainControl.Content = new MouseControl();
+                MainControl.Content = _mouseControl;
             }
         }
 
@@ -116,7 +124,7 @@ namespace WinApp.Windows
         {
             if (MainControl.Content is not KeyboardControl)
             {
-                MainControl.Content = new KeyboardControl();
+                MainControl.Content = _keyboardControl;
             }
         }
 
@@ -124,7 +132,7 @@ namespace WinApp.Windows
         {
             if (MainControl.Content is not RustControl)
             {
-                MainControl.Content = new RustControl();
+                MainControl.Content = _rustControl;
             }
         }
 
