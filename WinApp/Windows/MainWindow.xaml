@@ -6,6 +6,8 @@
         xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d"
 
+        Title="Cezium"
+        
         Height="600"
         Width="900"
         WindowStyle="None"
