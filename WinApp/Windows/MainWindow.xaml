@@ -110,7 +110,7 @@
                                         BorderThickness="0"
                                         Click="MinimizeButton_OnClick">
                                         <Button.Background>
-                                            <ImageBrush ImageSource="../Assets/Minimize-button-48.png" />
+                                            <ImageBrush ImageSource="../Assets/Minimize-button-white-48.png" />
                                         </Button.Background>
                                     </Button>
                                 </Grid>
@@ -125,7 +125,7 @@
                                         BorderThickness="0"
                                         Click="CloseButton_OnClick">
                                         <Button.Background>
-                                            <ImageBrush ImageSource="../Assets/Close-button-48.png" />
+                                            <ImageBrush ImageSource="../Assets/Close-button-white-48.png" />
                                         </Button.Background>
                                     </Button>
                                 </Grid>
