@@ -7,18 +7,16 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Border CornerRadius="0, 0, 8, 0" Background="Red">
-            <Grid>
-                <Label Background="Transparent"
-                       BorderThickness="0"
-                       Padding="0"
-                       Margin="6, 0, 0, 0">
-                    <TextBlock FontSize="16"
-                               FontFamily="Fugaz One"
-                               Foreground="White"
-                               Text="CEZIUM - STRATEIM PROJECT" />
-                </Label>
-            </Grid>
-        </Border>
+        <!-- <Border BorderThickness="1" -->
+        <!--         CornerRadius="8" -->
+        <!--         Background="#484848" Width="250" Height="150" Margin="8" HorizontalAlignment="Left" -->
+        <!--         VerticalAlignment="Top"> -->
+        <!--     <DockPanel> -->
+        <!--         <Label Content="Status" Background="Transparent" BorderThickness="0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4" FontSize="20"></Label> -->
+        <!--         <Label Content="Unknown" Background="Transparent" BorderThickness="0" Foreground="#161616" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="4" FontSize="20"></Label> -->
+        <!--     </DockPanel> -->
+        <!-- </Border> -->
+        <!-- <Button Content="Config" Style="{StaticResource ButtonPrimary}"/> -->
+        <Label Content="Version 1.0.0" Background="Transparent" BorderThickness="0" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="4" FontSize="12"></Label>
     </Grid>
 </UserControl>
