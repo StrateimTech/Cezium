@@ -4,9 +4,163 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:WinApp.Windows.Rust"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+
+             hc:Theme.Skin="Dark">
     <Grid>
-        
+        <Grid x:Name="MainGrid">
+            <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Line Stretch="Fill" Stroke="White" X1="1" StrokeThickness="1" Margin="16, 64, 16, 0" />
+            </Grid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Margin="16, 84, 0, 0">
+                <Grid>
+                    <Label x:Name="FovLabel" HorizontalAlignment="Left" VerticalAlignment="Top" Content="FOV: 90"
+                           Background="Transparent" BorderThickness="0" Foreground="White"
+                           Margin="4, 12, 0, 0" />
+                    <Slider x:Name="FovSlider"
+                            hc:TipElement.Visibility="Visible"
+                            hc:TipElement.Placement="Bottom"
+                            hc:TipElement.StringFormat="#0"
+                            Maximum="90"
+                            Minimum="70"
+                            Value="90"
+                            Width="200"
+                            ValueChanged="FovSlider_OnValueChanged"
+                            Thumb.DragCompleted="FovSlider_OnDragCompleted" />
+                </Grid>
+
+                <Grid Margin="24, 0, 0, 0">
+                    <Label x:Name="SensitivityLabel" HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Content="Sensitivity: 0.5"
+                           Background="Transparent" BorderThickness="0" Foreground="White"
+                           Margin="4, 12, 0, 0" />
+                    <Slider x:Name="SensitivitySlider"
+                            hc:TipElement.Visibility="Visible"
+                            hc:TipElement.Placement="Bottom"
+                            hc:TipElement.StringFormat="#0.00"
+                            Maximum="2"
+                            Minimum="0.01"
+                            Value="0.5"
+                            Width="200"
+                            ValueChanged="SensitivitySlider_OnValueChanged"
+                            Thumb.DragCompleted="SensitivitySlider_OnDragCompleted" />
+                </Grid>
+
+                <Grid Margin="24, 0, 0, 0">
+                    <Label x:Name="SmoothnessLabel" HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Content="Smoothness: 6"
+                           Background="Transparent" BorderThickness="0" Foreground="White"
+                           Margin="4, 12, 0, 0" />
+                    <Slider x:Name="SmoothnessSlider"
+                            hc:TipElement.Visibility="Visible"
+                            hc:TipElement.Placement="Bottom"
+                            hc:TipElement.StringFormat="#0"
+                            Maximum="12"
+                            Minimum="1"
+                            Value="6"
+                            Width="200"
+                            ValueChanged="SmoothnessSlider_OnValueChanged"
+                            Thumb.DragCompleted="SmoothnessSlider_OnDragCompleted" />
+                </Grid>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Margin="24, 128, 0, 0">
+                <ComboBox x:Name="GunCombo" hc:InfoElement.Placeholder="Assault Rifle"
+                          hc:InfoElement.Title="Guns" Style="{StaticResource ComboBoxExtend}"
+                          SelectionChanged="GunCombo_OnSelectionChanged" Width="150" SelectedIndex="1">
+                    <ComboBoxItem Content="M249" />
+                    <ComboBoxItem Content="Assault Rifle" />
+                    <ComboBoxItem Content="Lr300" />
+                    <ComboBoxItem Content="Mp5" />
+                    <ComboBoxItem Content="Thompson" />
+                    <ComboBoxItem Content="Custom" />
+                </ComboBox>
+
+                <ComboBox x:Name="ScopeCombo" hc:InfoElement.Placeholder="Empty"
+                          hc:InfoElement.Title="Scopes" Style="{StaticResource ComboBoxExtend}"
+                          SelectionChanged="ScopeCombo_OnSelectionChanged" Width="150" SelectedIndex="0"
+                          Margin="24, 0, 0, 0">
+                    <ComboBoxItem Content="Empty" />
+                    <ComboBoxItem Content="Holo Sight" />
+                    <ComboBoxItem Content="8x Scope" />
+                    <ComboBoxItem Content="16x Scope" />
+                    <ComboBoxItem Content="Handmade Sight" />
+                </ComboBox>
+
+                <ComboBox x:Name="AttachmentCombo" hc:InfoElement.Placeholder="Empty"
+                          hc:InfoElement.Title="Attachments" Style="{StaticResource ComboBoxExtend}"
+                          SelectionChanged="AttachmentCombo_OnSelectionChanged" Width="150" SelectedIndex="0"
+                          Margin="24, 0, 0, 0">
+                    <ComboBoxItem Content="Empty" />
+                    <ComboBoxItem Content="Silencer" />
+                    <ComboBoxItem Content="Muzzle Brake" />
+                    <ComboBoxItem Content="Muzzle Boost" />
+                </ComboBox>
+            </StackPanel>
+            <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Line Stretch="Fill" Stroke="White" X1="1" StrokeThickness="1" Margin="16, 208, 16, 0" />
+            </Grid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Margin="24, 208, 0, 0">
+                <Grid>
+                    <ToggleButton x:Name="RandomizationToggle"
+                                  IsChecked="false" Margin="0, 8, 176, 0"
+                                  Style="{StaticResource ToggleButtonSwitch}" Width="48" Height="48"
+                                  Foreground="White" Unchecked="RandomizationToggle_OnUnchecked"
+                                  Checked="RandomizationToggle_OnChecked" />
+                    <Label Content="Randomization" Background="Transparent" BorderThickness="0"
+                           Margin="0, 4, 0, 0"
+                           Foreground="White"
+                           FontSize="16" />
+                </Grid>
+
+                <Grid>
+                    <ToggleButton x:Name="ReverseRandomizationToggle"
+                                  IsChecked="false" Margin="0, 8, 231, 0"
+                                  Style="{StaticResource ToggleButtonSwitch}" Width="48" Height="48"
+                                  Foreground="White"
+                                  IsEnabled="False"/>
+                    <Label x:Name="ReverseRandomizationLabel" Content="ReverseRandomization" Background="Transparent" BorderThickness="0"
+                            Margin="0, 4, 0, 0"
+                            Foreground="White"
+                            FontSize="16" 
+                            IsEnabled="False"/>
+                </Grid>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Margin="16, 288, 0, 0">
+                <Grid Margin="8, 0, 0, 0">
+                    <Label x:Name="RandomizationSliderLabel" HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Content="Randomization: 1 - 5"
+                           Background="Transparent" BorderThickness="0" Foreground="White"
+                           Margin="4, 12, 0, 0" 
+                           IsEnabled="False"/>
+                    <hc:RangeSlider x:Name="RandomizationSlider"
+                                    hc:TipElement.Visibility="Visible" 
+                                    hc:TipElement.Placement="Bottom" 
+                                    hc:TipElement.StringFormat="#0" 
+                                    Maximum="12"
+                                    Minimum="1"
+                                    ValueStart="1"
+                                    ValueEnd="5"
+                                    Width="200" 
+                                    ValueChanged="RandomizationSlider_OnValueChanged"
+                                    IsEnabled="False"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+        <Grid VerticalAlignment="Top">
+            <ToggleButton x:Name="StateButton" HorizontalAlignment="Left"
+                          Checked="StateButton_OnChecked"
+                          Unchecked="StateButton_OnUnchecked"
+                          IsChecked="true" Margin="16, -17, 0, 47" Content="State"
+                          Style="{StaticResource ToggleButtonSwitch}" Width="96" Height="96" Foreground="White" />
+            <Label HorizontalAlignment="Center" VerticalAlignment="Top" Content="Rust Settings"
+                   Background="Transparent" Margin="0, 14, 0, 0"
+                   BorderThickness="0" Foreground="White" FontSize="16" FontFamily="Carter One" />
+        </Grid>
     </Grid>
 </UserControl>

@@ -22,10 +22,10 @@ namespace WinApp.Windows.Mouse
             {
                 MainGrid.Opacity = 1;
                 MainGrid.Background = Brushes.Transparent;
-                
-                InvertMouseX.LockToggle = false;
-                InvertMouseY.LockToggle = false;
-                InvertMouseWheel.LockToggle = false;
+
+                InvertMouseX.IsEnabled = true;
+                InvertMouseY.IsEnabled = true;
+                InvertMouseWheel.IsEnabled = true;
             });
         }
 
@@ -36,9 +36,9 @@ namespace WinApp.Windows.Mouse
                 MainGrid.Opacity = 0.4;
                 MainGrid.Background = Brushes.Black;
 
-                InvertMouseX.LockToggle = true;
-                InvertMouseY.LockToggle = true;
-                InvertMouseWheel.LockToggle = true;
+                InvertMouseX.IsEnabled = false;
+                InvertMouseY.IsEnabled = false;
+                InvertMouseWheel.IsEnabled = false;
             });
         }
     }
