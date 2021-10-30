@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using Main.HID;
+using Main.Utils;
 
 namespace Main.Rust
 {
@@ -65,7 +67,8 @@ namespace Main.Rust
                     var delay = 60000.0 / (int)CurrentWeapon.Item3;
                     var smoothing = _settings.Rust.Smoothness;
                     var sleep = (delay / smoothing) * CurrentWeapon.Item6.Item2;
-                    
+
+                    var count = 0.0;
                     for (int i = 0; i < smoothing; i++)
                     {
                         if(!_hidHandler.Mouse.LeftButton || !_hidHandler.Mouse.LeftButton)
@@ -76,8 +79,13 @@ namespace Main.Rust
                                         Y = Convert.ToInt32(gunPixelY / smoothing),
                                         Wheel = 0
                         });
-                        Thread.Sleep(Convert.ToInt32(sleep));
+
+                        var stopwatch = Stopwatch.StartNew();
+                        count += (stopwatch.ElapsedTicks * 1000000.0 / Stopwatch.Frequency);
+                        while (stopwatch.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= sleep * 1000);
+                        ConsoleUtils.WriteCentered($"Slept {stopwatch.ElapsedMilliseconds} Microseconds: {(stopwatch.ElapsedTicks * 1000000 / Stopwatch.Frequency)} Frequency: {Stopwatch.Frequency}");
                     }
+                    ConsoleUtils.WriteCentered($"Sleep: {count/1000} Bullet: {_bullet} SleepRate: {sleep}");
                     _bullet++;
                 }
                 else
