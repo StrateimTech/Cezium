@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -31,6 +33,31 @@ namespace WinApp.Windows
             MainControl.Content = _homeControl;
             MainControl.Width = Width - SidebarWidth;
             MainControl.Height = Height - TopContentHeight;
+
+            new Thread(() =>
+            {
+                string dataPath = Path.Combine(Directory.GetCurrentDirectory(), "data");
+                if (File.Exists(dataPath))
+                {
+                    var lines = File.ReadAllLines(dataPath);
+                    for (int i = 0; i < lines.Length; i++)
+                    {
+                        switch (i)
+                        {
+                            case 0:
+                                var value = lines[i];
+                                if (value.Length > 0)
+                                {
+                                    Application.Current.Dispatcher.Invoke(() =>
+                                    {
+                                        ((HomeControl) _homeControl).ServerIPTextBox.Text = value;
+                                    });
+                                }
+                                break;
+                        }
+                    }
+                }
+            }).Start();
         }
         
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
@@ -144,6 +171,20 @@ namespace WinApp.Windows
 
         private void CloseButton_OnClick(object sender, RoutedEventArgs e)
         {
+            new Thread(() =>
+            {
+                string? text = null;
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    text = ((HomeControl) _homeControl).ServerIPTextBox.Text;
+                });
+                if (text is not null)
+                {
+                    var dataPath = Path.Combine(Directory.GetCurrentDirectory(), "data");
+                    File.WriteAllLines(dataPath, new[]{text});
+                }
+            }).Start();
+            
             Close();
             Application.Current.Shutdown();
         }

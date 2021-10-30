@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using Figgle;
 using Main;
+using Main.API;
 using Main.HID;
 using Main.Rust;
 using Main.Utils;
@@ -39,6 +40,13 @@ var rustThreadHandler = new Thread(() =>
                 IsBackground = true
 };
 rustThreadHandler.Start();
+
+ConsoleUtils.WriteCentered("Starting API server on port 200");
+var apiThreadHandler = new Thread(() => new ApiServer(200, rustHandler, hidHandler))
+{
+    IsBackground = true
+};
+apiThreadHandler.Start();
 
 ConsoleUtils.WriteCentered("Press any key to continue...");
 Console.ReadKey(true);

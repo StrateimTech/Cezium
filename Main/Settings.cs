@@ -12,6 +12,11 @@ namespace Main
         public class GeneralSettings
         {
             /// <summary>
+            /// Whether to use the mouse or not.
+            /// </summary>
+            public bool MouseState = true;
+            
+            /// <summary>
             /// Whether to invert mouse y when sending to separate machine.
             /// </summary>
             public bool InvertMouseY = false;

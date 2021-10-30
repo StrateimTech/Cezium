@@ -20,7 +20,8 @@
                           Checked="StateButton_OnChecked"
                           Unchecked="StateButton_OnUnchecked"
                           IsChecked="True" Margin="16, -17, 0, 47" Content="State"
-                          Style="{StaticResource ToggleButtonSwitch}" Width="96" Height="96" Foreground="White" />
+                          Style="{StaticResource ToggleButtonSwitch}" Width="96" Height="96" Foreground="White"
+                          />
             <Label HorizontalAlignment="Center" VerticalAlignment="Top" Content="Keyboard Settings" Background="Transparent" Margin="0, 14, 0, 0"
                    BorderThickness="0" Foreground="White" FontSize="16" FontFamily="Carter One" />
         </Grid>

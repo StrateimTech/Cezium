@@ -10,6 +10,8 @@ namespace Main.Rust
         private readonly Settings _settings;
         
         private readonly HidHandler _hidHandler;
+
+        public readonly RustApiHandler RustApiHandler;
         
         /// <summary>
         /// The current bullet that the gun is on
@@ -38,16 +40,11 @@ namespace Main.Rust
             _hidHandler = hidHandler;
             
             PixelTable = CalculatePixelTables(CurrentWeapon.Item2);
+            RustApiHandler = new RustApiHandler(this, settings);
         }
 
         public void Start()
         {
-            var rustApiThreadHandler = new Thread(() => new RustAPI(this, _settings))
-            {
-                            IsBackground = true
-            };
-            rustApiThreadHandler.Start();
-            
             while (true)
             {
                 if(!_settings.Rust.State || !_hidHandler.Mouse.LeftButton || !_hidHandler.Mouse.RightButton)

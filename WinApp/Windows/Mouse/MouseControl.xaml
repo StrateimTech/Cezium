@@ -19,9 +19,11 @@
                     <Label Content="InvertMouseX" Background="Transparent" Margin="0, 72, 0, 0" BorderThickness="0"
                            Foreground="White" />
                     <ToggleButton x:Name="InvertMouseX"
-                                                 IsChecked="false" Margin="0, 12, 0, 0"
-                                                 Style="{StaticResource ToggleButtonSwitch}" Width="48" Height="48"
-                                                 Foreground="White" />
+                                  IsChecked="false" Margin="0, 12, 0, 0"
+                                  Style="{StaticResource ToggleButtonSwitch}" Width="48" Height="48"
+                                  Foreground="White"
+                                  Unchecked="InvertMouseX_OnUnchecked"
+                                  Checked="InvertMouseX_OnChecked" />
                 </Grid>
                 <Grid>
                     <Label Content="InvertMouseY" Background="Transparent" Margin="0, 72, 0, 0" BorderThickness="0"
@@ -29,7 +31,9 @@
                     <ToggleButton x:Name="InvertMouseY"
                                   IsChecked="false" Margin="0, 12, 0, 0"
                                   Style="{StaticResource ToggleButtonSwitch}" Width="48" Height="48"
-                                  Foreground="White" />
+                                  Foreground="White"
+                                  Unchecked="InvertMouseY_OnUnchecked"
+                                  Checked="InvertMouseY_OnChecked" />
                 </Grid>
                 <Grid>
                     <Label Content="InvertMouseWheel" Background="Transparent" Margin="0, 72, 0, 0" BorderThickness="0"
@@ -37,7 +41,9 @@
                     <ToggleButton x:Name="InvertMouseWheel"
                                   IsChecked="false" Margin="0, 12, 0, 0"
                                   Style="{StaticResource ToggleButtonSwitch}" Width="48" Height="48"
-                                  Foreground="White" />
+                                  Foreground="White"
+                                  Unchecked="InvertMouseWheel_OnUnchecked"
+                                  Checked="InvertMouseWheel_OnChecked" />
                 </Grid>
             </StackPanel>
         </Grid>

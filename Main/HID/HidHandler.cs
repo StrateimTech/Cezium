@@ -5,6 +5,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using Main.HID.API;
 using Main.Utils;
 
 namespace Main.HID
@@ -29,6 +30,9 @@ namespace Main.HID
         
         public Mouse Mouse { get; private set; } = new();
 
+        public readonly KeyboardApiHandler KeyboardApiHandler;
+        public readonly MouseApiHandler MouseApiHandler;
+        
         public HidHandler(Settings settings)
         {
             _settings = settings;
@@ -36,6 +40,9 @@ namespace Main.HID
             // _keyboardFileStream = File.Open(KeyboardStreamPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite); 
             
             _hidFileStream = File.Open(HumanInterfaceDeviceStreamPath, FileMode.Open, FileAccess.Write);
+
+            KeyboardApiHandler = new KeyboardApiHandler();
+            MouseApiHandler = new MouseApiHandler(settings);
         }
         
         
@@ -54,7 +61,6 @@ namespace Main.HID
             _running = true;
             while (_running)
             {
-                var mouseSbyteArray = BitUtils.ReadSByteFromStream(_mouseFileStream);
                 // var keyboardSbyteArray = BitUtils.ReadSByteFromStream(_keyboardFileStream, 3);
 
                 // var buffer = new byte[64];
@@ -74,25 +80,29 @@ namespace Main.HID
                 //     ConsoleUtils.WriteCentered($"Value {cc.Value.value}\n");
                 // }
 
-                if (mouseSbyteArray.Length > 0)
+                if (_settings.General.MouseState)
                 {
-                    mouseSbyteArray[1] = _settings.General.InvertMouseX ? Convert.ToSByte(Convert.ToInt32(mouseSbyteArray[1]) * -1) : mouseSbyteArray[1];
-                    mouseSbyteArray[2] = _settings.General.InvertMouseY ? mouseSbyteArray[2] : Convert.ToSByte(Convert.ToInt32(mouseSbyteArray[2]) * -1);
-                    mouseSbyteArray[3] = _settings.General.InvertMouseWheel ? mouseSbyteArray[3] : Convert.ToSByte(Convert.ToInt32(mouseSbyteArray[3]) * -1);
-                    
-                    WriteMouseReport(Mouse = new Mouse()
+                    var mouseSbyteArray = BitUtils.ReadSByteFromStream(_mouseFileStream);
+                    if (mouseSbyteArray.Length > 0)
                     {
-                                    LeftButton = (mouseSbyteArray[0] & 0x1) > 0,
-                                    RightButton = (mouseSbyteArray[0] & 0x2) > 0,
-                                    MiddleButton = (mouseSbyteArray[0] & 0x4) > 0,
-                                    X = Convert.ToInt32(mouseSbyteArray[1]),
-                                    Y = Convert.ToInt32(mouseSbyteArray[2]),
-                                    Wheel = Convert.ToInt32(mouseSbyteArray[3]),
-                                    ButtonBitArray = new BitArray(new[]
-                                    {
-                                                    (mouseSbyteArray[0] & 0x1) > 0, (mouseSbyteArray[0] & 0x2) > 0, (mouseSbyteArray[0] & 0x4) > 0, false, false, false, false, false
-                                    })
-                    });
+                        mouseSbyteArray[1] = _settings.General.InvertMouseX ? Convert.ToSByte(Convert.ToInt32(mouseSbyteArray[1]) * -1) : mouseSbyteArray[1];
+                        mouseSbyteArray[2] = _settings.General.InvertMouseY ? mouseSbyteArray[2] : Convert.ToSByte(Convert.ToInt32(mouseSbyteArray[2]) * -1);
+                        mouseSbyteArray[3] = _settings.General.InvertMouseWheel ? mouseSbyteArray[3] : Convert.ToSByte(Convert.ToInt32(mouseSbyteArray[3]) * -1);
+                    
+                        WriteMouseReport(Mouse = new Mouse()
+                        {
+                            LeftButton = (mouseSbyteArray[0] & 0x1) > 0,
+                            RightButton = (mouseSbyteArray[0] & 0x2) > 0,
+                            MiddleButton = (mouseSbyteArray[0] & 0x4) > 0,
+                            X = Convert.ToInt32(mouseSbyteArray[1]),
+                            Y = Convert.ToInt32(mouseSbyteArray[2]),
+                            Wheel = Convert.ToInt32(mouseSbyteArray[3]),
+                            ButtonBitArray = new BitArray(new[]
+                            {
+                                (mouseSbyteArray[0] & 0x1) > 0, (mouseSbyteArray[0] & 0x2) > 0, (mouseSbyteArray[0] & 0x4) > 0, false, false, false, false, false
+                            })
+                        });
+                    }
                 }
                 // if (keyboardSbyteArray.Length > 0)
                 // {

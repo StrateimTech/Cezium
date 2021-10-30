@@ -1,11 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Input;
 using System.Windows.Media;
+using static WinApp.Utils.ServerUtil;
 
 namespace WinApp.Windows.Mouse
 {
@@ -18,6 +14,7 @@ namespace WinApp.Windows.Mouse
 
         private void StateButton_OnChecked(object sender, RoutedEventArgs e)
         {
+            UpdateState(true);
             Application.Current.Dispatcher.Invoke(() =>
             {
                 MainGrid.Opacity = 1;
@@ -31,6 +28,7 @@ namespace WinApp.Windows.Mouse
 
         private void StateButton_OnUnchecked(object sender, RoutedEventArgs e)
         {
+            UpdateState(false);
             Application.Current.Dispatcher.Invoke(() =>
             {
                 MainGrid.Opacity = 0.4;
@@ -40,6 +38,56 @@ namespace WinApp.Windows.Mouse
                 InvertMouseY.IsEnabled = false;
                 InvertMouseWheel.IsEnabled = false;
             });
+        }
+
+        private void InvertMouseX_OnUnchecked(object sender, RoutedEventArgs e)
+        {
+            UpdateInvertMouseX(false);
+        }
+
+        private void InvertMouseX_OnChecked(object sender, RoutedEventArgs e)
+        {
+            UpdateInvertMouseX(true);
+        }
+
+        private void InvertMouseY_OnUnchecked(object sender, RoutedEventArgs e)
+        {
+            UpdateInvertMouseY(false);
+        }
+
+        private void InvertMouseY_OnChecked(object sender, RoutedEventArgs e)
+        {
+            UpdateInvertMouseY(true);
+        }
+
+        private void InvertMouseWheel_OnUnchecked(object sender, RoutedEventArgs e)
+        {
+            UpdateInvertMouseWheel(false);
+        }
+
+        private void InvertMouseWheel_OnChecked(object sender, RoutedEventArgs e)
+        {
+            UpdateInvertMouseWheel(true);
+        }
+        
+        private void UpdateState(bool state)
+        {
+            SendMessage($"0 MouseState {state}");
+        }
+        
+        private void UpdateInvertMouseY(bool state)
+        {
+            SendMessage($"0 InvertMouseY {state}");
+        }
+        
+        private void UpdateInvertMouseX(bool state)
+        {
+            SendMessage($"0 InvertMouseX {state}");
+        }
+        
+        private void UpdateInvertMouseWheel(bool state)
+        {
+            SendMessage($"0 InvertMouseWheel {state}");
         }
     }
 }
