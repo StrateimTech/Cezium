@@ -137,7 +137,7 @@ namespace Main.HID
             _mouseWriteLock.EnterWriteLock();
             try
             {
-                FileUtils.WriteReport(_hidFileStream, Convert.ToSByte(1), new []{BitUtils.ToByte(mouse.ButtonBitArray)}, new []{Convert.ToSByte(mouse.X), Convert.ToSByte(mouse.Y), Convert.ToSByte(mouse.Wheel)}, leaveOpen);
+                FileUtils.WriteReport(_hidFileStream, Convert.ToSByte(1), new []{BitUtils.ToByte(mouse.ButtonBitArray)}, new []{Convert.ToInt16(mouse.X), Convert.ToInt16(mouse.Y)}, new [] {Convert.ToSByte(mouse.Wheel)}, true);
             }
             catch (Exception exception)
             {

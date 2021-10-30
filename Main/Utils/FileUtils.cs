@@ -15,22 +15,17 @@ namespace Main.Utils
             binaryWriter.Flush();
         }
         
-        public static void WriteReport(FileStream fileStream, sbyte[] sbytes, bool leaveOpen = true)
+        public static void WriteReport(FileStream fileStream, sbyte reportId, byte[] bytes, short[] shorts, sbyte[] sbytes, bool leaveOpen = true)
         {
             using BinaryWriter binaryWriter = new(fileStream, Encoding.Default, leaveOpen);
-            foreach (var signedByte in sbytes)
-            {
-                binaryWriter.Write(signedByte);
-            }
-            binaryWriter.Flush();
-        }
-        
-        public static void WriteReport(FileStream fileStream, byte[] bytes, sbyte[] sbytes, bool leaveOpen = true)
-        {
-            using BinaryWriter binaryWriter = new(fileStream, Encoding.Default, leaveOpen);
+            binaryWriter.Write(reportId);
             foreach (var unsignedByte in bytes)
             {
                 binaryWriter.Write(unsignedByte);
+            }
+            foreach (var signedUShort in shorts)
+            {
+                binaryWriter.Write(signedUShort);
             }
             foreach (var signedByte in sbytes)
             {
@@ -39,19 +34,5 @@ namespace Main.Utils
             binaryWriter.Flush();
         }
         
-        public static void WriteReport(FileStream fileStream, sbyte reportID,  byte[] bytes, sbyte[] sbytes, bool leaveOpen = true)
-        {
-            using BinaryWriter binaryWriter = new(fileStream, Encoding.Default, leaveOpen);
-            binaryWriter.Write(reportID);
-            foreach (var unsignedByte in bytes)
-            {
-                binaryWriter.Write(unsignedByte);
-            }
-            foreach (var signedByte in sbytes)
-            {
-                binaryWriter.Write(signedByte);
-            }
-            binaryWriter.Flush();
-        }
     }
 }
