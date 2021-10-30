@@ -8,7 +8,6 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              hc:Theme.Skin="Dark">
-
     <Grid>
         <Grid x:Name="MainGrid">
             <Grid HorizontalAlignment="Left" VerticalAlignment="Top">

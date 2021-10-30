@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Net.Sockets;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using HandyControl.Controls;
 using HandyControl.Data;
 
 namespace WinApp.Windows.Rust
@@ -30,7 +30,7 @@ namespace WinApp.Windows.Rust
                 ScopeCombo.IsEnabled = true;
                 AttachmentCombo.IsEnabled = true;
                 RandomizationToggle.IsEnabled = true;
-
+            
                 if (RandomizationToggle.IsChecked!.Value)
                 {
                     ReverseRandomizationToggle.IsEnabled = true;
@@ -212,7 +212,7 @@ namespace WinApp.Windows.Rust
             {
                 ReverseRandomizationToggle.IsEnabled = true;
                 ReverseRandomizationLabel.IsEnabled = true;
-
+            
                 RandomizationSliderLabel.IsEnabled = true;
                 RandomizationSlider.IsEnabled = true;
             });
@@ -230,54 +230,56 @@ namespace WinApp.Windows.Rust
         {
             Connect(Server, Port, $"ChangeGun {gun} {scope} {attachment}");
         }
-        
-        public void UpdateSens(double sens)
+
+        private void UpdateSens(double sens)
         {
             Connect(Server, Port, $"ChangeSens {sens}");
         }
-        
-        public void UpdateFov(int fov)
+
+        private void UpdateFov(int fov)
         {
             Connect(Server, Port, $"ChangeFov {fov}");
         }
-        
-        public void UpdateSmooth(int smooth)
+
+        private void UpdateSmooth(int smooth)
         {
             Connect(Server, Port, $"ChangeSmoothness {smooth}");
         }
-        
-        public void UpdateState(bool state)
+
+        private void UpdateState(bool state)
         {
             Connect(Server, Port, $"ChangeState {state}");
         }
-        
-        public void Connect(string server, int port, string message)
+
+        private void Connect(string server, int port, string message)
         {
-            try
-            {
-                TcpClient client = new TcpClient(server, port);
-
-                byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
-
-                NetworkStream stream = client.GetStream();
-
-                stream.Write(data, 0, data.Length);
-
-                Console.WriteLine("Sent: {0}", message);
-
-                data = new byte[256];
-
-                Int32 bytes = stream.Read(data, 0, data.Length);
-                string responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-                Console.WriteLine("Received: {0}", responseData);
-
-                stream.Close();
-                client.Close();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception: {0}", e);
-            }
+            (new Thread(() => {
+                try
+                {
+                    TcpClient client = new TcpClient(server, port);
+        
+                    byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
+        
+                    NetworkStream stream = client.GetStream();
+        
+                    stream.Write(data, 0, data.Length);
+        
+                    Console.WriteLine("Sent: {0}", message);
+        
+                    data = new byte[256];
+        
+                    Int32 bytes = stream.Read(data, 0, data.Length);
+                    string responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                    Console.WriteLine("Received: {0}", responseData);
+        
+                    stream.Close();
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception: {0}", e);
+                }
+            })).Start();
         }
     }
 }
