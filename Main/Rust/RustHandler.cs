@@ -75,10 +75,11 @@ namespace Main.Rust
 
                     if (_settings.Rust.Randomization)
                     {
-                        var xRandom = _random.Next(_settings.Rust.RandomizationAmount.Item1,
-                            _settings.Rust.RandomizationAmount.Item2);
-                        var yRandom = _random.Next(_settings.Rust.RandomizationAmount.Item1,
-                            _settings.Rust.RandomizationAmount.Item2);
+                        var min = _settings.Rust.RandomizationAmount.Item1;
+                        var max = _settings.Rust.RandomizationAmount.Item2;
+                        
+                        var xRandom = _random.Next(min, max);
+                        var yRandom = _random.Next(min, max);
 
                         var xBool = _random.Next() > (Int32.MaxValue / 2);
                         var yBool = _random.Next() > (Int32.MaxValue / 2);
@@ -119,7 +120,7 @@ namespace Main.Rust
                                         Y = Convert.ToInt32(gunPixelY / smoothing),
                                         Wheel = 0
                         });
-
+                    
                         var stopwatch = Stopwatch.StartNew();
                         while (stopwatch.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= sleep * 1000);
                     }
