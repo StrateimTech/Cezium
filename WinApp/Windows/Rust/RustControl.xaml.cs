@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -193,6 +194,7 @@ namespace WinApp.Windows.Rust
 
         private void RandomizationToggle_OnUnchecked(object sender, RoutedEventArgs e)
         {
+            UpdateRandomization(false);
             Application.Current.Dispatcher.Invoke(() =>
             {
                 ReverseRandomizationToggle.IsEnabled = false;
@@ -205,6 +207,7 @@ namespace WinApp.Windows.Rust
 
         private void RandomizationToggle_OnChecked(object sender, RoutedEventArgs e)
         {
+            UpdateRandomization(true);
             Application.Current.Dispatcher.Invoke(() =>
             {
                 ReverseRandomizationToggle.IsEnabled = true;
@@ -218,6 +221,17 @@ namespace WinApp.Windows.Rust
         private void RandomizationSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<DoubleRange> e)
         {
             RandomizationSliderLabel.Content = $"Randomization: {(int)e.NewValue.Start} - {(int)e.NewValue.End}";
+            UpdateRandomizationAmount((int)e.NewValue.Start, (int)e.NewValue.End);
+        }
+        
+        private void ReverseRandomizationToggle_OnUnchecked(object sender, RoutedEventArgs e)
+        {
+            UpdateReverseRandomization(false);
+        }
+
+        private void ReverseRandomizationToggle_OnChecked(object sender, RoutedEventArgs e)
+        {
+            UpdateReverseRandomization(true);
         }
         
         private void AmmoReset_OnUnchecked(object sender, RoutedEventArgs e)
@@ -258,6 +272,21 @@ namespace WinApp.Windows.Rust
         private void UpdateAmmoReset(bool state)
         {
             SendMessage($"2 ChangeAmmoReset {state}");
+        }
+        
+        private void UpdateRandomization(bool state)
+        {
+            SendMessage($"2 ChangeRandomization {state}");
+        }
+        
+        private void UpdateReverseRandomization(bool state)
+        {
+            SendMessage($"2 ChangeReverseRandomization {state}");
+        }
+        
+        private void UpdateRandomizationAmount(int start, int end)
+        {
+            SendMessage($"2 ChangeRandomizationAmount {start} {end}");
         }
     }
 }

@@ -35,6 +35,10 @@ namespace Main.Rust
         /// <param name="Tuple">Pixels coordinates for each relative mouse movement for every bullet</param>
         /// </summary>
         public List<Tuple<double, double>>? PixelTable;
+
+        private Tuple<int, int> _lastRandomization = new(0, 0);
+
+        private readonly Random _random = new Random();
         
         public RustHandler(Settings settings, HidHandler hidHandler)
         {
@@ -65,15 +69,46 @@ namespace Main.Rust
                         else
                             continue;
                     }
-
+                    
                     var gunPixelX = PixelTable[_bullet].Item1 * CurrentWeapon.Item5 * CurrentWeapon.Item6.Item1;
                     var gunPixelY = PixelTable[_bullet].Item2 * CurrentWeapon.Item5 * CurrentWeapon.Item6.Item1;
+
+                    if (_settings.Rust.Randomization)
+                    {
+                        var xRandom = _random.Next(_settings.Rust.RandomizationAmount.Item1,
+                            _settings.Rust.RandomizationAmount.Item2);
+                        var yRandom = _random.Next(_settings.Rust.RandomizationAmount.Item1,
+                            _settings.Rust.RandomizationAmount.Item2);
+
+                        var xBool = _random.Next() > (Int32.MaxValue / 2);
+                        var yBool = _random.Next() > (Int32.MaxValue / 2);
+
+                        xRandom = xBool ? xRandom : xRandom * -1;
+                        yRandom = yBool ? yRandom : yRandom * -1;
+                        
+                        ConsoleUtils.WriteCentered($"xRandom: {xRandom}, yRandom: {yRandom}");
+
+                        gunPixelX += xRandom;
+                        gunPixelY += yRandom;
+
+                        _lastRandomization = new(xRandom, yRandom);
+                    }
                     
+                    if (_settings.Rust.ReverseRandomization && _settings.Rust.Randomization)
+                    {
+                        var invertedLastX = _lastRandomization.Item1 * -1;
+                        var invertedLastY = _lastRandomization.Item2 * -1;
+                        
+                        ConsoleUtils.WriteCentered($"InvertedLastX: {invertedLastX}, InvertedLastY: {invertedLastY}");
+
+                        gunPixelX += invertedLastX;
+                        gunPixelY += invertedLastY;
+                    }
+
                     var delay = 60000.0 / (int)CurrentWeapon.Item3;
                     var smoothing = _settings.Rust.Smoothness;
                     var sleep = (delay / smoothing) * CurrentWeapon.Item6.Item2;
 
-                    var count = 0.0;
                     for (int i = 0; i < smoothing; i++)
                     {
                         if(!_hidHandler.Mouse.LeftButton || !_hidHandler.Mouse.LeftButton)
@@ -86,11 +121,8 @@ namespace Main.Rust
                         });
 
                         var stopwatch = Stopwatch.StartNew();
-                        count += (stopwatch.ElapsedTicks * 1000000.0 / Stopwatch.Frequency);
                         while (stopwatch.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= sleep * 1000);
-                        ConsoleUtils.WriteCentered($"Slept {stopwatch.ElapsedMilliseconds} Microseconds: {(stopwatch.ElapsedTicks * 1000000 / Stopwatch.Frequency)} Frequency: {Stopwatch.Frequency}");
                     }
-                    ConsoleUtils.WriteCentered($"Sleep: {count/1000} Bullet: {_bullet} SleepRate: {sleep}");
                     _bullet++;
                 }
                 else
@@ -106,7 +138,16 @@ namespace Main.Rust
             var lastShot = new Tuple<double, double>(0.0, 0.0);
 
             var localSens = _settings.Rust.Sensitivity;
-            localSens += (CurrentWeapon.Item1.Equals(Settings.RustSettings.Guns.THOMPSON) && !CurrentWeapon.Item5.Equals(Settings.RustSettings.Scopes.HoloSight) ? .10 : 0);
+
+            switch (CurrentWeapon.Item1)
+            {
+                case Settings.RustSettings.Guns.THOMPSON:
+                    localSens += !CurrentWeapon.Item5.Equals(Settings.RustSettings.Scopes.HoloSight) ? .10 : 0;
+                    break;
+                case Settings.RustSettings.Guns.CUSTOM:
+                    localSens += !CurrentWeapon.Item5.Equals(Settings.RustSettings.Scopes.HoloSight) ? .10 : 0;
+                    break;
+            }
             
             foreach (var tableValue in angleTable)
             {

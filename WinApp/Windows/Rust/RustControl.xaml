@@ -137,7 +137,9 @@
                                   IsChecked="false" Margin="0, 8, 231, 0"
                                   Style="{StaticResource ToggleButtonSwitch}" Width="48" Height="48"
                                   Foreground="White"
-                                  IsEnabled="False"/>
+                                  IsEnabled="False"
+                                  Unchecked="ReverseRandomizationToggle_OnUnchecked"
+                                  Checked="ReverseRandomizationToggle_OnChecked"/>
                     <Label x:Name="ReverseRandomizationLabel" Content="Reverse Randomization" Background="Transparent" BorderThickness="0"
                             Margin="0, 4, 0, 0"
                             Foreground="White"

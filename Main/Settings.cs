@@ -1,6 +1,9 @@
 
 // ReSharper disable InconsistentNaming
 // ReSharper disable IdentifierTypo
+
+using System;
+
 namespace Main
 {
     public class Settings
@@ -88,7 +91,10 @@ namespace Main
             public Attachments CurrentAttachment;
             
             public Scopes CurrentScope;
-
+            
+            
+            public bool AmmoReset = false;
+            
             public int Smoothness = 6;
 
             public double Sensitivity = 0.5;
@@ -96,8 +102,13 @@ namespace Main
             public int Fov = 90;
 
             public bool State = true;
+
+
+            public bool Randomization = false;
             
-            public bool AmmoReset = false;
+            public bool ReverseRandomization = false;
+            
+            public Tuple<int, int> RandomizationAmount = new(1, 5);
         }
     }
 }

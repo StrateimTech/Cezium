@@ -46,6 +46,20 @@ namespace Main.Rust
                         Boolean.TryParse(data[2], out bool value5);
                         _settings.Rust.AmmoReset = value5;
                         break;
+                    
+                    case "ChangeRandomization":
+                        Boolean.TryParse(data[2], out bool value6);
+                        _settings.Rust.Randomization = value6;
+                        break;
+                    case "ChangeReverseRandomization":
+                        Boolean.TryParse(data[2], out bool value7);
+                        _settings.Rust.ReverseRandomization = value7;
+                        break;
+                    case "ChangeRandomizationAmount":
+                        Int32.TryParse(data[2], out Int32 value8);
+                        Int32.TryParse(data[2], out Int32 value9);
+                        _settings.Rust.RandomizationAmount = new(value8, value9);
+                        break;
                 }
             }
         }
