@@ -51,31 +51,31 @@
                                 <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Width="250">
                                     <Label Content="Uptime:" Background="Transparent" BorderThickness="0" Foreground="White"
                                            HorizontalAlignment="Left" />
-                                    <Label Content="Unknown" Background="Transparent" BorderThickness="0" Foreground="White"
+                                    <Label x:Name="UptimeContent" Content="Unknown" Background="Transparent" BorderThickness="0" Foreground="White"
                                            HorizontalAlignment="Right"/>
                                 </Grid>
                                 <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Width="250">
                                     <Label Content="Mouse:" Background="Transparent" BorderThickness="0" Foreground="White"
                                            HorizontalAlignment="Left" />
-                                    <Label Content="Unknown" Background="Transparent" BorderThickness="0" Foreground="White"
+                                    <Label x:Name="MouseContent" Content="Unknown" Background="Transparent" BorderThickness="0" Foreground="White"
                                            HorizontalAlignment="Right"/>
                                 </Grid>
                                 <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Width="250">
                                     <Label Content="Keyboard:" Background="Transparent" BorderThickness="0" Foreground="White"
                                            HorizontalAlignment="Left" />
-                                    <Label Content="Unknown" Background="Transparent" BorderThickness="0" Foreground="White"
-                                           HorizontalAlignment="Right"/>
+                                    <Label x:Name="KeyboardContent" Content="Unknown" Background="Transparent" BorderThickness="0" Foreground="White"
+                                            HorizontalAlignment="Right"/>
                                 </Grid>
                                 <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Width="250">
                                     <Label Content="Rust:" Background="Transparent" BorderThickness="0" Foreground="White"
                                            HorizontalAlignment="Left" />
-                                    <Label Content="Unknown" Background="Transparent" BorderThickness="0" Foreground="White"
+                                    <Label x:Name="RustContent" Content="Unknown" Background="Transparent" BorderThickness="0" Foreground="White"
                                            HorizontalAlignment="Right"/>
                                 </Grid>
                                 <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Width="250">
                                     <Label Content="Server Version:" Background="Transparent" BorderThickness="0" Foreground="White"
                                            HorizontalAlignment="Left" />
-                                    <Label Content="Unknown" Background="Transparent" BorderThickness="0" Foreground="White"
+                                    <Label x:Name="ServerContent" Content="Unknown" Background="Transparent" BorderThickness="0" Foreground="White"
                                            HorizontalAlignment="Right"/>
                                 </Grid>
                             </StackPanel>

@@ -12,7 +12,7 @@ namespace Main.HID.API
             _settings = settings;
         }
         
-        public void HandlePacket(string[] data)
+        public string? HandlePacket(string[] data)
         {
             if (data.Length > 0)
             {
@@ -20,22 +20,23 @@ namespace Main.HID.API
                 {
                     case "MouseState":
                         Boolean.TryParse(data[2], out bool value);
-                        _settings.General.MouseState = value;
+                        _settings.General.Mouse.MouseState = value;
                         break;
                     case "InvertMouseY":
                         Boolean.TryParse(data[2], out bool value2);
-                        _settings.General.InvertMouseY = value2;
+                        _settings.General.Mouse.InvertMouseY = value2;
                         break;
                     case "InvertMouseX":
                         Boolean.TryParse(data[2], out bool value3);
-                        _settings.General.InvertMouseX = value3;
+                        _settings.General.Mouse.InvertMouseX = value3;
                         break;
                     case "InvertMouseWheel":
                         Boolean.TryParse(data[2], out bool value4);
-                        _settings.General.InvertMouseWheel = value4;
+                        _settings.General.Mouse.InvertMouseWheel = value4;
                         break;
                 }
             }
+            return null;
         }
     }
 }

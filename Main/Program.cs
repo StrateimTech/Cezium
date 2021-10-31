@@ -20,16 +20,7 @@ ConsoleUtils.WriteCentered("Initializing default settings.");
 var settings = new Settings();
 
 ConsoleUtils.WriteCentered($"Starting Human Interface Device handler.");
-
 HidHandler hidHandler = new(settings);
-var hidThreadHandler = new Thread(() =>
-{
-    hidHandler.Start();
-})
-{
-                IsBackground = true
-};
-hidThreadHandler.Start();
 
 RustHandler rustHandler = new(settings, hidHandler);
 var rustThreadHandler = new Thread(() =>
@@ -42,7 +33,7 @@ var rustThreadHandler = new Thread(() =>
 rustThreadHandler.Start();
 
 ConsoleUtils.WriteCentered("Starting API server on port 200");
-var apiThreadHandler = new Thread(() => new ApiServer(200, rustHandler, hidHandler))
+var apiThreadHandler = new Thread(() => new ApiServer(200, rustHandler, hidHandler, settings))
 {
     IsBackground = true
 };

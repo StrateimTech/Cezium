@@ -3,6 +3,6 @@ namespace Main.API
 {
     public interface IApiHandler
     {
-        public void HandlePacket(string[] data);
+        public string? HandlePacket(string[] data);
     }
 }

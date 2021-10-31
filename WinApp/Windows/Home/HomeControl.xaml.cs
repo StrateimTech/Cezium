@@ -1,6 +1,12 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading;
+using System.Timers;
+using System.Windows;
 using System.Windows.Controls;
+using WinApp.Utils;
+using Timer = System.Timers.Timer;
 
 namespace WinApp.Windows.Home
 {
@@ -9,6 +15,30 @@ namespace WinApp.Windows.Home
         public HomeControl()
         {
             InitializeComponent();
+            new Thread(() =>
+            {
+                var timer = new Timer();
+                timer.Interval = 1000;
+                timer.Elapsed += TimerEventProcessor;
+                timer.Start();
+            }).Start();
+        }
+        
+        private void TimerEventProcessor(object sender, EventArgs e)
+        {
+            var getUptime= ServerUtil.SendMessageWithReturn("3 GetUptime");
+            var getMouseState = ServerUtil.SendMessageWithReturn("3 GetMouseState");
+            var getKeyboardState = ServerUtil.SendMessageWithReturn("3 GetKeyboardState");
+            var getRustState = ServerUtil.SendMessageWithReturn("3 GetRustState");
+            var getServerVersion = ServerUtil.SendMessageWithReturn("3 GetServerVersion");
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                UptimeContent.Content = getUptime;
+                MouseContent.Content = getMouseState;
+                KeyboardContent.Content = getKeyboardState;
+                RustContent.Content = getRustState;
+                ServerContent.Content = getServerVersion;
+            });
         }
 
         public static string? ServerIp;

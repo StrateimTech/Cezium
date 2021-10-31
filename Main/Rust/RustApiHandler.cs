@@ -15,7 +15,7 @@ namespace Main.Rust
             _rustHandler = rustHandler;
         }
         
-        public void HandlePacket(string[] data)
+        public string? HandlePacket(string[] data)
         {
             if (data.Length > 0)
             {
@@ -62,6 +62,7 @@ namespace Main.Rust
                         break;
                 }
             }
+            return null;
         }
     }
 }

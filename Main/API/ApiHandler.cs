@@ -9,14 +9,18 @@ namespace Main.API
     {
         private readonly RustHandler _rustHandler;
         private readonly HidHandler _hidHandler;
-        
-        public ApiHandler(RustHandler rustHandler, HidHandler hidHandler)
+        private readonly Settings _settings;
+        private readonly GeneralApiHandler _generalApiHandler;
+
+        public ApiHandler(RustHandler rustHandler, HidHandler hidHandler, Settings settings)
         {
             _rustHandler = rustHandler;
             _hidHandler = hidHandler;
+            _settings = settings;
+            _generalApiHandler = new(settings);
         }
         
-        public void HandlePacket(string[] data)
+        public string? HandlePacket(string[] data)
         {
             if (data.Length > 0)
             {
@@ -24,18 +28,19 @@ namespace Main.API
                 {
                     // Mouse
                     case "0":
-                        _hidHandler.MouseApiHandler.HandlePacket(data);
-                        break;
+                        return _hidHandler.MouseApiHandler.HandlePacket(data);
                     // Keyboard
                     case "1":
-                        _hidHandler.KeyboardApiHandler.HandlePacket(data);
-                        break;
+                        return _hidHandler.KeyboardApiHandler.HandlePacket(data);
                     // Rust
                     case "2":
-                        _rustHandler.RustApiHandler.HandlePacket(data);
-                        break;
+                        return _rustHandler.RustApiHandler.HandlePacket(data);
+                    // General
+                    case "3":
+                        return _generalApiHandler.HandlePacket(data);
                 }
             }
+            return null;
         }
     }
 }

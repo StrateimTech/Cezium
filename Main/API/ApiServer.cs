@@ -11,9 +11,9 @@ namespace Main.API
     public class ApiServer
     {
 
-        public ApiServer(int port, RustHandler rustHandler, HidHandler hidHandler)
+        public ApiServer(int port, RustHandler rustHandler, HidHandler hidHandler, Settings settings)
         {
-            ApiHandler apiHandler = new(rustHandler, hidHandler);
+            ApiHandler apiHandler = new(rustHandler, hidHandler, settings);
             var listener = new TcpListener(IPAddress.Any, port);
             listener.Start();
 
@@ -27,10 +27,18 @@ namespace Main.API
                 int i;
                 while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
                 {
-                    var data = Encoding.ASCII.GetString(bytes, 0, i);
-                    apiHandler.HandlePacket(data.Split(null));
-                    ConsoleUtils.WriteCentered(data);
-                    stream.Write(bytes, 0, bytes.Length);
+                    var receiveData = Encoding.ASCII.GetString(bytes, 0, i);
+                    var sendData = apiHandler.HandlePacket(receiveData.Split(null));
+                    // ConsoleUtils.WriteCentered($"Incoming: {receiveData} | Outgoing: {receiveData}");
+                    if (sendData != null)
+                    {
+                        var sendBytes = Encoding.ASCII.GetBytes(sendData);
+                        stream.Write(sendBytes, 0, sendBytes.Length);
+                    }
+                    else
+                    {
+                        stream.Write(bytes, 0, bytes.Length);
+                    }
                 }
                 client.Close();
             }

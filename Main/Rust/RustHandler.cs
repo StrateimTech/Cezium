@@ -53,12 +53,12 @@ namespace Main.Rust
         {
             while (true)
             {
-                if(!_settings.Rust.State || !_hidHandler.Mouse.LeftButton || !_hidHandler.Mouse.RightButton)
+                if(!_settings.Rust.State || !_hidHandler.HidMouseHandler.Mouse.LeftButton || !_hidHandler.HidMouseHandler.Mouse.RightButton)
                     Thread.Sleep(1);
                 if(!_settings.Rust.State)
                     continue;
 
-                if (_hidHandler.Mouse.LeftButton && _hidHandler.Mouse.RightButton)
+                if (_hidHandler.HidMouseHandler.Mouse.LeftButton && _hidHandler.HidMouseHandler.Mouse.RightButton)
                 {
                     if (PixelTable == null)
                         continue;
@@ -112,9 +112,9 @@ namespace Main.Rust
 
                     for (int i = 0; i < smoothing; i++)
                     {
-                        if(!_hidHandler.Mouse.LeftButton || !_hidHandler.Mouse.LeftButton)
+                        if(!_hidHandler.HidMouseHandler.Mouse.LeftButton || !_hidHandler.HidMouseHandler.Mouse.LeftButton)
                             continue;
-                        _hidHandler.WriteMouseReport(_hidHandler.Mouse with
+                        _hidHandler.WriteMouseReport(_hidHandler.HidMouseHandler.Mouse with
                         {
                                         X = Convert.ToInt32(gunPixelX / smoothing),
                                         Y = Convert.ToInt32(gunPixelY / smoothing),

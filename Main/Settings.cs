@@ -14,25 +14,39 @@ namespace Main
         
         public class GeneralSettings
         {
-            /// <summary>
-            /// Whether to use the mouse or not.
-            /// </summary>
-            public bool MouseState = true;
+            public MouseSettings Mouse { get; } = new();
+            public KeyboardSettings Keyboard { get; } = new();
             
-            /// <summary>
-            /// Whether to invert mouse y when sending to separate machine.
-            /// </summary>
-            public bool InvertMouseY = false;
+            public class MouseSettings
+            {
+                /// <summary>
+                /// Whether to use the mouse or not.
+                /// </summary>
+                public bool MouseState = true;
+            
+                /// <summary>
+                /// Whether to invert mouse y when sending to separate machine.
+                /// </summary>
+                public bool InvertMouseY = false;
 
-            /// <summary>
-            /// Whether to invert mouse x when sending to separate machine.
-            /// </summary>
-            public bool InvertMouseX = false;
+                /// <summary>
+                /// Whether to invert mouse x when sending to separate machine.
+                /// </summary>
+                public bool InvertMouseX = false;
             
-            /// <summary>
-            /// Whether to invert mouse wheel when sending to separate machine.
-            /// </summary>
-            public bool InvertMouseWheel = false;
+                /// <summary>
+                /// Whether to invert mouse wheel when sending to separate machine.
+                /// </summary>
+                public bool InvertMouseWheel = false;
+            }
+            
+            public class KeyboardSettings
+            {
+                /// <summary>
+                /// Whether to use the keyboard or not.
+                /// </summary>
+                public bool KeyboardState = true;
+            }
         }
 
         public class RustSettings
