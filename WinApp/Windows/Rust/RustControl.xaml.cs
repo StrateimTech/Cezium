@@ -219,6 +219,16 @@ namespace WinApp.Windows.Rust
         {
             RandomizationSliderLabel.Content = $"Randomization: {(int)e.NewValue.Start} - {(int)e.NewValue.End}";
         }
+        
+        private void AmmoReset_OnUnchecked(object sender, RoutedEventArgs e)
+        {
+            UpdateAmmoReset(false);
+        }
+
+        private void AmmoReset_OnChecked(object sender, RoutedEventArgs e)
+        {
+            UpdateAmmoReset(true);
+        }
 
         private void UpdateGun(string gun, string scope, string attachment)
         {
@@ -243,6 +253,11 @@ namespace WinApp.Windows.Rust
         private void UpdateState(bool state)
         {
             SendMessage($"2 ChangeState {state}");
+        }
+
+        private void UpdateAmmoReset(bool state)
+        {
+            SendMessage($"2 ChangeAmmoReset {state}");
         }
     }
 }

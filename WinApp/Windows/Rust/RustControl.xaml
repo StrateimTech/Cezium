@@ -100,11 +100,26 @@
                     <ComboBoxItem Content="Muzzle Boost" />
                 </ComboBox>
             </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Margin="24, 193, 0, 0">
+                <Grid>
+                    <ToggleButton x:Name="AmmoReset"
+                                  IsChecked="false" Margin="0, 8, 176, 0"
+                                  Style="{StaticResource ToggleButtonSwitch}" Width="48" Height="48"
+                                  Foreground="White" 
+                                  Unchecked="AmmoReset_OnUnchecked"
+                                  Checked="AmmoReset_OnChecked"/>
+                    <Label Content="Ammo Reset" Background="Transparent" BorderThickness="0"
+                           Margin="0, 4, 0, 0"
+                           Foreground="White"
+                           FontSize="16" />
+                </Grid>
+            </StackPanel>
             <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
-                <Line Stretch="Fill" Stroke="White" X1="1" StrokeThickness="1" Margin="16, 208, 16, 0" />
+                <Line Stretch="Fill" Stroke="White" X1="1" StrokeThickness="1" Margin="16, 264, 16, 0" />
             </Grid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"
-                        Margin="24, 208, 0, 0">
+                        Margin="24, 272, 0, 0">
                 <Grid>
                     <ToggleButton x:Name="RandomizationToggle"
                                   IsChecked="false" Margin="0, 8, 176, 0"
@@ -123,7 +138,7 @@
                                   Style="{StaticResource ToggleButtonSwitch}" Width="48" Height="48"
                                   Foreground="White"
                                   IsEnabled="False"/>
-                    <Label x:Name="ReverseRandomizationLabel" Content="ReverseRandomization" Background="Transparent" BorderThickness="0"
+                    <Label x:Name="ReverseRandomizationLabel" Content="Reverse Randomization" Background="Transparent" BorderThickness="0"
                             Margin="0, 4, 0, 0"
                             Foreground="White"
                             FontSize="16" 
@@ -131,7 +146,7 @@
                 </Grid>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"
-                        Margin="16, 288, 0, 0">
+                        Margin="16, 349, 0, 0">
                 <Grid Margin="8, 0, 0, 0">
                     <Label x:Name="RandomizationSliderLabel" HorizontalAlignment="Left" VerticalAlignment="Top"
                            Content="Randomization: 1 - 5"

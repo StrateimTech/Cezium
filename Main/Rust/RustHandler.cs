@@ -59,7 +59,12 @@ namespace Main.Rust
                     if (PixelTable == null)
                         continue;
                     if (_bullet >= CurrentWeapon.Item4 - 1)
-                        _bullet = 0;
+                    {
+                        if (_settings.Rust.AmmoReset)
+                            _bullet = 0;
+                        else
+                            continue;
+                    }
 
                     var gunPixelX = PixelTable[_bullet].Item1 * CurrentWeapon.Item5 * CurrentWeapon.Item6.Item1;
                     var gunPixelY = PixelTable[_bullet].Item2 * CurrentWeapon.Item5 * CurrentWeapon.Item6.Item1;

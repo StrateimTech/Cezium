@@ -42,6 +42,10 @@ namespace Main.Rust
                         Int32.TryParse(data[2], out Int32 value4);
                         _settings.Rust.Smoothness = value4;
                         break;
+                    case "ChangeAmmoReset":
+                        Boolean.TryParse(data[2], out bool value5);
+                        _settings.Rust.AmmoReset = value5;
+                        break;
                 }
             }
         }
