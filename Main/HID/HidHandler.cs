@@ -35,7 +35,7 @@ namespace Main.HID
         public HidHandler(Settings settings)
         {
             _mouseFileStream = File.Open(MouseStreamPath, FileMode.Open, FileAccess.ReadWrite); 
-            _keyboardFileStream = File.Open(KeyboardStreamPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite); 
+            _keyboardFileStream = File.Open(KeyboardStreamPath, FileMode.Open, FileAccess.Read); 
             
             _hidFileStream = File.Open(HumanInterfaceDeviceStreamPath, FileMode.Open, FileAccess.Write);
 
@@ -58,7 +58,7 @@ namespace Main.HID
             _hidWriteLock.EnterWriteLock();
             try
             {
-                FileUtils.WriteReport(_hidFileStream, Convert.ToSByte(1), new []{BitUtils.ToByte(mouse.ButtonBitArray)}, new []{Convert.ToInt16(mouse.X), Convert.ToInt16(mouse.Y)}, new [] {Convert.ToSByte(mouse.Wheel)}, true);
+                FileUtils.WriteReport(_hidFileStream, 1, new []{BitUtils.ToByte(mouse.ButtonBitArray)}, new []{Convert.ToInt16(mouse.X), Convert.ToInt16(mouse.Y)}, new [] {Convert.ToSByte(mouse.Wheel)}, true);
             }
             catch (Exception exception)
             {
@@ -73,21 +73,34 @@ namespace Main.HID
         
         public void WriteKeyboardReport(Keyboard keyboard, bool leaveOpen = true)
         {
-            throw new NotImplementedException();
-            // _hidWriteLock.EnterWriteLock();
-            // try
-            // {
-            //     FileUtils.WriteReport(_hidFileStream, Convert.ToSByte(1), new []{BitUtils.ToByte(mouse.ButtonBitArray)}, new []{Convert.ToInt16(mouse.X), Convert.ToInt16(mouse.Y)}, new [] {Convert.ToSByte(mouse.Wheel)}, true);
-            // }
-            // catch (Exception exception)
-            // {
-            //     // Good Exception Handling I would say myself :)
-            //     ConsoleUtils.WriteCentered($"{exception.Message}");
-            // }
-            // finally
-            // {
-            //     _hidWriteLock.ExitWriteLock();
-            // }
+            _hidWriteLock.EnterWriteLock();
+            try
+            {
+                using BinaryWriter binaryWriter = new(_hidFileStream, Encoding.Default, leaveOpen);
+                byte[] buffer = new byte[9];
+                buffer[0] = 2;
+                if (keyboard.Modifier != null)
+                {
+                    buffer[1] = keyboard.Modifier.Value;
+                }
+                buffer[3] = keyboard.KeyCode;
+
+                binaryWriter.Flush();
+                
+                byte[] buffer2 = new byte[9];
+                buffer2[0] = 2;
+                binaryWriter.Write(buffer2);
+                binaryWriter.Flush();
+            }
+            catch (Exception exception)
+            {
+                // Good Exception Handling I would say myself :)
+                ConsoleUtils.WriteCentered($"{exception.Message}");
+            }
+            finally
+            {
+                _hidWriteLock.ExitWriteLock();
+            }
         }
     }
 }

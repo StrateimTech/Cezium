@@ -17,8 +17,10 @@ namespace Main.HID
                         false, false, false, false, false, false, false
         });
     }
-    
+
     public record Keyboard
     {
+        public byte KeyCode;
+        public byte? Modifier;
     }
 }

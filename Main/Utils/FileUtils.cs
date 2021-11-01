@@ -15,7 +15,7 @@ namespace Main.Utils
             binaryWriter.Flush();
         }
         
-        public static void WriteReport(FileStream fileStream, sbyte reportId, byte[] bytes, short[] shorts, sbyte[] sbytes, bool leaveOpen = true)
+        public static void WriteReport(FileStream fileStream, byte reportId, byte[] bytes, short[] shorts, sbyte[] sbytes, bool leaveOpen = true)
         {
             using BinaryWriter binaryWriter = new(fileStream, Encoding.Default, leaveOpen);
             binaryWriter.Write(reportId);
@@ -33,6 +33,5 @@ namespace Main.Utils
             }
             binaryWriter.Flush();
         }
-        
     }
 }
