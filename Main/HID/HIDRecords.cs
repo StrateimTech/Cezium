@@ -20,7 +20,7 @@ namespace Main.HID
 
     public record Keyboard
     {
-        public byte KeyCode;
+        public byte? KeyCode;
         public byte? Modifier;
     }
 }

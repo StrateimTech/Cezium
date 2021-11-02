@@ -83,13 +83,12 @@ namespace Main.HID
                 {
                     buffer[1] = keyboard.Modifier.Value;
                 }
-                buffer[3] = keyboard.KeyCode;
-
-                binaryWriter.Flush();
+                if (keyboard.KeyCode != null)
+                {
+                    buffer[3] = keyboard.KeyCode.Value;
+                }
                 
-                byte[] buffer2 = new byte[9];
-                buffer2[0] = 2;
-                binaryWriter.Write(buffer2);
+                binaryWriter.Write(buffer);
                 binaryWriter.Flush();
             }
             catch (Exception exception)

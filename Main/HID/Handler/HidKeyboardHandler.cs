@@ -509,10 +509,10 @@ namespace Main.HID.Handler
                         {
                             case EventType.EV_KEY:
                             {
-                                ConsoleUtils.WriteCentered(
-                                    $"Key: {keyCode} | {code}, KeyState: {keyState} | {value}, EventType: {eventType} | {type}");
+                                ConsoleUtils.WriteCentered($"Key: {keyCode} | {code}, KeyState: {keyState} | {value}, EventType: {eventType} | {type}");
                                 switch (keyState)
                                 {
+                                    case KeyState.KeyHold:
                                     case KeyState.KeyDown:
                                     {
                                         KeysDown.Add(code);
@@ -522,6 +522,7 @@ namespace Main.HID.Handler
                                                 keyCode.ToString());
                                             break;
                                         }
+                                        
 
                                         if (!Enum.IsDefined(typeof(UsbKeyCode), keyCode.ToString()))
                                         {
@@ -531,23 +532,11 @@ namespace Main.HID.Handler
 
                                         var UsbKeycode = (int) Enum.Parse(typeof(UsbKeyCode), keyCode.ToString());
 
-
-                                        using BinaryWriter binaryWriter = new(hidFileStream, Encoding.Default, true);
-                                        byte[] buffer2 = new byte[9];
-
-                                        buffer2[0] = 2;
-
-                                        // Modifier
-                                        if (KeyCodeModifier != null)
+                                        hidHandler.WriteKeyboardReport(new Keyboard()
                                         {
-                                            buffer2[1] = Convert.ToByte(KeyCodeModifier);
-                                        }
-
-                                        // Keycode
-                                        buffer2[3] = Convert.ToByte(UsbKeycode);
-                                        binaryWriter.Write(buffer2);
-
-                                        binaryWriter.Flush();
+                                            KeyCode = Convert.ToByte(UsbKeycode),
+                                            Modifier = KeyCodeModifier != null ? Convert.ToByte(KeyCodeModifier) : null
+                                        });
                                         break;
                                     }
                                     case KeyState.KeyUp:
@@ -557,16 +546,12 @@ namespace Main.HID.Handler
                                         if (Enum.IsDefined(typeof(UsbKeyCodeModifiers), keyCode.ToString()))
                                         {
                                             KeyCodeModifier = null;
-                                            break;
                                         }
-
-                                        using BinaryWriter binaryWriter = new(hidFileStream, Encoding.Default, true);
-                                        byte[] buffer3 = new byte[9];
-
-                                        buffer3[0] = 2;
-                                        binaryWriter.Write(buffer3);
-                                        binaryWriter.Flush();
-                                        break;
+                                        
+                                        hidHandler.WriteKeyboardReport(new Keyboard()
+                                        {
+                                            Modifier = KeyCodeModifier != null ? Convert.ToByte(KeyCodeModifier) : null
+                                        });                                                                                             
                                     }
                                 }
 
