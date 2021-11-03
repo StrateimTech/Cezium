@@ -260,6 +260,7 @@ namespace Main.HID.Handler
 
         public enum UsbKeyCode
         {
+            KEYRESERVED = 0x00,
             KEYA = 0x04,
             KEYB = 0x05,
             KEYC = 0x06,
@@ -479,7 +480,8 @@ namespace Main.HID.Handler
         }
 
         private int? KeyCodeModifier;
-
+        private short? PreviousKey;
+        
         private readonly List<int> KeysDown = new();
 
         public HidKeyboardHandler(HidHandler hidHandler, Settings settings, FileStream keyboardFileStream,
@@ -509,20 +511,27 @@ namespace Main.HID.Handler
                         {
                             case EventType.EV_KEY:
                             {
-                                ConsoleUtils.WriteCentered($"Key: {keyCode} | {code}, KeyState: {keyState} | {value}, EventType: {eventType} | {type}");
+                                ConsoleUtils.WriteCentered($"Key: {keyCode} | {code}, KeyState: {keyState} | {value}, EventType: {eventType} | {type} | Modifier: {(KeyCodeModifier != null ? (UsbKeyCodeModifiers)KeyCodeModifier : "null")}");
+                                
+                                
                                 switch (keyState)
                                 {
                                     case KeyState.KeyHold:
                                     case KeyState.KeyDown:
                                     {
-                                        KeysDown.Add(code);
                                         if (Enum.IsDefined(typeof(UsbKeyCodeModifiers), keyCode.ToString()))
                                         {
                                             KeyCodeModifier = (int) Enum.Parse(typeof(UsbKeyCodeModifiers),
                                                 keyCode.ToString());
-                                            break;
+                                            if (PreviousKey != null)
+                                            {
+                                                keyCode = (LinuxKeyCode)PreviousKey;
+                                            }
+                                            else
+                                            {
+                                                break;
+                                            }
                                         }
-                                        
 
                                         if (!Enum.IsDefined(typeof(UsbKeyCode), keyCode.ToString()))
                                         {
@@ -530,13 +539,17 @@ namespace Main.HID.Handler
                                             break;
                                         }
 
-                                        var UsbKeycode = (int) Enum.Parse(typeof(UsbKeyCode), keyCode.ToString());
-
+                                        var USBKeyCode = (int) Enum.Parse(typeof(UsbKeyCode), keyCode.ToString());
+                                        
                                         hidHandler.WriteKeyboardReport(new Keyboard()
                                         {
-                                            KeyCode = Convert.ToByte(UsbKeycode),
+                                            KeyCode = Convert.ToByte(USBKeyCode),
                                             Modifier = KeyCodeModifier != null ? Convert.ToByte(KeyCodeModifier) : null
                                         });
+
+                                        if(!KeysDown.Contains(code))
+                                            KeysDown.Add(code);
+                                        PreviousKey = code;
                                         break;
                                     }
                                     case KeyState.KeyUp:
@@ -551,10 +564,36 @@ namespace Main.HID.Handler
                                         hidHandler.WriteKeyboardReport(new Keyboard()
                                         {
                                             Modifier = KeyCodeModifier != null ? Convert.ToByte(KeyCodeModifier) : null
-                                        });                                                                                             
+                                        });
+
+                                        foreach (var keyDown in KeysDown)
+                                        {
+                                            var LinuxKeyDown = (LinuxKeyCode) keyDown;
+                                            UsbKeyCodeModifiers? localModifier = null;
+                                            UsbKeyCode? localKeyCode = null;
+                                            
+                                            if (Enum.IsDefined(typeof(UsbKeyCodeModifiers), LinuxKeyDown.ToString()))
+                                            {
+                                                localModifier = (UsbKeyCodeModifiers) Enum.Parse(typeof(UsbKeyCodeModifiers), LinuxKeyDown.ToString());
+                                            }
+                                            
+                                            if (Enum.IsDefined(typeof(UsbKeyCode), LinuxKeyDown.ToString()))
+                                            {
+                                                localKeyCode = (UsbKeyCode) Enum.Parse(typeof(UsbKeyCode), LinuxKeyDown.ToString());
+                                            }
+                                            
+                                            ConsoleUtils.WriteCentered($"KeyUP: {localModifier.ToString()}, {localKeyCode.ToString()}");
+                                            
+                                            hidHandler.WriteKeyboardReport(new Keyboard()
+                                            {
+                                                Modifier = localModifier != null ? Convert.ToByte(localModifier) : null,
+                                                KeyCode = localKeyCode != null ? Convert.ToByte(localKeyCode) : null
+                                            });
+                                        }
+                                        
+                                        break;
                                     }
                                 }
-
                                 break;
                             }
                         }

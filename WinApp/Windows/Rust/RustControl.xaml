@@ -66,8 +66,47 @@
                             Thumb.DragCompleted="SmoothnessSlider_OnDragCompleted" />
                 </Grid>
             </StackPanel>
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"
-                        Margin="24, 128, 0, 0">
+                        Margin="16, 132, 0, 0">
+                <Grid>
+                    <Label x:Name="HorizontalModifierLabel" HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Content="Horizontal Modifier: 1.0"
+                           Background="Transparent" BorderThickness="0" Foreground="White"
+                           Margin="4, 12, 0, 0" />
+                    <Slider x:Name="HorizontalModifierSlider"
+                            hc:TipElement.Visibility="Visible"
+                            hc:TipElement.Placement="Bottom"
+                            hc:TipElement.StringFormat="#0.00"
+                            Maximum="1"
+                            Minimum="0"
+                            Value="1.0"
+                            ValueChanged="HorizontalModifierSlider_OnValueChanged"
+                            Width="200" />
+                </Grid>
+
+                <Grid Margin="24, 0, 0, 0">
+                    <Label x:Name="VerticalModifierLabel" HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Content="Vertical Modifier: 1.0"
+                           Background="Transparent" BorderThickness="0" Foreground="White"
+                           Margin="4, 12, 0, 0" />
+                    <Slider x:Name="VerticalModifierSlider"
+                            hc:TipElement.Visibility="Visible"
+                            hc:TipElement.Placement="Bottom"
+                            hc:TipElement.StringFormat="#0.00"
+                            Maximum="1"
+                            Minimum="0"
+                            Value="1.0"
+                            ValueChanged="VerticalModifierSlider_OnValueChanged"
+                            Width="200" />
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Margin="24, 128, 0, 0" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Margin="24, 172, 0, 0">
                 <ComboBox x:Name="GunCombo" hc:InfoElement.Placeholder="Assault Rifle"
                           hc:InfoElement.Title="Guns" Style="{StaticResource ComboBoxExtend}"
                           SelectionChanged="GunCombo_OnSelectionChanged" Width="150" SelectedIndex="1">
@@ -101,14 +140,14 @@
                 </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"
-                        Margin="24, 193, 0, 0">
+                        Margin="24, 237, 0, 0">
                 <Grid>
                     <ToggleButton x:Name="AmmoReset"
                                   IsChecked="false" Margin="0, 8, 176, 0"
                                   Style="{StaticResource ToggleButtonSwitch}" Width="48" Height="48"
-                                  Foreground="White" 
+                                  Foreground="White"
                                   Unchecked="AmmoReset_OnUnchecked"
-                                  Checked="AmmoReset_OnChecked"/>
+                                  Checked="AmmoReset_OnChecked" />
                     <Label Content="Ammo Reset" Background="Transparent" BorderThickness="0"
                            Margin="0, 4, 0, 0"
                            Foreground="White"
@@ -116,10 +155,10 @@
                 </Grid>
             </StackPanel>
             <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
-                <Line Stretch="Fill" Stroke="White" X1="1" StrokeThickness="1" Margin="16, 264, 16, 0" />
+                <Line Stretch="Fill" Stroke="White" X1="1" StrokeThickness="1" Margin="16, 308, 16, 0" />
             </Grid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"
-                        Margin="24, 272, 0, 0">
+                        Margin="24, 316, 0, 0">
                 <Grid>
                     <ToggleButton x:Name="RandomizationToggle"
                                   IsChecked="false" Margin="0, 8, 176, 0"
@@ -139,33 +178,52 @@
                                   Foreground="White"
                                   IsEnabled="False"
                                   Unchecked="ReverseRandomizationToggle_OnUnchecked"
-                                  Checked="ReverseRandomizationToggle_OnChecked"/>
-                    <Label x:Name="ReverseRandomizationLabel" Content="Reverse Randomization" Background="Transparent" BorderThickness="0"
-                            Margin="0, 4, 0, 0"
-                            Foreground="White"
-                            FontSize="16" 
-                            IsEnabled="False"/>
+                                  Checked="ReverseRandomizationToggle_OnChecked" />
+                    <Label x:Name="ReverseRandomizationLabel" Content="Reverse Randomization" Background="Transparent"
+                           BorderThickness="0"
+                           Margin="0, 4, 0, 0"
+                           Foreground="White"
+                           FontSize="16"
+                           IsEnabled="False" />
                 </Grid>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"
-                        Margin="16, 349, 0, 0">
+                        Margin="16, 387, 0, 0">
                 <Grid Margin="8, 0, 0, 0">
-                    <Label x:Name="RandomizationSliderLabel" HorizontalAlignment="Left" VerticalAlignment="Top"
-                           Content="Randomization: 1 - 5"
+                    <Label x:Name="RandomizationXSliderLabel" HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Content="RandomizationX: 1 - 5"
                            Background="Transparent" BorderThickness="0" Foreground="White"
-                           Margin="4, 12, 0, 0" 
-                           IsEnabled="False"/>
-                    <hc:RangeSlider x:Name="RandomizationSlider"
-                                    hc:TipElement.Visibility="Visible" 
-                                    hc:TipElement.Placement="Bottom" 
-                                    hc:TipElement.StringFormat="#0" 
+                           Margin="4, 12, 0, 0"
+                           IsEnabled="False" />
+                    <hc:RangeSlider x:Name="RandomizationXSlider"
+                                    hc:TipElement.Visibility="Visible"
+                                    hc:TipElement.Placement="Bottom"
+                                    hc:TipElement.StringFormat="#0"
                                     Maximum="24"
-                                    Minimum="1"
+                                    Minimum="0"
                                     ValueStart="1"
                                     ValueEnd="5"
-                                    Width="200" 
-                                    ValueChanged="RandomizationSlider_OnValueChanged"
-                                    IsEnabled="False"/>
+                                    Width="200"
+                                    ValueChanged="RandomizationXSlider_OnValueChanged"
+                                    IsEnabled="False" />
+                </Grid>
+                <Grid Margin="8, 0, 0, 0">
+                    <Label x:Name="RandomizationYSliderLabel" HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Content="RandomizationY: 1 - 5"
+                           Background="Transparent" BorderThickness="0" Foreground="White"
+                           Margin="4, 12, 0, 0"
+                           IsEnabled="False" />
+                    <hc:RangeSlider x:Name="RandomizationYSlider"
+                                    hc:TipElement.Visibility="Visible"
+                                    hc:TipElement.Placement="Bottom"
+                                    hc:TipElement.StringFormat="#0"
+                                    Maximum="24"
+                                    Minimum="0"
+                                    ValueStart="1"
+                                    ValueEnd="5"
+                                    Width="200"
+                                    ValueChanged="RandomizationYSlider_OnValueChanged"
+                                    IsEnabled="False" />
                 </Grid>
             </StackPanel>
         </Grid>

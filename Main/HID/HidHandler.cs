@@ -15,19 +15,19 @@ namespace Main.HID
     public class HidHandler
     {
         private const string MouseStreamPath = "/dev/input/mice";
-        private const string KeyboardStreamPath = "/dev/input/event0";
+        // private const string KeyboardStreamPath = "/dev/input/event0";
         
         private const string HumanInterfaceDeviceStreamPath = "/dev/hidg0";
 
         private readonly FileStream _mouseFileStream;
-        private readonly FileStream _keyboardFileStream;
+        // private readonly FileStream _keyboardFileStream;
         
         private readonly FileStream _hidFileStream;
 
         public readonly KeyboardApiHandler KeyboardApiHandler;
         public readonly MouseApiHandler MouseApiHandler;
 
-        public readonly HidKeyboardHandler HidKeyboardHandler;
+        // public readonly HidKeyboardHandler HidKeyboardHandler;
         public readonly HidMouseHandler HidMouseHandler;
         
         private readonly ReaderWriterLockSlim _hidWriteLock = new();
@@ -35,21 +35,21 @@ namespace Main.HID
         public HidHandler(Settings settings)
         {
             _mouseFileStream = File.Open(MouseStreamPath, FileMode.Open, FileAccess.ReadWrite); 
-            _keyboardFileStream = File.Open(KeyboardStreamPath, FileMode.Open, FileAccess.Read); 
+            // _keyboardFileStream = File.Open(KeyboardStreamPath, FileMode.Open, FileAccess.Read); 
             
             _hidFileStream = File.Open(HumanInterfaceDeviceStreamPath, FileMode.Open, FileAccess.Write);
 
             KeyboardApiHandler = new(settings);
             MouseApiHandler = new(settings);
 
-            HidKeyboardHandler = new(this, settings, _keyboardFileStream, _hidFileStream);
+            // HidKeyboardHandler = new(this, settings, _keyboardFileStream, _hidFileStream);
             HidMouseHandler = new(this, settings, _mouseFileStream, _hidFileStream);
         }
 
         public void Stop()
         {
             _mouseFileStream.Close();
-            _keyboardFileStream.Close();
+            // _keyboardFileStream.Close();
             _hidFileStream.Close();
         }
         

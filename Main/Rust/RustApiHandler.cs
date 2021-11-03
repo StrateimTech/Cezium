@@ -55,10 +55,23 @@ namespace Main.Rust
                         Boolean.TryParse(data[2], out bool value7);
                         _settings.Rust.ReverseRandomization = value7;
                         break;
-                    case "ChangeRandomizationAmount":
+                    case "ChangeRandomizationAmountX":
                         Int32.TryParse(data[2], out Int32 value8);
-                        Int32.TryParse(data[2], out Int32 value9);
-                        _settings.Rust.RandomizationAmount = new(value8, value9);
+                        Int32.TryParse(data[3], out Int32 value9);
+                        _settings.Rust.RandomizationAmountX = new(value8, value9);
+                        break;
+                    case "ChangeRandomizationAmountY":
+                        Int32.TryParse(data[2], out Int32 value10);
+                        Int32.TryParse(data[3], out Int32 value11);
+                        _settings.Rust.RandomizationAmountY = new(value10, value11);
+                        break;
+                    case "ChangeRecoilModifierX":
+                        Double.TryParse(data[2], out double value12);
+                        _settings.Rust.RecoilModifier = new(value12, _settings.Rust.RecoilModifier.Item2);
+                        break;
+                    case "ChangeRecoilModifierY":
+                        Double.TryParse(data[2], out double value13);
+                        _settings.Rust.RecoilModifier = new(_settings.Rust.RecoilModifier.Item1, value13);
                         break;
                 }
             }

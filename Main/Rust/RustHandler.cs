@@ -37,7 +37,8 @@ namespace Main.Rust
         public List<Tuple<double, double>>? PixelTable;
 
         private Tuple<int, int> _lastRandomization = new(0, 0);
-
+        private bool _reverseRandom = false;
+        
         private readonly Random _random = new Random();
         
         public RustHandler(Settings settings, HidHandler hidHandler)
@@ -69,33 +70,17 @@ namespace Main.Rust
                         else
                             continue;
                     }
-                    
-                    var gunPixelX = PixelTable[_bullet].Item1 * CurrentWeapon.Item5 * CurrentWeapon.Item6.Item1;
-                    var gunPixelY = PixelTable[_bullet].Item2 * CurrentWeapon.Item5 * CurrentWeapon.Item6.Item1;
 
-                    if (_settings.Rust.Randomization)
-                    {
-                        var min = _settings.Rust.RandomizationAmount.Item1;
-                        var max = _settings.Rust.RandomizationAmount.Item2;
-                        
-                        var xRandom = _random.Next(min, max);
-                        var yRandom = _random.Next(min, max);
+                    var pixelXTable = PixelTable[_bullet].Item1;
+                    var pixelYTable = PixelTable[_bullet].Item2;
 
-                        var xBool = _random.Next() > (Int32.MaxValue / 2);
-                        var yBool = _random.Next() > (Int32.MaxValue / 2);
+                    pixelXTable *= _settings.Rust.RecoilModifier.Item1;
+                    pixelYTable *= _settings.Rust.RecoilModifier.Item2;
 
-                        xRandom = xBool ? xRandom : xRandom * -1;
-                        yRandom = yBool ? yRandom : yRandom * -1;
-                        
-                        ConsoleUtils.WriteCentered($"xRandom: {xRandom}, yRandom: {yRandom}");
+                    var gunPixelX = pixelXTable * CurrentWeapon.Item5 * CurrentWeapon.Item6.Item1;
+                    var gunPixelY = pixelYTable * CurrentWeapon.Item5 * CurrentWeapon.Item6.Item1;
 
-                        gunPixelX += xRandom;
-                        gunPixelY += yRandom;
-
-                        _lastRandomization = new(xRandom, yRandom);
-                    }
-                    
-                    if (_settings.Rust.ReverseRandomization && _settings.Rust.Randomization)
+                    if (_settings.Rust.ReverseRandomization && _settings.Rust.Randomization && _reverseRandom)
                     {
                         var invertedLastX = _lastRandomization.Item1 * -1;
                         var invertedLastY = _lastRandomization.Item2 * -1;
@@ -104,6 +89,26 @@ namespace Main.Rust
 
                         gunPixelX += invertedLastX;
                         gunPixelY += invertedLastY;
+                    }
+                    
+                    if (_settings.Rust.Randomization)
+                    {
+                        var xRandom = _settings.Rust.RandomizationAmountX.Item2 != 0 ? _random.Next(_settings.Rust.RandomizationAmountX.Item1, _settings.Rust.RandomizationAmountX.Item2) : 0;
+                        var yRandom = _settings.Rust.RandomizationAmountY.Item2 != 0 ? _random.Next(_settings.Rust.RandomizationAmountY.Item1, _settings.Rust.RandomizationAmountY.Item2) : 0;
+                        
+                        var xBool = _random.Next() > (Int32.MaxValue / 2);
+                        var yBool = _random.Next() > (Int32.MaxValue / 2);
+                        
+                        xRandom = xBool ? xRandom : xRandom * -1;
+                        yRandom = yBool ? yRandom : yRandom * -1;
+                        
+                        ConsoleUtils.WriteCentered($"xRandom: {xRandom}, yRandom: {yRandom}");
+                        
+                        gunPixelX += xRandom;
+                        gunPixelY += yRandom;
+                        
+                        _lastRandomization = new(xRandom, yRandom);
+                        _reverseRandom = true;
                     }
 
                     var delay = 60000.0 / (int)CurrentWeapon.Item3;
@@ -125,10 +130,12 @@ namespace Main.Rust
                         while (stopwatch.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= sleep * 1000);
                     }
                     _bullet++;
+                    _reverseRandom = false;
                 }
                 else
                 {
                     _bullet = 0;
+                    _reverseRandom = false;
                 }
             }
         }

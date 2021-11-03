@@ -35,7 +35,8 @@ namespace WinApp.Windows.Rust
                 if (RandomizationToggle.IsChecked!.Value)
                 {
                     ReverseRandomizationToggle.IsEnabled = true;
-                    RandomizationSlider.IsEnabled = true;
+                    RandomizationXSlider.IsEnabled = true;
+                    RandomizationYSlider.IsEnabled = true;
                 }
             });
         }
@@ -58,7 +59,8 @@ namespace WinApp.Windows.Rust
                 if (RandomizationToggle.IsChecked!.Value)
                 {
                     ReverseRandomizationToggle.IsEnabled = false;
-                    RandomizationSlider.IsEnabled = false;
+                    RandomizationXSlider.IsEnabled = false;
+                    RandomizationYSlider.IsEnabled = false;
                 }
             });
         }
@@ -200,8 +202,11 @@ namespace WinApp.Windows.Rust
                 ReverseRandomizationToggle.IsEnabled = false;
                 ReverseRandomizationLabel.IsEnabled = false;
                 
-                RandomizationSliderLabel.IsEnabled = false;
-                RandomizationSlider.IsEnabled = false;
+                RandomizationXSliderLabel.IsEnabled = false;
+                RandomizationXSlider.IsEnabled = false;
+                
+                RandomizationYSliderLabel.IsEnabled = false;
+                RandomizationYSlider.IsEnabled = false;
             });
         }
 
@@ -213,15 +218,36 @@ namespace WinApp.Windows.Rust
                 ReverseRandomizationToggle.IsEnabled = true;
                 ReverseRandomizationLabel.IsEnabled = true;
             
-                RandomizationSliderLabel.IsEnabled = true;
-                RandomizationSlider.IsEnabled = true;
+                RandomizationXSliderLabel.IsEnabled = true;
+                RandomizationXSlider.IsEnabled = true;
+                
+                RandomizationYSliderLabel.IsEnabled = true;
+                RandomizationYSlider.IsEnabled = true;
             });
         }
-
-        private void RandomizationSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<DoubleRange> e)
+        
+        private void RandomizationXSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<DoubleRange> e)
         {
-            RandomizationSliderLabel.Content = $"Randomization: {(int)e.NewValue.Start} - {(int)e.NewValue.End}";
-            UpdateRandomizationAmount((int)e.NewValue.Start, (int)e.NewValue.End);
+            RandomizationXSliderLabel.Content = $"RandomizationX: {(int)e.NewValue.Start} - {(int)e.NewValue.End}";
+            UpdateRandomizationAmountX((int) e.NewValue.Start, (int) e.NewValue.End);
+        }
+        
+        private void RandomizationYSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<DoubleRange> e)
+        {
+            RandomizationYSliderLabel.Content = $"RandomizationY: {(int)e.NewValue.Start} - {(int)e.NewValue.End}";
+            UpdateRandomizationAmountY((int) e.NewValue.Start, (int) e.NewValue.End);
+        }
+        
+        private void HorizontalModifierSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            HorizontalModifierLabel.Content = $"Horizontal Modifier: {Math.Round(HorizontalModifierSlider.Value, 2)}";
+            UpdateRecoilModifierX(Math.Round(HorizontalModifierSlider.Value, 2));
+        }
+
+        private void VerticalModifierSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            VerticalModifierLabel.Content = $"Vertical Modifier: {Math.Round(VerticalModifierSlider.Value, 2)}";
+            UpdateRecoilModifierY(Math.Round(VerticalModifierSlider.Value, 2));
         }
         
         private void ReverseRandomizationToggle_OnUnchecked(object sender, RoutedEventArgs e)
@@ -284,9 +310,24 @@ namespace WinApp.Windows.Rust
             SendMessage($"2 ChangeReverseRandomization {state}");
         }
         
-        private void UpdateRandomizationAmount(int start, int end)
+        private void UpdateRandomizationAmountX(int start, int end)
         {
-            SendMessage($"2 ChangeRandomizationAmount {start} {end}");
+            SendMessage($"2 ChangeRandomizationAmountX {start} {end}");
+        }
+        
+        private void UpdateRandomizationAmountY(int start, int end)
+        {
+            SendMessage($"2 ChangeRandomizationAmountY {start} {end}");
+        }
+        
+        private void UpdateRecoilModifierX(double value)
+        {
+            SendMessage($"2 ChangeRecoilModifierX {value}");
+        }
+        
+        private void UpdateRecoilModifierY(double value)
+        {
+            SendMessage($"2 ChangeRecoilModifierY {value}");
         }
     }
 }
