@@ -15,41 +15,68 @@ namespace Main.HID
     public class HidHandler
     {
         private const string MouseStreamPath = "/dev/input/mice";
-        // private const string KeyboardStreamPath = "/dev/input/event0";
+        private const string KeyboardStreamPath = "/dev/input/event0";
         
         private const string HumanInterfaceDeviceStreamPath = "/dev/hidg0";
 
-        private readonly FileStream _mouseFileStream;
-        // private readonly FileStream _keyboardFileStream;
+        private readonly FileStream? _mouseFileStream;
+        private readonly FileStream? _keyboardFileStream;
         
         private readonly FileStream _hidFileStream;
 
         public readonly KeyboardApiHandler KeyboardApiHandler;
         public readonly MouseApiHandler MouseApiHandler;
 
-        // public readonly HidKeyboardHandler HidKeyboardHandler;
-        public readonly HidMouseHandler HidMouseHandler;
+        public readonly HidKeyboardHandler? HidKeyboardHandler;
+        public readonly HidMouseHandler? HidMouseHandler;
         
         private readonly ReaderWriterLockSlim _hidWriteLock = new();
         
         public HidHandler(Settings settings)
         {
-            _mouseFileStream = File.Open(MouseStreamPath, FileMode.Open, FileAccess.ReadWrite); 
-            // _keyboardFileStream = File.Open(KeyboardStreamPath, FileMode.Open, FileAccess.Read); 
-            
+            if (File.Exists(MouseStreamPath))
+            {
+                _mouseFileStream = File.Open(MouseStreamPath, FileMode.Open, FileAccess.ReadWrite);
+            }
+            if (File.Exists(KeyboardStreamPath))
+            {
+                _keyboardFileStream = File.Open(KeyboardStreamPath, FileMode.Open, FileAccess.Read);
+            }
+
             _hidFileStream = File.Open(HumanInterfaceDeviceStreamPath, FileMode.Open, FileAccess.Write);
 
             KeyboardApiHandler = new(settings);
             MouseApiHandler = new(settings);
 
-            // HidKeyboardHandler = new(this, settings, _keyboardFileStream, _hidFileStream);
-            HidMouseHandler = new(this, settings, _mouseFileStream, _hidFileStream);
+            if (_keyboardFileStream != null)
+            {
+                HidKeyboardHandler = new(this, settings, _keyboardFileStream);
+            }
+            else
+            {
+                ConsoleUtils.WriteCentered("Failed to find Keyboard", "HidHandler");
+            }
+
+            if (_mouseFileStream != null)
+            {
+                HidMouseHandler = new(this, settings, _mouseFileStream);
+            }
+            else
+            {
+                ConsoleUtils.WriteCentered("Failed to find Mouse", "HidHandler");
+            }
         }
 
         public void Stop()
         {
-            _mouseFileStream.Close();
-            // _keyboardFileStream.Close();
+            if (_mouseFileStream != null)
+            {
+                _mouseFileStream.Close();
+            }
+            if (_keyboardFileStream != null)
+            {
+                _keyboardFileStream.Close();
+            }
             _hidFileStream.Close();
         }
         
@@ -87,7 +114,13 @@ namespace Main.HID
                 {
                     buffer[3] = keyboard.KeyCode.Value;
                 }
-                
+
+                buffer[4] = keyboard.ExtraKeys[0];
+                buffer[5] = keyboard.ExtraKeys[1];
+                buffer[6] = keyboard.ExtraKeys[2];
+                buffer[7] = keyboard.ExtraKeys[3];
+                buffer[8] = keyboard.ExtraKeys[4];
+
                 binaryWriter.Write(buffer);
                 binaryWriter.Flush();
             }

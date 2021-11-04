@@ -10,7 +10,7 @@ namespace Main.HID.Handler
     {
         public Mouse Mouse { get; private set; } = new();
         
-        public HidMouseHandler(HidHandler hidHandler, Settings settings, FileStream mouseFileStream, FileStream hidFileStream)
+        public HidMouseHandler(HidHandler hidHandler, Settings settings, FileStream mouseFileStream)
         {
             new Thread(() =>
             {

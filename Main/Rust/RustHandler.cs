@@ -54,6 +54,12 @@ namespace Main.Rust
         {
             while (true)
             {
+                if (_hidHandler.HidMouseHandler == null)
+                {
+                    ConsoleUtils.WriteCentered("Couldn't find a mouse stopping.. RustHandler", "RustHandler");
+                    break;
+                }
+
                 if(!_settings.Rust.State || !_hidHandler.HidMouseHandler.Mouse.LeftButton || !_hidHandler.HidMouseHandler.Mouse.RightButton)
                     Thread.Sleep(1);
                 if(!_settings.Rust.State)

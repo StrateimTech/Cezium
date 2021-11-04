@@ -22,22 +22,30 @@ var settings = new Settings();
 ConsoleUtils.WriteCentered($"Starting Human Interface Device handler.");
 HidHandler hidHandler = new(settings);
 
-RustHandler rustHandler = new(settings, hidHandler);
-var rustThreadHandler = new Thread(() =>
+if (hidHandler.HidMouseHandler != null)
 {
-    rustHandler.Start();
-})
+    ConsoleUtils.WriteCentered($"Starting Rust handler.");
+    RustHandler rustHandler = new(settings, hidHandler);
+    var rustThreadHandler = new Thread(() =>
+    {
+        rustHandler.Start();
+    })
+    {
+        IsBackground = true
+    };
+    rustThreadHandler.Start();
+    
+    ConsoleUtils.WriteCentered("Starting API server on port 200");
+    var apiThreadHandler = new Thread(() => new ApiServer(200, rustHandler, hidHandler, settings))
+    {
+        IsBackground = true
+    };
+    apiThreadHandler.Start();
+}
+else
 {
-                IsBackground = true
-};
-rustThreadHandler.Start();
-
-ConsoleUtils.WriteCentered("Starting API server on port 200");
-var apiThreadHandler = new Thread(() => new ApiServer(200, rustHandler, hidHandler, settings))
-{
-    IsBackground = true
-};
-apiThreadHandler.Start();
+    ConsoleUtils.WriteCentered($"Cannot start Rust handler without a mouse connected.");
+}
 
 ConsoleUtils.WriteCentered("Press any key to continue...");
 Console.ReadKey(true);
