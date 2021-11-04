@@ -25,8 +25,8 @@ namespace Main.HID.Handler
                             mouseSbyteArray[1] = settings.General.Mouse.InvertMouseX ? Convert.ToSByte(Convert.ToInt32(mouseSbyteArray[1]) * -1) : mouseSbyteArray[1];
                             mouseSbyteArray[2] = settings.General.Mouse.InvertMouseY ? mouseSbyteArray[2] : Convert.ToSByte(Convert.ToInt32(mouseSbyteArray[2]) * -1);
                             mouseSbyteArray[3] = settings.General.Mouse.InvertMouseWheel ? mouseSbyteArray[3] : Convert.ToSByte(Convert.ToInt32(mouseSbyteArray[3]) * -1);
-                        
-                            hidHandler.WriteMouseReport(Mouse = new Mouse()
+
+                            Mouse = new Mouse()
                             {
                                 LeftButton = (mouseSbyteArray[0] & 0x1) > 0,
                                 RightButton = (mouseSbyteArray[0] & 0x2) > 0,
@@ -36,9 +36,16 @@ namespace Main.HID.Handler
                                 Wheel = Convert.ToInt32(mouseSbyteArray[3]),
                                 ButtonBitArray = new BitArray(new[]
                                 {
-                                    (mouseSbyteArray[0] & 0x1) > 0, (mouseSbyteArray[0] & 0x2) > 0, (mouseSbyteArray[0] & 0x4) > 0, false, false, false, false, false
+                                    (mouseSbyteArray[0] & 0x1) > 0, (mouseSbyteArray[0] & 0x2) > 0,
+                                    (mouseSbyteArray[0] & 0x4) > 0, false, false, false, false, false
                                 })
-                            });
+                            };
+                            
+                            if (settings.General.Mouse.DebugState)
+                            {
+                                ConsoleUtils.WriteCentered($"Left Button: {Mouse.LeftButton}, Right Button: {Mouse.RightButton}, Middle Button: {Mouse.MiddleButton}, X: {Mouse.X}, Y: {Mouse.Y}, Wheel {Mouse.Wheel}");
+                            }
+                            hidHandler.WriteMouseReport(Mouse);
                         }
                     }
                 }

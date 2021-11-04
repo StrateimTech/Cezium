@@ -39,6 +39,16 @@ namespace WinApp.Windows.Mouse
                 InvertMouseWheel.IsEnabled = false;
             });
         }
+        
+        private void DebugButton_OnChecked(object sender, RoutedEventArgs e)
+        {
+            UpdateDebugState(true);
+        }
+
+        private void DebugButton_OnUnchecked(object sender, RoutedEventArgs e)
+        {
+            UpdateDebugState(false);
+        }
 
         private void InvertMouseX_OnUnchecked(object sender, RoutedEventArgs e)
         {
@@ -88,6 +98,11 @@ namespace WinApp.Windows.Mouse
         private void UpdateInvertMouseWheel(bool state)
         {
             SendMessage($"0 InvertMouseWheel {state}");
+        }
+        
+        private void UpdateDebugState(bool state)
+        {
+            SendMessage($"0 DebugState {state}");
         }
     }
 }

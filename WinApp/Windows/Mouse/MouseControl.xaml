@@ -48,14 +48,23 @@
             </StackPanel>
         </Grid>
         <Grid VerticalAlignment="Top">
-            <ToggleButton x:Name="StateButton" HorizontalAlignment="Left"
-                          Checked="StateButton_OnChecked"
-                          Unchecked="StateButton_OnUnchecked"
-                          IsChecked="true" Margin="16, -17, 0, 47" Content="State"
-                          Style="{StaticResource ToggleButtonSwitch}" Width="96" Height="96" Foreground="White" />
+            <Grid>
+                <ToggleButton x:Name="StateButton" HorizontalAlignment="Left"
+                              Checked="StateButton_OnChecked"
+                              Unchecked="StateButton_OnUnchecked"
+                              IsChecked="true" Margin="16, -17, 0, 47" Content="State"
+                              Style="{StaticResource ToggleButtonSwitch}" Width="96" Height="96" Foreground="White" />
+            </Grid>
             <Label HorizontalAlignment="Center" VerticalAlignment="Top" Content="Mouse Settings"
                    Background="Transparent" Margin="0, 14, 0, 0"
                    BorderThickness="0" Foreground="White" FontSize="16" FontFamily="Carter One" />
+            <Grid>
+                <ToggleButton x:Name="DebugButton" HorizontalAlignment="Right"
+                              Checked="DebugButton_OnChecked"
+                              Unchecked="DebugButton_OnUnchecked"
+                              IsChecked="false" Margin="16, -17, 16, 47" Content="Debug"
+                              Style="{StaticResource ToggleButtonSwitch}" Width="96" Height="96" Foreground="White" />
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

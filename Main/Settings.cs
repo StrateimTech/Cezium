@@ -8,6 +8,8 @@ namespace Main
 {
     public class Settings
     {
+        public string Version = "1.0.0";
+        
         public GeneralSettings General { get; } = new();
         
         public RustSettings Rust { get; } = new();
@@ -38,6 +40,11 @@ namespace Main
                 /// Whether to invert mouse wheel when sending to separate machine.
                 /// </summary>
                 public bool InvertMouseWheel = false;
+                
+                /// <summary>
+                /// Whether or not to output debug information to console.
+                /// </summary>
+                public bool DebugState = false;
             }
             
             public class KeyboardSettings
@@ -46,11 +53,21 @@ namespace Main
                 /// Whether to use the keyboard or not.
                 /// </summary>
                 public bool KeyboardState = true;
+                
+                /// <summary>
+                /// Whether or not to output debug information to console.
+                /// </summary>
+                public bool DebugState = false;
             }
         }
 
         public class RustSettings
         {
+            /// <summary>
+            /// Whether or not to output debug information to console.
+            /// </summary>
+            public bool DebugState = false;
+            
             public enum Guns
             {
                 ASSAULTRIFLE,

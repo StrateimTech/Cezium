@@ -19,20 +19,34 @@ namespace Main.HID.API
                 switch (data[1])
                 {
                     case "MouseState":
+                    {
                         Boolean.TryParse(data[2], out bool value);
                         _settings.General.Mouse.MouseState = value;
+                    }
                         break;
                     case "InvertMouseY":
-                        Boolean.TryParse(data[2], out bool value2);
-                        _settings.General.Mouse.InvertMouseY = value2;
+                    {
+                        Boolean.TryParse(data[2], out bool value);
+                        _settings.General.Mouse.InvertMouseY = value;
+                    }
                         break;
                     case "InvertMouseX":
-                        Boolean.TryParse(data[2], out bool value3);
-                        _settings.General.Mouse.InvertMouseX = value3;
+                    {
+                        Boolean.TryParse(data[2], out bool value);
+                        _settings.General.Mouse.InvertMouseX = value;
+                    }
                         break;
                     case "InvertMouseWheel":
-                        Boolean.TryParse(data[2], out bool value4);
-                        _settings.General.Mouse.InvertMouseWheel = value4;
+                    {
+                        Boolean.TryParse(data[2], out bool value);
+                        _settings.General.Mouse.InvertMouseWheel = value;
+                    }
+                        break;
+                    case "DebugState":
+                    {
+                        Boolean.TryParse(data[2], out bool value);
+                        _settings.General.Mouse.DebugState = value;
+                    } 
                         break;
                 }
             }

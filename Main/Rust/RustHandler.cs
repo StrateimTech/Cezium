@@ -90,8 +90,11 @@ namespace Main.Rust
                     {
                         var invertedLastX = _lastRandomization.Item1 * -1;
                         var invertedLastY = _lastRandomization.Item2 * -1;
-                        
-                        ConsoleUtils.WriteCentered($"InvertedLastX: {invertedLastX}, InvertedLastY: {invertedLastY}");
+
+                        if (_settings.Rust.DebugState)
+                        {
+                            ConsoleUtils.WriteCentered($"Reverse Randomization: InvertedLastX: {invertedLastX}, InvertedLastY: {invertedLastY}");
+                        }
 
                         gunPixelX += invertedLastX;
                         gunPixelY += invertedLastY;
@@ -107,8 +110,11 @@ namespace Main.Rust
                         
                         xRandom = xBool ? xRandom : xRandom * -1;
                         yRandom = yBool ? yRandom : yRandom * -1;
-                        
-                        ConsoleUtils.WriteCentered($"xRandom: {xRandom}, yRandom: {yRandom}");
+
+                        if (_settings.Rust.DebugState)
+                        {
+                            ConsoleUtils.WriteCentered($"Randomization: xRandom: {xRandom}, yRandom: {yRandom}");
+                        }
                         
                         gunPixelX += xRandom;
                         gunPixelY += yRandom;
@@ -121,6 +127,11 @@ namespace Main.Rust
                     var smoothing = _settings.Rust.Smoothness;
                     var sleep = (delay / smoothing) * CurrentWeapon.Item6.Item2;
 
+                    if (_settings.Rust.DebugState)
+                    {
+                        ConsoleUtils.WriteCentered($"Bullet: {_bullet}, Smoothing: {smoothing}, Sleep: {sleep}, X: {gunPixelX}, Y: {gunPixelY}");
+                    }
+                    
                     for (int i = 0; i < smoothing; i++)
                     {
                         if(!_hidHandler.HidMouseHandler.Mouse.LeftButton || !_hidHandler.HidMouseHandler.Mouse.LeftButton)

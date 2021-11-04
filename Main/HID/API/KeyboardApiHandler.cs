@@ -14,7 +14,25 @@ namespace Main.HID.API
         
         public string? HandlePacket(string[] data)
         {
-            throw new NotImplementedException();
+            if (data.Length > 0)
+            {
+                switch (data[1])
+                {
+                    case "KeyboardState":
+                    {
+                        Boolean.TryParse(data[2], out bool value);
+                        _settings.General.Keyboard.KeyboardState = value;
+                    }
+                        break;
+                    case "DebugState":
+                    {
+                        Boolean.TryParse(data[2], out bool value);
+                        _settings.General.Keyboard.DebugState = value;
+                    } 
+                        break;
+                }
+            }
+            return null;
         }
     }
 }

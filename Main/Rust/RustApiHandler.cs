@@ -1,6 +1,5 @@
 ﻿using System;
 using Main.API;
-using Main.Utils;
 
 namespace Main.Rust
 {
@@ -22,56 +21,87 @@ namespace Main.Rust
                 switch (data[1])
                 {
                     case "ChangeState":
+                    {
                         Boolean.TryParse(data[2], out bool value);
                         _settings.Rust.State = value;
+                    }
                         break;
                     case "ChangeFov":
-                        Int32.TryParse(data[2], out Int32 value2);
-                        _settings.Rust.Fov = value2;
+                    {
+                        Int32.TryParse(data[2], out Int32 value);
+                        _settings.Rust.Fov = value;
                         _rustHandler.PixelTable = _rustHandler.CalculatePixelTables(_rustHandler.CurrentWeapon.Item2);
+                    }
                         break;
                     case "ChangeSens":
-                        Double.TryParse(data[2], out double value3);
-                        _settings.Rust.Sensitivity = value3;
+                    {
+                        Double.TryParse(data[2], out double value);
+                        _settings.Rust.Sensitivity = value;
                         _rustHandler.PixelTable = _rustHandler.CalculatePixelTables(_rustHandler.CurrentWeapon.Item2);
+                    }
                         break;
                     case "ChangeGun":
+                    {
                         _rustHandler.UpdateGun(data[2], data[3], data[4]);
+                    }
                         break;
                     case "ChangeSmoothness":
-                        Int32.TryParse(data[2], out Int32 value4);
-                        _settings.Rust.Smoothness = value4;
+                    {
+                        Int32.TryParse(data[2], out Int32 value);
+                        _settings.Rust.Smoothness = value;
+                    }
                         break;
                     case "ChangeAmmoReset":
-                        Boolean.TryParse(data[2], out bool value5);
-                        _settings.Rust.AmmoReset = value5;
+                    {
+                        Boolean.TryParse(data[2], out bool value);
+                        _settings.Rust.AmmoReset = value;
+                    }
                         break;
-                    
+
                     case "ChangeRandomization":
-                        Boolean.TryParse(data[2], out bool value6);
-                        _settings.Rust.Randomization = value6;
+                    {
+                        Boolean.TryParse(data[2], out bool value);
+                        _settings.Rust.Randomization = value;
+                    }
                         break;
                     case "ChangeReverseRandomization":
-                        Boolean.TryParse(data[2], out bool value7);
-                        _settings.Rust.ReverseRandomization = value7;
+                    {
+                        Boolean.TryParse(data[2], out bool value);
+                        _settings.Rust.ReverseRandomization = value;
+                    }
+
                         break;
                     case "ChangeRandomizationAmountX":
-                        Int32.TryParse(data[2], out Int32 value8);
-                        Int32.TryParse(data[3], out Int32 value9);
-                        _settings.Rust.RandomizationAmountX = new(value8, value9);
+                    {
+                        Int32.TryParse(data[2], out Int32 value);
+                        Int32.TryParse(data[3], out Int32 value2);
+                        _settings.Rust.RandomizationAmountX = new(value, value2);
+                    }
                         break;
                     case "ChangeRandomizationAmountY":
-                        Int32.TryParse(data[2], out Int32 value10);
-                        Int32.TryParse(data[3], out Int32 value11);
-                        _settings.Rust.RandomizationAmountY = new(value10, value11);
+                    {
+                        Int32.TryParse(data[2], out Int32 value);
+                        Int32.TryParse(data[3], out Int32 value2);
+                        _settings.Rust.RandomizationAmountY = new(value, value2);
+                    }
                         break;
                     case "ChangeRecoilModifierX":
-                        Double.TryParse(data[2], out double value12);
-                        _settings.Rust.RecoilModifier = new(value12, _settings.Rust.RecoilModifier.Item2);
+                    {
+                        Double.TryParse(data[2], out double value);
+                        _settings.Rust.RecoilModifier = new(value, _settings.Rust.RecoilModifier.Item2);
+                    }
                         break;
                     case "ChangeRecoilModifierY":
-                        Double.TryParse(data[2], out double value13);
-                        _settings.Rust.RecoilModifier = new(_settings.Rust.RecoilModifier.Item1, value13);
+                    {
+                        Double.TryParse(data[2], out double value);
+                        _settings.Rust.RecoilModifier = new(_settings.Rust.RecoilModifier.Item1, value);
+                    }
+                        break;
+                    case "DebugState":
+                    {
+                        Boolean.TryParse(data[2], out bool value);
+                        _settings.Rust.DebugState = value;
+                    }
                         break;
                 }
             }

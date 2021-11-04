@@ -38,6 +38,10 @@ namespace Main.HID.Handler
                         {
                             case Keyboard.EventType.EV_KEY:
                             {
+                                if (settings.General.Keyboard.DebugState)
+                                {
+                                    ConsoleUtils.WriteCentered($"Key: {keyCode} | {code}, KeyState: {keyState} | {value}, EventType: {eventType} | {type}");
+                                }
                                 switch (keyState)
                                 {
                                     case Keyboard.KeyState.KeyHold:
@@ -51,7 +55,10 @@ namespace Main.HID.Handler
                                         
                                         if (!Enum.IsDefined(typeof(Keyboard.UsbKeyCodeModifiers), keyCode.ToString()) && !Enum.IsDefined(typeof(Keyboard.UsbKeyCode), keyCode.ToString()))
                                         {
-                                            ConsoleUtils.WriteCentered($"Unknown Key: {keyCode.ToString()}\n");
+                                            if (settings.General.Keyboard.DebugState)
+                                            {
+                                                ConsoleUtils.WriteCentered($"Unknown Key: {keyCode.ToString()}\n");
+                                            }
                                             break;
                                         }
 
@@ -91,7 +98,6 @@ namespace Main.HID.Handler
                                                 else
                                                 {
                                                     keyboard.ExtraKeys[i] = Convert.ToByte(Enum.Parse(typeof(Keyboard.UsbKeyCode), ((Keyboard.LinuxKeyCode)_keysDown[i]).ToString()));
-                                                    ConsoleUtils.WriteCentered($"{((Keyboard.UsbKeyCode) keyboard.ExtraKeys[i])}, {(Keyboard.LinuxKeyCode)_keysDown[i]}");
                                                 }
                                             }
                                         }
@@ -138,7 +144,6 @@ namespace Main.HID.Handler
                                                 else
                                                 {
                                                     keyboard.ExtraKeys[i] = Convert.ToByte(Enum.Parse(typeof(Keyboard.UsbKeyCode), ((Keyboard.LinuxKeyCode)_keysDown[i]).ToString()));
-                                                    ConsoleUtils.WriteCentered($"{((Keyboard.UsbKeyCode) keyboard.ExtraKeys[i])}, {(Keyboard.LinuxKeyCode)_keysDown[i]}");
                                                 }
                                             }
                                         }

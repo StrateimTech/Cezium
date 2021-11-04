@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using HandyControl.Data;
-using WinApp.Windows.Home;
 using static WinApp.Utils.ServerUtil;
 
 namespace WinApp.Windows.Rust
@@ -250,6 +248,16 @@ namespace WinApp.Windows.Rust
             UpdateRecoilModifierY(Math.Round(VerticalModifierSlider.Value, 2));
         }
         
+        private void DebugButton_OnChecked(object sender, RoutedEventArgs e)
+        {
+            UpdateDebugState(true);
+        }
+
+        private void DebugButton_OnUnchecked(object sender, RoutedEventArgs e)
+        {
+            UpdateDebugState(false);
+        }
+        
         private void ReverseRandomizationToggle_OnUnchecked(object sender, RoutedEventArgs e)
         {
             UpdateReverseRandomization(false);
@@ -328,6 +336,11 @@ namespace WinApp.Windows.Rust
         private void UpdateRecoilModifierY(double value)
         {
             SendMessage($"2 ChangeRecoilModifierY {value}");
+        }
+        
+        private void UpdateDebugState(bool state)
+        {
+            SendMessage($"2 DebugState {state}");
         }
     }
 }

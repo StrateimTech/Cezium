@@ -31,7 +31,7 @@ namespace Main.API
                     case "GetRustState":
                         return $"{_settings.Rust.State}";
                     case "GetServerVersion":
-                        return $"1.0.0";
+                        return $"{_settings.Version}";
                 }
             }
 

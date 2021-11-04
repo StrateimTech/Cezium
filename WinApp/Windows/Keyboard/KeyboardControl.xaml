@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:WinApp.Windows.Keyboard"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             hc:Theme.Skin="Dark">
     <Grid>
         <Grid x:Name="MainGrid">
             <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -16,14 +18,24 @@
             </StackPanel>
         </Grid>
         <Grid VerticalAlignment="Top">
-            <ToggleButton x:Name="StateButton" HorizontalAlignment="Left" 
-                          Checked="StateButton_OnChecked"
-                          Unchecked="StateButton_OnUnchecked"
-                          IsChecked="True" Margin="16, -17, 0, 47" Content="State"
-                          Style="{StaticResource ToggleButtonSwitch}" Width="96" Height="96" Foreground="White"
-                          />
+            <Grid>
+                <ToggleButton x:Name="StateButton" HorizontalAlignment="Left" 
+                              Checked="StateButton_OnChecked"
+                              Unchecked="StateButton_OnUnchecked"
+                              IsChecked="True" Margin="16, -17, 0, 47" Content="State"
+                              Style="{StaticResource ToggleButtonSwitch}" Width="96" Height="96" Foreground="White"
+                />
+            </Grid>
             <Label HorizontalAlignment="Center" VerticalAlignment="Top" Content="Keyboard Settings" Background="Transparent" Margin="0, 14, 0, 0"
                    BorderThickness="0" Foreground="White" FontSize="16" FontFamily="Carter One" />
+            <Grid>
+                <ToggleButton x:Name="DebugButton" HorizontalAlignment="Right" 
+                              Checked="DebugButton_OnChecked"
+                              Unchecked="DebugButton_OnUnchecked"
+                              IsChecked="False" Margin="16, -17, 16, 47" Content="Debug"
+                              Style="{StaticResource ToggleButtonSwitch}" Width="96" Height="96" Foreground="White"
+                />
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>
