@@ -121,7 +121,8 @@ namespace Main
 
             public Attachments CurrentAttachment;
             
-            public Scopes CurrentScope;            
+            public Scopes CurrentScope;          
+			
             
             public bool AmmoReset = false;
             
@@ -132,6 +133,7 @@ namespace Main
             public int Fov = 90;
 
             public bool State = true;
+			
 
             public bool Randomization = false;
             
