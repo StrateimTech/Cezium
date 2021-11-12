@@ -134,6 +134,7 @@ namespace Main
 
             public bool State = true;
 
+///
             public bool Randomization = false;
             
             public bool ReverseRandomization = false;
