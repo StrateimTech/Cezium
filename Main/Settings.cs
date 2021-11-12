@@ -133,7 +133,6 @@ namespace Main
             public int Fov = 90;
 
             public bool State = true;
-			
 
             public bool Randomization = false;
             
