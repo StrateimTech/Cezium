@@ -1,15 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace Loader
 {
     class Program
     {
-        // private const string DllPath = @"C:\Users\Etho\Desktop\ConsoleLibrary.dll";
-        // private const string DllPath = @"E:\Programming\C#\ConsoleLibrary\publish\ConsoleLibrary.dll";
-
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             if (args.Length == 0)
             {
@@ -22,35 +20,34 @@ namespace Loader
                 return;
             }
 
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                throw new Exception($"Platform not supported ({Environment.OSVersion})");
+            }
+
             byte[] fileBytes = File.ReadAllBytes(args[0]);
             Console.WriteLine($"File Size: {fileBytes.Length}");
-
-            var assembly = Assembly.Load(fileBytes);
-
+            
+            LoadAssembly(Assembly.Load(fileBytes));
             Array.Clear(fileBytes, 0, fileBytes.Length);
+        }
 
-            Type t = assembly.GetType("Client.Program");
+        private static void LoadAssembly(object assembly)
+        {
+            Type t = ((Assembly)assembly).GetType("Client.Program");
             if (t == null)
             {
-                foreach (var type in assembly.GetTypes())
-                {
-                    Console.WriteLine($"TName: {type.Name}");
-                }
-                throw new Exception("No such type exists.");
+                throw new Exception("[TypeLoader] No such type exists.");
             }
 
             var methodInfo = t.GetMethod("Main");
             if (methodInfo == null)
             {
-                foreach (var methods in t.GetMethods())
-                {
-                    Console.WriteLine($"MName: {methods.Name}");
-                }
-                throw new Exception("No such method exists.");
+                throw new Exception("[MethodLoader] No such method exists.");
             }
 
             var o = Activator.CreateInstance(t);
-            var r = methodInfo.Invoke(o, null);
+            methodInfo.Invoke(o, null);
         }
     }
 }
