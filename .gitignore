@@ -39,6 +39,7 @@ nupkg/
 **/.idea/**/dynamic.xml
 
 # Build results
+[Pp]ublish/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/

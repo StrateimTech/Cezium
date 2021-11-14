@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Main", "Main\Main.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinApp", "WinApp\WinApp.csproj", "{2DEF2325-7A48-4954-89A9-6A27F46C31BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loader", "Loader\Loader.csproj", "{4D7CFEA1-456D-4708-B74B-420DB64F402A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{5A1F0443-A90E-4AD4-9A83-CBC20946EDD8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{2DEF2325-7A48-4954-89A9-6A27F46C31BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DEF2325-7A48-4954-89A9-6A27F46C31BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DEF2325-7A48-4954-89A9-6A27F46C31BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D7CFEA1-456D-4708-B74B-420DB64F402A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D7CFEA1-456D-4708-B74B-420DB64F402A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D7CFEA1-456D-4708-B74B-420DB64F402A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D7CFEA1-456D-4708-B74B-420DB64F402A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A1F0443-A90E-4AD4-9A83-CBC20946EDD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A1F0443-A90E-4AD4-9A83-CBC20946EDD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A1F0443-A90E-4AD4-9A83-CBC20946EDD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A1F0443-A90E-4AD4-9A83-CBC20946EDD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
