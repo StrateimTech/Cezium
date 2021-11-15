@@ -12,6 +12,12 @@ namespace Server
         
         static void Main(string[] args)
         {
+            byte[] fileAssemblyBytes = File.ReadAllBytes(@"E:\Programming\Projects\StrateimTech\Cezium\Client\publish\Client.dll");
+            
+            var obfuscatedAssembly = AssemblyUtils.GetObfuscatedAssembly(fileAssemblyBytes);
+            
+            Console.WriteLine($"Length: {obfuscatedAssembly.Length}");
+            File.WriteAllBytes(@"E:\TestAssembly.dll", obfuscatedAssembly);
         }
 
         public void ProcessRequest()
@@ -21,7 +27,7 @@ namespace Server
             
             //Check if account data exists blah blah blah...
 
-            byte[] fileAssemblyBytes = File.ReadAllBytes("a");
+            byte[] fileAssemblyBytes = File.ReadAllBytes(@"E:\Programming\C#\ConsoleLibrary\publish\ConsoleLibrary.dll");
 
             var obfuscatedAssembly = AssemblyUtils.GetObfuscatedAssembly(fileAssemblyBytes);
 
