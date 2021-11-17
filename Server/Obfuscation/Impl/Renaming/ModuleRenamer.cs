@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using dnlib.DotNet;
 using Server.Utils;
 
@@ -16,9 +17,13 @@ namespace Server.Obfuscation.Impl.Renaming
                 foreach (var typeDef in moduleDef.Types)
                 {
                     Console.WriteLine($"TDName: {typeDef.Name}");
-                    if(typeDef.Name != "Program")
+                    if (typeDef.Name != "Program")
+                    {
                         typeDef.Name = RandomizationUtils.RandomString(_stringLength);
-                    foreach (var fieldDef in typeDef.Fields)
+                        typeDef.Namespace = RandomizationUtils.RandomString(_stringLength);
+                    }
+                    
+                    foreach (var fieldDef in typeDef.Fields)    
                     {
                         Console.WriteLine($"FDName: {fieldDef.Name}");
                         fieldDef.Name = RandomizationUtils.RandomString(_stringLength);
@@ -26,16 +31,30 @@ namespace Server.Obfuscation.Impl.Renaming
                     
                     foreach (var methodDef in typeDef.Methods)
                     {
-                        if(methodDef.IsConstructor || methodDef.Name == "Main")
-                            continue;
                         Console.WriteLine($"MDName: {methodDef.Name}");
-                        methodDef.Name = RandomizationUtils.RandomString(_stringLength);
+                        
+                        foreach (var parameter in methodDef.Parameters)
+                        {
+                            Console.WriteLine($"MP: {parameter.Name}");
+                            parameter.Name = RandomizationUtils.RandomString(_stringLength);
+                        }
+                        
+                        // if(methodDef.Name == "Main")
+                            // continue;
+                        // Console.WriteLine($"MDName: {methodDef.Name}");
+                        // methodDef.Name = RandomizationUtils.RandomString(_stringLength);
                     }
                     
                     foreach (var propertyDef in typeDef.Properties)
                     {
                         Console.WriteLine($"PD: {propertyDef.Name}");
                         propertyDef.Name = RandomizationUtils.RandomString(_stringLength);
+                    
+                        // foreach (var methodDef in propertyDef.GetMethods)
+                        // {
+                        //     Console.WriteLine($"PD MD: {methodDef.Name}");
+                        //     methodDef.Name = RandomizationUtils.RandomString(_stringLength);
+                        // }
                     }
                     
                     foreach (var genericParameter in typeDef.GenericParameters)

@@ -1,7 +1,7 @@
 ﻿using System;
-using Main.API;
+using Client.API;
 
-namespace Main.HID.API
+namespace Client.HID.API
 {
     public class MouseApiHandler : IApiHandler
     {

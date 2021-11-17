@@ -17,7 +17,7 @@ namespace Server
             var obfuscatedAssembly = AssemblyUtils.GetObfuscatedAssembly(fileAssemblyBytes);
             
             Console.WriteLine($"Length: {obfuscatedAssembly.Length}");
-            File.WriteAllBytes(@"E:\TestAssembly.dll", obfuscatedAssembly);
+            File.WriteAllBytes(@"E:\TestAssemblyA.dll", obfuscatedAssembly);
         }
 
         public void ProcessRequest()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -34,18 +35,23 @@ namespace Loader
 
         private static void LoadAssembly(object assembly)
         {
+            foreach (var VARIABLE in ((Assembly)assembly).GetTypes())
+            {
+                Console.WriteLine(VARIABLE.Name);
+            }
+            
             Type t = ((Assembly)assembly).GetType("Client.Program");
             if (t == null)
             {
                 throw new Exception("[TypeLoader] No such type exists.");
             }
-
+            
             var methodInfo = t.GetMethod("Main");
             if (methodInfo == null)
             {
                 throw new Exception("[MethodLoader] No such method exists.");
             }
-
+            
             var o = Activator.CreateInstance(t);
             methodInfo.Invoke(o, null);
         }

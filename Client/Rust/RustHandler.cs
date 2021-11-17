@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using Main.HID;
-using Main.Utils;
+using Client.HID;
+using Client.Utils;
 
-namespace Main.Rust
+namespace Client.Rust
 {
     public class RustHandler
     {

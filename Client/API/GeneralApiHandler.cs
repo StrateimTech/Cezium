@@ -1,9 +1,6 @@
-﻿using System;
-using System.Diagnostics;
-using Main.HID;
-using Main.Rust;
+﻿using System.Diagnostics;
 
-namespace Main.API
+namespace Client.API
 {
     public class GeneralApiHandler : IApiHandler
     {

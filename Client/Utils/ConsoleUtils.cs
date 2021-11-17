@@ -1,6 +1,6 @@
 using System;
 
-namespace Main.Utils
+namespace Client.Utils
 {
     public static class ConsoleUtils
     {

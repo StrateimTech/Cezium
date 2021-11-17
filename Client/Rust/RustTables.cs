@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Main.Rust
+namespace Client.Rust
 {
     public static class RustTables
     {

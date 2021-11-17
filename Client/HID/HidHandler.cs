@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Buffers.Binary;
-using System.Collections;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using Main.HID.API;
-using Main.HID.Handler;
-using Main.Utils;
+using Client.HID.API;
+using Client.HID.Handler;
+using Client.Utils;
 
-namespace Main.HID
+namespace Client.HID
 {
     
     public class HidHandler

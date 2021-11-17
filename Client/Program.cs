@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Threading;
+using Client.API;
+using Client.HID;
+using Client.Rust;
+using Client.Utils;
 using Figgle;
-using Main;
-using Main.API;
-using Main.HID;
-using Main.Rust;
-using Main.Utils;
 
 namespace Client
 {

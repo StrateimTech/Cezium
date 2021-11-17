@@ -1,7 +1,7 @@
 using System.IO;
 using System.Text;
 
-namespace Main.Utils
+namespace Client.Utils
 {
     public static class FileUtils
     {

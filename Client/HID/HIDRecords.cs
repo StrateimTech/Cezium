@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 
-namespace Main.HID
+namespace Client.HID
 {
     public record Mouse
     {

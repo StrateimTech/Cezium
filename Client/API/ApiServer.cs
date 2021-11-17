@@ -2,11 +2,10 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using Main.HID;
-using Main.Rust;
-using Main.Utils;
+using Client.HID;
+using Client.Rust;
 
-namespace Main.API
+namespace Client.API
 {
     public class ApiServer
     {

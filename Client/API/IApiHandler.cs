@@ -1,5 +1,5 @@
 ﻿
-namespace Main.API
+namespace Client.API
 {
     public interface IApiHandler
     {

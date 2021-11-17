@@ -1,9 +1,7 @@
-﻿
-using System;
-using Main.HID;
-using Main.Rust;
+﻿using Client.HID;
+using Client.Rust;
 
-namespace Main.API
+namespace Client.API
 {
     public class ApiHandler : IApiHandler
     {

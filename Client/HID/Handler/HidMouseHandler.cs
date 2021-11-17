@@ -2,9 +2,9 @@
 using System.Collections;
 using System.IO;
 using System.Threading;
-using Main.Utils;
+using Client.Utils;
 
-namespace Main.HID.Handler
+namespace Client.HID.Handler
 {
     public class HidMouseHandler
     {

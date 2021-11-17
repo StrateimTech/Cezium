@@ -1,7 +1,7 @@
 ﻿using System;
-using Main.API;
+using Client.API;
 
-namespace Main.Rust
+namespace Client.Rust
 {
     public class RustApiHandler : IApiHandler
     {

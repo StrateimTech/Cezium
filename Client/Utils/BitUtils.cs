@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.IO;
 
-namespace Main.Utils
+namespace Client.Utils
 {
     public static class BitUtils
     {
