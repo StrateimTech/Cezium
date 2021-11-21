@@ -31,7 +31,7 @@ namespace Server.Network.Packets
 
         protected byte[] GetBuffer(Packet packet)
         {
-            byte[] output = new byte[256];
+            byte[] output = new byte[1];
             output[0] = (byte) packet.Id;
 
             foreach (var fieldInfo in packet.GetType().GetFields())
@@ -57,7 +57,6 @@ namespace Server.Network.Packets
                     }
                     if (bytes != null)
                     {
-                        ConsoleUtils.WriteLine($"Length: {bytes.Length}");
                         output = ByteUtils.CombineArray(output, bytes);
                     }
                 }

@@ -17,7 +17,6 @@ namespace Server.Network.Packets
             new VersionPacket()
         };
 
-
         public bool Handle(ClientWrapper client, NetworkStream clientStream)
         {
             if (!client.Connected)
