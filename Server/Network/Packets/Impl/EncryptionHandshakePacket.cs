@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Net.Sockets;
+using System.Security.Cryptography;
+using System.Text;
+using Server.Utils;
 
 namespace Server.Network.Packets.Impl
 {
     public class EncryptionHandshakePacket : Packet
     {
-        public EncryptionHandshakePacket()
+        public EncryptionHandshakePacket(ClientWrapper client)
         {
             Id = 2;
+            Client = client;
         }
-
-        public string a = "lol";
-        public int b = 123;
-        public bool c = true;
-
+        
         public override void Handle(byte[] buffer, NetworkStream clientStream)
         {
+            base.Handle(buffer, clientStream);
+            throw new NotImplementedException();
         }
     }
 }

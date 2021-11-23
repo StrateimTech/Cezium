@@ -7,11 +7,15 @@ namespace Server.Network.Packets
 {
     public abstract class Packet
     {
+        protected static ClientWrapper Client;
         public int Id = 0;
 
         private int _offset;
 
-        public abstract void Handle(byte[] buffer, NetworkStream clientStream);
+        public virtual void Handle(byte[] buffer, NetworkStream clientStream)
+        {
+            _offset = 0;
+        }
 
         protected byte[] ReadBuffer(int length, byte[] buffer)
         {
@@ -24,44 +28,11 @@ namespace Server.Network.Packets
             return output;
         }
 
-        protected void SendPacket(byte[] buffer, NetworkStream clientStream)
+        protected void SendPacket(Packet packet, NetworkStream clientStream)
         {
+            var buffer = PacketUtils.GetBuffer(packet);
+            Array.Resize(ref buffer, 2048);
             clientStream.Write(buffer, 0, buffer.Length);
-        }
-
-        protected byte[] GetBuffer(Packet packet)
-        {
-            byte[] output = new byte[1];
-            output[0] = (byte) packet.Id;
-
-            foreach (var fieldInfo in packet.GetType().GetFields())
-            {
-                if(fieldInfo.Name == "Id")
-                    continue;
-                ConsoleUtils.WriteLine($"Name: {fieldInfo.Name} Type: {fieldInfo.FieldType.Name}");
-                var value = fieldInfo.GetValue(packet);
-                ConsoleUtils.WriteLine($"{value}");
-                
-                var converted = Convert.ChangeType(value, fieldInfo.FieldType);
-                if (converted != null)
-                {
-                    byte[] bytes;
-                    if (fieldInfo.FieldType == typeof(string))
-                    {
-                        bytes = Encoding.Unicode.GetBytes((string)converted);
-                    }
-                    else
-                    {
-                        bytes = (byte[])typeof(BitConverter).GetMethod("GetBytes", new [] {fieldInfo.FieldType})
-                            ?.Invoke(null,new []{converted});
-                    }
-                    if (bytes != null)
-                    {
-                        output = ByteUtils.CombineArray(output, bytes);
-                    }
-                }
-            }
-            return output;
         }
     }
 }

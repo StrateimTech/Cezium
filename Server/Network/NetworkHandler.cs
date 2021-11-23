@@ -5,7 +5,6 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Server.Network.Packets;
-using Server.Network.Wrappers;
 using Server.Utils;
 
 namespace Server.Network
@@ -13,7 +12,6 @@ namespace Server.Network
     public class NetworkHandler
     {
         private TcpListener _serverListener;
-        private readonly PacketHandler _packetHandler = new();
         
         private bool _disposed;
         
@@ -58,14 +56,15 @@ namespace Server.Network
 
         private void HandleClient(TcpClient client)
         {
+            var clientWrapper = new ClientWrapper();
+            var packetHandler = new PacketHandler(clientWrapper);
             var clientStream = client.GetStream();
-            var clientWrapper = new ClientWrapper(client);
             
             while (clientWrapper.Connected)
             {
                 try
                 {
-                    if (!_packetHandler.Handle(clientWrapper, clientStream))
+                    if (!packetHandler.Handle(clientWrapper, clientStream))
                     {
                         clientWrapper.Connected = false;
                         break;
@@ -73,7 +72,7 @@ namespace Server.Network
                 }
                 catch (Exception ex)
                 {
-                    ConsoleUtils.WriteLine(ex.Message, GetType().Name);
+                    ConsoleUtils.WriteLine(ex is IOException ? ex.Message : ex.ToString(), GetType().Name);
                     if (ex is IOException)
                     {
                         clientWrapper.Connected = false;
