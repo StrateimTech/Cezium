@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text;
-using Server.Network.Packets;
+using Loader.Network.Packets;
 
-namespace Server.Utils
+namespace Loader.Utils
 {
     public static class PacketUtils
     {

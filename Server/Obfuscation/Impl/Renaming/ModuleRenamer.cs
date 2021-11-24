@@ -9,17 +9,25 @@ namespace Server.Obfuscation.Impl.Renaming
     {
         private readonly int _stringLength = 16;
 
+        public string path;
+        public string main;
+
         public void Handle(ModuleDefMD md)
         {
             foreach (var moduleDef in md.Assembly.Modules)
             {
                 foreach (var typeDef in moduleDef.Types)
                 {
-                    if (typeDef.Name != "Program")
+                    var randomTypeName = RandomizationUtils.RandomString(_stringLength);
+                    var randomTypeNamespace = RandomizationUtils.RandomString(_stringLength);
+
+                    if (typeDef.Name == "Program")
                     {
-                        typeDef.Name = RandomizationUtils.RandomString(_stringLength);
-                        typeDef.Namespace = RandomizationUtils.RandomString(_stringLength);
+                        ConsoleUtils.WriteLine($"{typeDef.Name} {typeDef.Namespace}");
+                        path = $"{randomTypeNamespace}.{randomTypeName}";
                     }
+                    typeDef.Name = randomTypeName;
+                    typeDef.Namespace = randomTypeNamespace;
                     
                     foreach (var fieldDef in typeDef.Fields)    
                     {
@@ -28,14 +36,24 @@ namespace Server.Obfuscation.Impl.Renaming
                     
                     foreach (var methodDef in typeDef.Methods)
                     {
+                        if(methodDef.IsConstructor || methodDef.IsGetter || methodDef.IsSetter || methodDef.IsVirtual)
+                            continue;
+                        
                         foreach (var parameter in methodDef.Parameters)
                         {
                             parameter.Name = RandomizationUtils.RandomString(_stringLength);
                         }
+
+                        var randomString = RandomizationUtils.RandomString(64);
+                        if (methodDef.Name == "Main")
+                        {
+                            main = randomString;
+                        }
+                        ConsoleUtils.WriteLine($"Name: {methodDef.Name}, {randomString}");
+                        ConsoleUtils.WriteLine($"{methodDef.IsRuntime} | {methodDef.IsVirtual} | {methodDef.IsAbstract} | {methodDef.IsAssembly} | {methodDef.IsFamily} | {methodDef.IsFinal} | {methodDef.IsFire} | {methodDef.IsGetter} | {methodDef.IsManaged} | {methodDef.IsNative}");
+                        ConsoleUtils.WriteLine($"{methodDef.IsInternalCall}");
                         
-                        if(methodDef.Name == "Main")
-                            continue;
-                        methodDef.Name = RandomizationUtils.RandomString(_stringLength);
+                        methodDef.Name = randomString;
                     }
                     
                     foreach (var propertyDef in typeDef.Properties)

@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using Loader.Network;
+using Loader.Network.Packets.Impl;
 
 namespace Loader
 {
@@ -10,50 +12,41 @@ namespace Loader
     {
         private static void Main(string[] args)
         {
-            if (args.Length == 0)
+            // if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            // {
+                // throw new Exception($"Platform not supported ({Environment.OSVersion})");
+            // }
+            
+            var networkHandler = new NetworkHandler();
+            networkHandler.Connect("127.0.0.1", 3000);
+            
+            Console.WriteLine("Enter Account Id: ");
+            var outputId = Console.ReadLine();
+            Int32.TryParse(outputId, out int id);
+            
+            if (outputId == null)
             {
-                Console.WriteLine("Arguments cannot be zero!");
+                Console.WriteLine("Account ID is null");
+                networkHandler.Disconnect();
                 return;
             }
-            if (!File.Exists(args[0]))
+            
+            if (networkHandler.ServerWrapper.Connected)
             {
-                Console.WriteLine("File doesn't exist!");
-                return;
+                networkHandler.PacketHandler.SendPacket(new AuthHandshakePacket(networkHandler.ServerWrapper)
+                {
+                    AccountId = id
+                }, networkHandler.ClientStream);
             }
 
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                throw new Exception($"Platform not supported ({Environment.OSVersion})");
-            }
-
-            byte[] fileBytes = File.ReadAllBytes(args[0]);
-            Console.WriteLine($"File Size: {fileBytes.Length}");
-            
-            LoadAssembly(Assembly.Load(fileBytes));
-            Array.Clear(fileBytes, 0, fileBytes.Length);
-        }
-
-        private static void LoadAssembly(object assembly)
-        {
-            foreach (var VARIABLE in ((Assembly)assembly).GetTypes())
-            {
-                Console.WriteLine(VARIABLE.Name);
-            }
-            
-            Type t = ((Assembly)assembly).GetType("Client.Program");
-            if (t == null)
-            {
-                throw new Exception("[TypeLoader] No such type exists.");
-            }
-            
-            var methodInfo = t.GetMethod("Main");
-            if (methodInfo == null)
-            {
-                throw new Exception("[MethodLoader] No such method exists.");
-            }
-            
-            var o = Activator.CreateInstance(t);
-            methodInfo.Invoke(o, null);
+            Console.WriteLine("Press enter to continue");
+            Console.ReadLine();
+            networkHandler.Disconnect();
+            // byte[] fileBytes = File.ReadAllBytes(args[0]);
+            // Console.WriteLine($"File Size: {fileBytes.Length}");
+            //
+            // // LoadAssembly(Assembly.Load(fileBytes));
+            // Array.Clear(fileBytes, 0, fileBytes.Length);
         }
     }
 }

@@ -21,24 +21,31 @@ namespace Server.Obfuscation
             _assembly = assembly;
         }
 
-        public byte[] Run()
+        public (byte[], string, string) Run()
         {
             ModuleDefMD moduleDefMd = ModuleDefMD.Load(_assembly);
             if (moduleDefMd == null)
             {
-                return null;
+                throw new Exception("Couldn't load assembly.");
             }
 
             Console.WriteLine(moduleDefMd.Assembly.Name);
-            
+
+            string path = "";
+            string main = "";
             foreach (var obfuscationHandler in _obfuscationHandlers)
             {
                 obfuscationHandler.Handle(moduleDefMd);
+                if (obfuscationHandler is ModuleRenamer moduleRenamer)
+                {
+                    main = moduleRenamer.main;
+                    path = moduleRenamer.path;
+                }
             }
             
             using var stream = new MemoryStream();
             moduleDefMd.Write(stream);
-            return stream.ToArray();
+            return (stream.ToArray(), path, main);
         }
     }
 }

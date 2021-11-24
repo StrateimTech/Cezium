@@ -1,38 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net.Sockets;
-using dnlib.DotNet;
-using Server.Network.Packets.Impl;
-using Server.Utils;
+using Loader.Network.Packets.Impl;
+using Loader.Utils;
 
-namespace Server.Network.Packets
+namespace Loader.Network.Packets
 {
     public class PacketHandler
     {
-        private static ClientWrapper _clientWrapper;
+        private static ServerWrapper _serverWrapper;
         
-        public PacketHandler(ClientWrapper client)
+        public PacketHandler(ServerWrapper server)
         {
-            _clientWrapper = client;
+            _serverWrapper = server;
             _packets = new()
             {
-                new VersionPacket(_clientWrapper),
-                new EncryptionHandshakePacket(_clientWrapper),
-                new DataHandshakePacket(_clientWrapper),
-                new AuthHandshakePacket(_clientWrapper),
-                new TestPacket(_clientWrapper)
+                new VersionPacket(_serverWrapper),
+                new EncryptionHandshakePacket(_serverWrapper),
+                new DataHandshakePacket(_serverWrapper),
+                new AuthHandshakePacket(_serverWrapper),
+                new TestPacket(_serverWrapper)
             };
         }
 
         private readonly List<Packet> _packets;
 
-        public bool Handle(ClientWrapper client, NetworkStream clientStream)
+        public bool HandleData(NetworkStream clientStream)
         {
-            if (!client.Connected)
-                return false;
-            
             var buffer = new byte[2048];
             var readDataLength = clientStream.Read(buffer, 0, buffer.Length);
             if (readDataLength > 0)
@@ -50,6 +44,13 @@ namespace Server.Network.Packets
                 return true;
             }
             return false;
+        }
+
+        public void SendPacket(Packet packet, NetworkStream clientStream)
+        {
+            var buffer = PacketUtils.GetBuffer(packet);
+            Array.Resize(ref buffer, 2048);
+            clientStream.Write(buffer, 0, buffer.Length);
         }
     }
 }

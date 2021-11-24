@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-
-namespace Server.Network
+﻿namespace Server.Network
 {
     public class ClientWrapper
     {
@@ -8,7 +6,10 @@ namespace Server.Network
         {
         }
 
+        public int BuildNumber = 0;
+
         public bool Encryption = false;
+        public bool Authed = false;
         
         public bool Connected = true;
     }

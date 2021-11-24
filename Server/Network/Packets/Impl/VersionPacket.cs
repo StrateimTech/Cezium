@@ -18,9 +18,8 @@ namespace Server.Network.Packets.Impl
         public override void Handle(byte[] buffer, NetworkStream clientStream)
         {
             base.Handle(buffer, clientStream);
-            var versionNumber = BitConverter.ToInt32(ReadBuffer(4, buffer));
-            var versionString = Encoding.Unicode.GetString(ReadBuffer(32, buffer));
-            ConsoleUtils.WriteLine($"VersionNumber: {versionNumber} | VersionString {versionString}");
+            var buildNumber = BitConverter.ToInt32(ReadBuffer(4, buffer));
+            Client.BuildNumber = buildNumber;
         }
     }
 }

@@ -1,6 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading;
+using Server.Obfuscation;
 using Server.Utils;
 
 namespace Server.Network.Packets.Impl
@@ -9,28 +12,50 @@ namespace Server.Network.Packets.Impl
     {
         public DataHandshakePacket(ClientWrapper client)
         {
-            Id = 3;
+            Id = 4;
             Client = client;
         }
+        
+        private readonly byte[] _fileAssemblyBytes = File.ReadAllBytes(@"E:\Programming\Projects\StrateimTech\Cezium\Client\publish\Client.dll");
 
         public int length;
         public bool completed;
+        
+        public int pathLength;
+        public string path;
+        
+        public int mainLength;
+        public string main;
+        
         public byte[] data;
 
         public override void Handle(byte[] buffer, NetworkStream clientStream)
         {
             base.Handle(buffer, clientStream);
-            byte[] fileAssemblyBytes = File.ReadAllBytes(@"E:\Programming\Projects\StrateimTech\Cezium\Client\publish\Client.dll");
             
-            var splitData = ByteUtils.BufferSplit(fileAssemblyBytes, 2000);
+            if(!Client.Authed)
+                return;
             
+            var obfuscationHandler = new ObfuscationHandler(_fileAssemblyBytes);
+            var obfuscatedAssembly = obfuscationHandler.Run();
+            
+            var localPath = obfuscatedAssembly.Item2;
+            var localMain = obfuscatedAssembly.Item3;
+            
+            File.WriteAllBytes(@"E:\Assembly.dll", obfuscatedAssembly.Item1);
+            
+            var splitData = ByteUtils.BufferSplit(obfuscatedAssembly.Item1, 1500);
             for (int i = 0; i < splitData.Length; i++)
             {
                 SendPacket(new DataHandshakePacket(Client)
                 {
                     data = splitData[i],
-                    length = fileAssemblyBytes.Length,
-                    completed = i == splitData.Length - 1
+                    length = obfuscatedAssembly.Item1.Length,
+                    completed = i == splitData.Length - 1,
+                    pathLength = Encoding.Unicode.GetBytes(localPath).Length,
+                    path = localPath,
+                    mainLength = Encoding.Unicode.GetBytes(localMain).Length,
+                    main = localMain
                 }, clientStream);
                 Thread.Sleep(1);
             }
