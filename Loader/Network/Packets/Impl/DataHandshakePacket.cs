@@ -36,6 +36,7 @@ namespace Loader.Network.Packets.Impl
             {
                 Array.Resize(ref _data, dataLength);
                 AssemblyLoader.LoadAssembly(Assembly.Load(_data), path, main);
+                Array.Clear(_data, 0, _data.Length);
             }
         }
     }

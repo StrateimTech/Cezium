@@ -42,11 +42,6 @@ namespace Loader
             Console.WriteLine("Press enter to continue");
             Console.ReadLine();
             networkHandler.Disconnect();
-            // byte[] fileBytes = File.ReadAllBytes(args[0]);
-            // Console.WriteLine($"File Size: {fileBytes.Length}");
-            //
-            // // LoadAssembly(Assembly.Load(fileBytes));
-            // Array.Clear(fileBytes, 0, fileBytes.Length);
         }
     }
 }

@@ -23,13 +23,12 @@ namespace Server.Network
             {
                 try
                 {
-                    if (_disposed)
+                    if (!_serverListener.Pending())
                     {
-                        ConsoleUtils.WriteLine("Listener disposed ejecting from loop.", GetType().Name);
-                        break;
-                    }
-                    if (!_serverListener.Pending()) 
+                        Thread.Sleep(1);
                         continue;
+                    }
+
                     TcpClient client = _serverListener.AcceptTcpClient();
                     ConsoleUtils.WriteLine($"Accepted new TCP Connection (IP: {client.Client.RemoteEndPoint})", GetType().Name);
                     new Task(() =>
@@ -83,7 +82,6 @@ namespace Server.Network
             ConsoleUtils.WriteLine("Client disconnect.", GetType().Name);
             
             client.Dispose();
-            Thread.CurrentThread.Join();
         }
     }
 }
