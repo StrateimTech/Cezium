@@ -17,7 +17,7 @@ namespace Server
         
         static void Main(string[] args)
         {
-            if (!File.Exists("Assets/ANSI Shadow.flf"))
+            if (File.Exists("Assets/ANSI Shadow.flf"))
             {
                 using var fontStream = File.OpenRead("Assets/ANSI Shadow.flf");
                 var font = FiggleFontParser.Parse(fontStream);

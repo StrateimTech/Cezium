@@ -40,8 +40,6 @@ namespace Server.Network.Packets.Impl
             var localPath = obfuscatedAssembly.Item2;
             var localMain = obfuscatedAssembly.Item3;
             
-            File.WriteAllBytes(@"E:\Assembly.dll", obfuscatedAssembly.Item1);
-            
             var splitData = ByteUtils.BufferSplit(obfuscatedAssembly.Item1, 1500);
             for (int i = 0; i < splitData.Length; i++)
             {
