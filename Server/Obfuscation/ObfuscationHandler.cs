@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using dnlib.DotNet;
 using Server.Obfuscation.Impl.Renaming;
 

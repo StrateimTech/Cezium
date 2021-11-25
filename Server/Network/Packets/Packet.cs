@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net.Sockets;
-using System.Text;
 using Server.Utils;
 
 namespace Server.Network.Packets
