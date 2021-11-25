@@ -43,7 +43,7 @@ namespace Client.HID.Handler
                             
                             if (settings.General.Mouse.DebugState)
                             {
-                                ConsoleUtils.WriteCentered($"Left Button: {Mouse.LeftButton}, Right Button: {Mouse.RightButton}, Middle Button: {Mouse.MiddleButton}, X: {Mouse.X}, Y: {Mouse.Y}, Wheel {Mouse.Wheel}");
+                                ConsoleUtils.WriteLine($"Left Button: {Mouse.LeftButton}, Right Button: {Mouse.RightButton}, Middle Button: {Mouse.MiddleButton}, X: {Mouse.X}, Y: {Mouse.Y}, Wheel {Mouse.Wheel}");
                             }
                             hidHandler.WriteMouseReport(Mouse);
                         }

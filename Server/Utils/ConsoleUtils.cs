@@ -15,5 +15,17 @@ namespace Server.Utils
                 : $" {(displayTime ? "["+ formattedTime + "] | " : "")}{line}";
             Console.WriteLine(output);
         }
+        
+        public static void WriteCentered(string value)
+        {
+            int length = Console.WindowWidth - value.Length;
+            if (length < 2)
+            {
+                Console.WriteLine(value);
+                return;
+            }
+            Console.SetCursorPosition(length / 2, Console.CursorTop);
+            Console.WriteLine(value);
+        }
     }
 }

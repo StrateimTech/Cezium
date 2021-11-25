@@ -37,9 +37,9 @@ namespace Client.Rust
         public List<Tuple<double, double>>? PixelTable;
 
         private Tuple<int, int> _lastRandomization = new(0, 0);
-        private bool _reverseRandom = false;
+        private bool _reverseRandom;
         
-        private readonly Random _random = new Random();
+        private readonly Random _random = new();
         
         public RustHandler(Settings settings, HidHandler hidHandler)
         {
@@ -56,7 +56,7 @@ namespace Client.Rust
             {
                 if (_hidHandler.HidMouseHandler == null)
                 {
-                    ConsoleUtils.WriteCentered("Couldn't find a mouse stopping.. RustHandler", "RustHandler");
+                    ConsoleUtils.WriteLine("Couldn't find a mouse stopping.. RustHandler", "RustHandler");
                     break;
                 }
 
@@ -93,7 +93,7 @@ namespace Client.Rust
 
                         if (_settings.Rust.DebugState)
                         {
-                            ConsoleUtils.WriteCentered($"Reverse Randomization: InvertedLastX: {invertedLastX}, InvertedLastY: {invertedLastY}");
+                            ConsoleUtils.WriteLine($"Reverse Randomization: InvertedLastX: {invertedLastX}, InvertedLastY: {invertedLastY}");
                         }
 
                         gunPixelX += invertedLastX;
@@ -113,7 +113,7 @@ namespace Client.Rust
 
                         if (_settings.Rust.DebugState)
                         {
-                            ConsoleUtils.WriteCentered($"Randomization: xRandom: {xRandom}, yRandom: {yRandom}");
+                            ConsoleUtils.WriteLine($"Randomization: xRandom: {xRandom}, yRandom: {yRandom}");
                         }
                         
                         gunPixelX += xRandom;
@@ -129,7 +129,7 @@ namespace Client.Rust
 
                     if (_settings.Rust.DebugState)
                     {
-                        ConsoleUtils.WriteCentered($"Bullet: {_bullet}, Smoothing: {smoothing}, Sleep: {sleep}, X: {gunPixelX}, Y: {gunPixelY}");
+                        ConsoleUtils.WriteLine($"Bullet: {_bullet}, Smoothing: {smoothing}, Sleep: {sleep}, X: {gunPixelX}, Y: {gunPixelY}");
                     }
                     
                     for (int i = 0; i < smoothing; i++)

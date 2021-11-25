@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Text;
+using Loader.Utils;
 
 namespace Loader.Network.Packets.Impl
 {
@@ -22,7 +23,7 @@ namespace Loader.Network.Packets.Impl
             var aV = Encoding.Unicode.GetString(ReadBuffer(32, buffer));
             var bV = BitConverter.ToInt32(ReadBuffer(4, buffer));
             var cV = BitConverter.ToBoolean(ReadBuffer(1, buffer));
-            Console.WriteLine($"A: {aV}, B: {bV}, C: {cV}");
+            ConsoleUtils.WriteLine($"A: {aV}, B: {bV}, C: {cV}");
         }
     }
 }

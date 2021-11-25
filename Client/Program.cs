@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Client.API;
@@ -13,23 +14,21 @@ namespace Client
     {
         public void Main()
         {
-            var figgleText = FiggleFonts.Isometric3.Render("CEZIUM");
-            var figgleLines = Regex.Split(figgleText, "\r\n|\r|\n");
-            foreach (var figgleLine in figgleLines)
-            {
-                ConsoleUtils.WriteCentered(figgleLine);
-            }
-            ConsoleUtils.WriteCentered("Project by StrateimTech (https://Strateim.tech)");
-
-            ConsoleUtils.WriteCentered("Initializing default settings.");
+            // if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            // {
+            //     ConsoleUtils.WriteLine($"Platform unsupported please use Raspbian or linux alternative. ({Environment.OSVersion})");
+            //     return;
+            // }
+            
+            ConsoleUtils.WriteLine("Initializing default settings.");
             var settings = new Settings();
 
-            ConsoleUtils.WriteCentered($"Starting Human Interface Device handler.");
+            ConsoleUtils.WriteLine($"Starting Human Interface Device handler.");
             HidHandler hidHandler = new(settings);
 
             if (hidHandler.HidMouseHandler != null)
             {
-                ConsoleUtils.WriteCentered($"Starting Rust handler.");
+                ConsoleUtils.WriteLine("Starting Rust handler.");
                 RustHandler rustHandler = new(settings, hidHandler);
                 var rustThreadHandler = new Thread(() =>
                 {
@@ -40,7 +39,7 @@ namespace Client
                 };
                 rustThreadHandler.Start();
     
-                ConsoleUtils.WriteCentered("Starting API server on port 200");
+                ConsoleUtils.WriteLine("Starting API server on port 200");
                 var apiThreadHandler = new Thread(() => new ApiServer(200, rustHandler, hidHandler, settings))
                 {
                     IsBackground = true
@@ -49,10 +48,10 @@ namespace Client
             }
             else
             {
-                ConsoleUtils.WriteCentered($"Cannot start Rust handler without a mouse connected.");
+                ConsoleUtils.WriteLine("Cannot start Rust handler without a mouse connected.");
             }
 
-            ConsoleUtils.WriteCentered("Press any key to continue...");
+            ConsoleUtils.WriteLine("Press any key to continue...");
             Console.ReadKey(true);
             hidHandler.Stop();
         }

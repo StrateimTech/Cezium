@@ -24,7 +24,7 @@ namespace Server
                 var figgleLines = Regex.Split(font.Render("Cezium Server"), "\r\n|\r|\n");
                 foreach (var figgleLine in figgleLines)
                 {
-                    ConsoleUtils.WriteLine(figgleLine, null, false);
+                    ConsoleUtils.WriteCentered(figgleLine);
                 }
             }
             else

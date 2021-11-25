@@ -10,7 +10,7 @@ namespace Loader.Network.Packets.Impl
             Server = server;
         }
 
-        public int buildNumber = 1;
+        public int buildNumber = Program.Version;
         
         public override void Handle(byte[] buffer, NetworkStream clientStream)
         {

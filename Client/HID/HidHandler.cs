@@ -51,7 +51,7 @@ namespace Client.HID
             }
             else
             {
-                ConsoleUtils.WriteCentered("Failed to find Keyboard", "HidHandler");
+                ConsoleUtils.WriteLine("Failed to find Keyboard", "HidHandler");
             }
 
             if (_mouseFileStream != null)
@@ -60,7 +60,7 @@ namespace Client.HID
             }
             else
             {
-                ConsoleUtils.WriteCentered("Failed to find Mouse", "HidHandler");
+                ConsoleUtils.WriteLine("Failed to find Mouse", "HidHandler");
             }
         }
 
@@ -87,7 +87,7 @@ namespace Client.HID
             catch (Exception exception)
             {
                 // Good Exception Handling I would say myself :)
-                ConsoleUtils.WriteCentered($"{exception.Message}");
+                ConsoleUtils.WriteLine($"{exception.Message}");
             }
             finally
             {
@@ -124,7 +124,7 @@ namespace Client.HID
             catch (Exception exception)
             {
                 // Good Exception Handling I would say myself :)
-                ConsoleUtils.WriteCentered($"{exception.Message}");
+                ConsoleUtils.WriteLine($"{exception.Message}");
             }
             finally
             {

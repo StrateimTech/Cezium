@@ -40,7 +40,7 @@ namespace Client.HID.Handler
                             {
                                 if (settings.General.Keyboard.DebugState)
                                 {
-                                    ConsoleUtils.WriteCentered($"Key: {keyCode} | {code}, KeyState: {keyState} | {value}, EventType: {eventType} | {type}");
+                                    ConsoleUtils.WriteLine($"Key: {keyCode} | {code}, KeyState: {keyState} | {value}, EventType: {eventType} | {type}");
                                 }
                                 switch (keyState)
                                 {
@@ -57,7 +57,7 @@ namespace Client.HID.Handler
                                         {
                                             if (settings.General.Keyboard.DebugState)
                                             {
-                                                ConsoleUtils.WriteCentered($"Unknown Key: {keyCode.ToString()}\n");
+                                                ConsoleUtils.WriteLine($"Unknown Key: {keyCode.ToString()}\n");
                                             }
                                             break;
                                         }

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Loader.Network.Packets;
 using Loader.Network.Packets.Impl;
+using Loader.Utils;
 
 namespace Loader.Network
 {
@@ -18,12 +19,19 @@ namespace Loader.Network
         
         private bool _disposed;
 
-        public void Connect(string ip, int port)
-        { 
-            new Task(() =>
+        public bool Connect(string ip, int port)
+        {
+            try
             {
-                HandleConnection(_client = new TcpClient(ip, port));
-            }).Start();
+                _client = new TcpClient(ip, port);
+            }
+            catch (Exception ex)
+            {
+                ConsoleUtils.WriteLine($"{ex.Message}");
+                return false;
+            }
+            new Thread(() => HandleConnection(_client)).Start();
+            return true;
         }
 
         public void Disconnect()
@@ -46,11 +54,6 @@ namespace Loader.Network
             {
                 try
                 {
-                    if (_disposed)
-                    {
-                        Console.WriteLine("Client disposed ejecting from loop.");
-                        break;
-                    }
                     if (!PacketHandler.HandleData(ClientStream))
                     {
                         break;
@@ -58,12 +61,12 @@ namespace Loader.Network
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex is IOException ? ex.Message : ex.ToString(), GetType().Name);
+                    ConsoleUtils.WriteLine(ex is IOException ? ex.Message : ex.ToString());
                     break;
                 }
             }
             ServerWrapper.Connected = false;
-            Console.WriteLine("Client disconnected.");
+            ConsoleUtils.WriteLine("Disconnected from parent server.");
             
             ClientStream.Close();
             Thread.CurrentThread.Join();
