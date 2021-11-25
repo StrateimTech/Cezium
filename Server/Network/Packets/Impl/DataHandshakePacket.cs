@@ -15,8 +15,6 @@ namespace Server.Network.Packets.Impl
             Id = 4;
             Client = client;
         }
-        
-        private readonly byte[] _fileAssemblyBytes = File.ReadAllBytes(@"E:\Programming\Projects\StrateimTech\Cezium\Client\publish\Client.dll");
 
         public int length;
         public bool completed;
@@ -36,7 +34,7 @@ namespace Server.Network.Packets.Impl
             if(!Client.Authed)
                 return;
             
-            var obfuscationHandler = new ObfuscationHandler(_fileAssemblyBytes);
+            var obfuscationHandler = new ObfuscationHandler(Program.LatestClientAssembly);
             var obfuscatedAssembly = obfuscationHandler.Run();
             
             var localPath = obfuscatedAssembly.Item2;

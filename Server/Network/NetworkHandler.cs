@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -12,13 +13,22 @@ namespace Server.Network
     public class NetworkHandler
     {
         private TcpListener _serverListener;
-        
+
         private bool _disposed;
-        
+
+        private readonly List<TcpClient> _tcpClients = new();
+
         public void Start(int port)
         {
-            ConsoleUtils.WriteLine("Binding TCPListener to Port", GetType().Name);
+            if (!NetUtils.IsPortAvailable(port))
+            {
+                ConsoleUtils.WriteLine($"Couldn't bind to port {port}", GetType().Name);
+                throw new Exception("Couldn't bind to a port.");
+            }
+
+            ConsoleUtils.WriteLine($"Binding TCPListener to port {port}", GetType().Name);
             (_serverListener = new TcpListener(IPAddress.Any, port)).Start();
+            ConsoleUtils.WriteLine($"Network server started, waiting for clients to connect!", GetType().Name);
             while (_serverListener.Server.IsBound && !_disposed)
             {
                 try
@@ -30,16 +40,14 @@ namespace Server.Network
                     }
 
                     TcpClient client = _serverListener.AcceptTcpClient();
-                    ConsoleUtils.WriteLine($"Accepted new TCP Connection (IP: {client.Client.RemoteEndPoint})", GetType().Name);
-                    new Task(() =>
-                    {
-                        HandleClient(client);
-                    }).Start();
+                    _tcpClients.Add(client);
+                    ConsoleUtils.WriteLine($"Accepted new connection (IP: {client.Client.RemoteEndPoint})",
+                        GetType().Name);
+                    new Task(() => { HandleClient(client); }).Start();
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Improve exception handling this could be very useful in certain situations (EG. Someone attempting to exploit the backend)
-                    Console.WriteLine(ex.Message);
+                    ConsoleUtils.WriteLine($"{ex}", GetType().Name);
                 }
             }
         }
@@ -49,6 +57,9 @@ namespace Server.Network
             _disposed = true;
             if (_serverListener != null)
             {
+                ConsoleUtils.WriteLine("Disposing connected client connections", GetType().Name);
+                _tcpClients.ForEach(client => client.Close());
+                ConsoleUtils.WriteLine("Shutting down network server!", GetType().Name);
                 _serverListener.Stop();
             }
         }
@@ -58,7 +69,7 @@ namespace Server.Network
             var clientWrapper = new ClientWrapper();
             var packetHandler = new PacketHandler(clientWrapper);
             var clientStream = client.GetStream();
-            
+
             while (clientWrapper.Connected)
             {
                 try
@@ -76,11 +87,18 @@ namespace Server.Network
                     {
                         clientWrapper.Connected = false;
                     }
+
                     break;
                 }
             }
-            ConsoleUtils.WriteLine("Client disconnect.", GetType().Name);
-            
+
+            ConsoleUtils.WriteLine($"Client disconnect (IP: {client.Client.RemoteEndPoint})", GetType().Name);
+
+            if (_tcpClients.Contains(client))
+            {
+                _tcpClients.Remove(client);
+            }
+
             client.Dispose();
         }
     }

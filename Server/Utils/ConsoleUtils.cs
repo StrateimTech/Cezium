@@ -1,36 +1,20 @@
 ﻿using System;
+using System.Text;
 
 namespace Server.Utils
 {
     public static class ConsoleUtils
     {
-        public static void WriteLine(string line, string displayName = null)
-        {
-            if (displayName != null)
-            {
-                Console.WriteLine($" [{displayName}] | {line}");
-            }
-            else
-            {
-                Console.WriteLine($" {line}");
-            }
-        }
+        private static readonly TimeZoneInfo TimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Pacific SA Standard Time");
         
-        public static void WriteLine(string line, params object[] args)
+        public static void WriteLine(string line, string displayName = null, bool displayTime = true, bool logOutput = true)
         {
-            Console.WriteLine($" {line}", args);
-        }
-        
-        public static void WriteLine(string line, string displayName = null, params object[] args)
-        {
-            if (displayName != null)
-            {
-                Console.WriteLine($" [{displayName}] | {line}", args);
-            }
-            else
-            {
-                Console.WriteLine($" {line}", args);
-            }
+            var dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo);
+            var formattedTime = dateTime.ToString("MM/dd/yyyy HH:mm:ss");
+            var output = displayName != null
+                ? $" [{(displayTime ? formattedTime + " | " : "")}{displayName}] | {line}"
+                : $" {(displayTime ? "["+ formattedTime + "] | " : "")}{line}";
+            Console.WriteLine(output);
         }
     }
 }
