@@ -14,9 +14,11 @@ namespace Loader
     class Program
     {
         public static readonly int Version = 1;
+        public static string[] ClientArguments;
         
         private static void Main(string[] args)
         {
+            ClientArguments = args;
             var figgleText = FiggleFonts.Isometric3.Render("CEZIUM");
             var figgleLines = Regex.Split(figgleText, "\r\n|\r|\n");
             foreach (var figgleLine in figgleLines)

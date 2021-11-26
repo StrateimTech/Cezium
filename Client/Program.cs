@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 using System.Threading;
 using Client.API;
 using Client.HID;
 using Client.Rust;
 using Client.Utils;
-using Figgle;
 
 namespace Client
 {
     public class Program
     {
-        public void Main()
+        public void Main(string[] args)
         {
             // if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             // {
@@ -20,10 +17,12 @@ namespace Client
             //     return;
             // }
             
+            ConsoleUtils.WriteLine("Loading Cezium client");
+            
             ConsoleUtils.WriteLine("Initializing default settings.");
             var settings = new Settings();
 
-            ConsoleUtils.WriteLine($"Starting Human Interface Device handler.");
+            ConsoleUtils.WriteLine("Starting Human Interface Device handler.");
             HidHandler hidHandler = new(settings);
 
             if (hidHandler.HidMouseHandler != null)

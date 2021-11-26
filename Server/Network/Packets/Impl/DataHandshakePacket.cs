@@ -33,7 +33,7 @@ namespace Server.Network.Packets.Impl
             if(!Client.Authed)
                 return;
             
-            var obfuscationHandler = new ObfuscationHandler(Program.LatestClientAssembly);
+            var obfuscationHandler = new ObfuscationHandler(Program.ClientAssembly);
             var obfuscatedAssembly = obfuscationHandler.Run();
             
             var localPath = obfuscatedAssembly.Item2;

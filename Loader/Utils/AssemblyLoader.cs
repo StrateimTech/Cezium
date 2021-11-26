@@ -22,7 +22,7 @@ namespace Loader.Utils
             var o = Activator.CreateInstance(t);
             try
             {
-                methodInfo.Invoke(o, null);
+                methodInfo.Invoke(o, Program.ClientArguments != null ? new object[]{Program.ClientArguments} : null);
             }
             catch (Exception ex)
             {
