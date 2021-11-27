@@ -30,9 +30,11 @@ namespace Server.Network.Packets.Impl
         {
             base.Handle(buffer, clientStream);
             
+            ConsoleUtils.WriteLine($"Client requested client data (IsAuthed: {Client.Authed})", "NetworkHandler");
+            
             if(!Client.Authed)
                 return;
-            
+
             var obfuscationHandler = new ObfuscationHandler(Program.ClientAssembly);
             var obfuscatedAssembly = obfuscationHandler.Run();
             

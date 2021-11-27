@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Sockets;
+using Server.Utils;
 
 namespace Server.Network.Packets.Impl
 {
@@ -23,6 +24,7 @@ namespace Server.Network.Packets.Impl
                 Status = 1;
                 Client.Authed = true;
             }
+            ConsoleUtils.WriteLine($"Client authentication received (IsAuthed: {Client.Authed} | Status: {Status})", "NetworkHandler");
             SendPacket(this, clientStream);
         }
     }

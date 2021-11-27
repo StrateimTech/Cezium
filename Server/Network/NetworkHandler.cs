@@ -16,7 +16,7 @@ namespace Server.Network
 
         private bool _disposed;
 
-        private readonly List<TcpClient> _tcpClients = new();
+        private readonly List<Tuple<TcpClient, ClientWrapper>> _clients = new();
 
         public void Start(int port)
         {
@@ -28,7 +28,7 @@ namespace Server.Network
 
             ConsoleUtils.WriteLine($"Binding TCPListener to port {port}", GetType().Name);
             (_serverListener = new TcpListener(IPAddress.Any, port)).Start();
-            ConsoleUtils.WriteLine($"Network server started, waiting for clients to connect!", GetType().Name);
+            ConsoleUtils.WriteLine("Network server started, waiting for clients to connect!", GetType().Name);
             while (_serverListener.Server.IsBound && !_disposed)
             {
                 try
@@ -40,7 +40,6 @@ namespace Server.Network
                     }
 
                     TcpClient client = _serverListener.AcceptTcpClient();
-                    _tcpClients.Add(client);
                     ConsoleUtils.WriteLine($"Accepted new connection (IP: {client.Client.RemoteEndPoint})",
                         GetType().Name);
                     new Task(() => { HandleClient(client); }).Start();
@@ -58,7 +57,11 @@ namespace Server.Network
             if (_serverListener != null)
             {
                 ConsoleUtils.WriteLine("Disposing connected client connections", GetType().Name);
-                _tcpClients.ForEach(client => client.Close());
+                _clients.ForEach(client =>
+                {
+                    client.Item2.Connected = false;
+                    client.Item1.Close();
+                });
                 ConsoleUtils.WriteLine("Shutting down network server!", GetType().Name);
                 _serverListener.Stop();
             }
@@ -69,6 +72,9 @@ namespace Server.Network
             var clientWrapper = new ClientWrapper();
             var packetHandler = new PacketHandler(clientWrapper);
             var clientStream = client.GetStream();
+            var clientTuple = new Tuple<TcpClient, ClientWrapper>(client, clientWrapper);
+            
+            _clients.Add(clientTuple);
 
             while (clientWrapper.Connected)
             {
@@ -87,18 +93,12 @@ namespace Server.Network
                     {
                         clientWrapper.Connected = false;
                     }
-
                     break;
                 }
             }
+            ConsoleUtils.WriteLine($"Client disconnected (IP: {client.Client.RemoteEndPoint})", GetType().Name);
 
-            ConsoleUtils.WriteLine($"Client disconnect (IP: {client.Client.RemoteEndPoint})", GetType().Name);
-
-            if (_tcpClients.Contains(client))
-            {
-                _tcpClients.Remove(client);
-            }
-
+            _clients.Remove(clientTuple);
             client.Dispose();
         }
     }

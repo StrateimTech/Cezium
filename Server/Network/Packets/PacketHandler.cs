@@ -28,7 +28,6 @@ namespace Server.Network.Packets
         {
             if (!client.Connected)
                 return false;
-            
             var buffer = new byte[2048];
             var readDataLength = clientStream.Read(buffer, 0, buffer.Length);
             if (readDataLength > 0)

@@ -11,11 +11,11 @@ namespace Server
 {
     class Program
     {
+        private const string AssemblyFolder = @"E:\Programming\Projects\StrateimTech\Cezium\Client\publish\";
+
         public static byte[] ClientAssembly;
 
-        public static readonly string AssemblyFolder = @"E:\Programming\Projects\StrateimTech\Cezium\Client\publish\";
-
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             if (File.Exists("Assets/ANSI Shadow.flf"))
             {
@@ -35,6 +35,7 @@ namespace Server
                 ConsoleUtils.WriteLine("Couldn't load FiggleFont font continuing. (Assets/ANSI Shadow.flf) \n",
                     "Server");
             }
+            ConsoleUtils.WriteLine("Starting server", "Server");
             
             ConsoleUtils.WriteLine("Starting AssemblyLoader", "Server");
             AssemblyLoader assemblyLoader = new AssemblyLoader();

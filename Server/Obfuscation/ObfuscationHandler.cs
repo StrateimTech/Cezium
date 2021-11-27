@@ -28,8 +28,6 @@ namespace Server.Obfuscation
                 throw new Exception("Couldn't load assembly.");
             }
 
-            Console.WriteLine(moduleDefMd.Assembly.Name);
-
             string path = "";
             string main = "";
             foreach (var obfuscationHandler in _obfuscationHandlers)
