@@ -37,7 +37,7 @@ namespace Loader
             
             ConsoleUtils.WriteLine("Attempting to connect to parent server");
             var networkHandler = new NetworkHandler();
-            if (!networkHandler.Connect("127.0.0.1", 3000))
+            if (!networkHandler.Connect("66.94.123.254", 3000))
             {
                 ConsoleUtils.WriteLine("Couldn't establish connection to parent server (Retry)");
                 return;
@@ -57,6 +57,7 @@ namespace Loader
             
             if (networkHandler.ServerWrapper.Connected)
             {
+                ConsoleUtils.WriteLine("Logging in please wait...");
                 networkHandler.PacketHandler.SendPacket(new AuthHandshakePacket(networkHandler.ServerWrapper)
                 {
                     AccountId = id

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace Server.Utils
 {
     public static class ConsoleUtils
     {
-        private static readonly TimeZoneInfo TimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Pacific SA Standard Time");
+        private static readonly TimeZoneInfo TimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "America/Santiago" : "Pacific SA Standard Time");
         
         public static void WriteLine(string message, string displayName = null, bool displayTime = true, bool logOutput = true)
         {

@@ -27,7 +27,7 @@ namespace Loader.Network.Packets
 
         public bool HandleData(NetworkStream clientStream)
         {
-            var buffer = new byte[2048];
+            var buffer = new byte[1024];
             var readDataLength = clientStream.Read(buffer, 0, buffer.Length);
             if (readDataLength > 0)
             {
@@ -35,7 +35,7 @@ namespace Loader.Network.Packets
                 {
                     if (packet.Id == buffer[0])
                     {
-                        var dataBuffer = new byte[2047];
+                        var dataBuffer = new byte[1023];
                         Buffer.BlockCopy(buffer, 1, dataBuffer, 0, dataBuffer.Length);
                         packet.Handle(dataBuffer, clientStream);
                         break;
@@ -49,7 +49,7 @@ namespace Loader.Network.Packets
         public void SendPacket(Packet packet, NetworkStream clientStream)
         {
             var buffer = PacketUtils.GetBuffer(packet);
-            Array.Resize(ref buffer, 2048);
+            Array.Resize(ref buffer, 1024);
             clientStream.Write(buffer, 0, buffer.Length);
         }
     }

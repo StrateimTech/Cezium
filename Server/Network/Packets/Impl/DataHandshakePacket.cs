@@ -30,7 +30,7 @@ namespace Server.Network.Packets.Impl
         {
             base.Handle(buffer, clientStream);
             
-            ConsoleUtils.WriteLine($"Client requested client data (IsAuthed: {Client.Authed})", "NetworkHandler");
+            ConsoleUtils.WriteLine($"(IP: {Client.Client.Client.RemoteEndPoint}) Client requested client data (IsAuthed: {Client.Authed})", "NetworkHandler");
             
             if(!Client.Authed)
                 return;
@@ -41,9 +41,9 @@ namespace Server.Network.Packets.Impl
             var localPath = obfuscatedAssembly.Item2;
             var localMain = obfuscatedAssembly.Item3;
             
-            var splitData = ByteUtils.BufferSplit(obfuscatedAssembly.Item1, 1500);
+            var splitData = ByteUtils.BufferSplit(obfuscatedAssembly.Item1, 750);
             for (int i = 0; i < splitData.Length; i++)
-            {
+            { 
                 SendPacket(new DataHandshakePacket(Client)
                 {
                     data = splitData[i],
@@ -54,8 +54,9 @@ namespace Server.Network.Packets.Impl
                     mainLength = Encoding.Unicode.GetBytes(localMain).Length,
                     main = localMain
                 }, clientStream);
-                Thread.Sleep(1);
+                Thread.Sleep(50);
             }
+            ConsoleUtils.WriteLine($"(IP: {Client.Client.Client.RemoteEndPoint}) Client's requested data has fully sent (IsAuthed: {Client.Authed})", "NetworkHandler");
         }
     }
 }

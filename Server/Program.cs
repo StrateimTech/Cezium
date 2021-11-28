@@ -11,12 +11,13 @@ namespace Server
 {
     class Program
     {
-        private const string AssemblyFolder = @"E:\Programming\Projects\StrateimTech\Cezium\Client\publish\";
+        private static string _assemblyFolder /*= @"E:\Programming\Projects\StrateimTech\Cezium\Client\publish\"*/;
 
         public static byte[] ClientAssembly;
 
         public static void Main(string[] args)
         {
+            _assemblyFolder = Path.Combine(Directory.GetCurrentDirectory(), "Clients");
             if (File.Exists("Assets/ANSI Shadow.flf"))
             {
                 using var fontStream = File.OpenRead("Assets/ANSI Shadow.flf");
@@ -37,15 +38,17 @@ namespace Server
             }
             ConsoleUtils.WriteLine("Starting server", "Server");
             
-            ConsoleUtils.WriteLine("Starting AssemblyLoader", "Server");
-            AssemblyLoader assemblyLoader = new AssemblyLoader();
-            new Thread(() => assemblyLoader.StartWatcher(AssemblyFolder)).Start();
-            var assembly = AssemblyLoader.FindLatestAssembly(AssemblyFolder);
+            // ConsoleUtils.WriteLine("Starting AssemblyLoader", "Server");
+            // AssemblyLoader assemblyLoader = new AssemblyLoader();
+            // new Thread(() => assemblyLoader.StartWatcher(_assemblyFolder)).Start();
+            var assembly = AssemblyLoader.FindLatestAssembly(_assemblyFolder);
 
             if (assembly == null)
             {
                 ConsoleUtils.WriteLine("Cezium client assembly couldn't be found or loaded!", "Server");
                 ConsoleUtils.WriteLine("Shutting the server down!", "Server");
+                // TODO: Hangs here
+                Environment.Exit(0);
                 return;
             }
             ConsoleUtils.WriteLine("Found & loaded latest assembly", "Server");
@@ -60,7 +63,7 @@ namespace Server
             ConsoleUtils.WriteLine("Press any key to to continue & shutdown", "Server");
             Console.ReadKey(true);
             networkHandler.Stop();
-            assemblyLoader.ResetEvent.Set();
+            // assemblyLoader.ResetEvent.Set();
             ConsoleUtils.WriteLine("Shutting the server down!", "Server");
         }
     }

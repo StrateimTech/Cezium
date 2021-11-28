@@ -30,7 +30,7 @@ namespace Loader.Network.Packets.Impl
             
             _data ??= new byte[dataLength];
             
-            _data = ByteUtils.CombineArray(_data, ReadBuffer(1500, buffer));
+            _data = ByteUtils.CombineArray(_data, ReadBuffer(750, buffer));
             
             if (completed)
             {

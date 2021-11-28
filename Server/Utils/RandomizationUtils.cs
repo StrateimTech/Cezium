@@ -10,7 +10,12 @@ namespace Server.Utils
         {
             byte[] bytes = new byte[length];
             Random.NextBytes(bytes);
-            return GetString(bytes);
+            var convertedString = GetString(bytes);
+            if (convertedString == null)
+            {
+                return RandomString(length);
+            }
+            return convertedString;
         }
         
         private static string GetString(byte[] bytes)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Sockets;
+using System.Threading;
 using Server.Utils;
 
 namespace Server.Network.Packets.Impl
@@ -24,7 +25,7 @@ namespace Server.Network.Packets.Impl
                 Status = 1;
                 Client.Authed = true;
             }
-            ConsoleUtils.WriteLine($"Client authentication received (IsAuthed: {Client.Authed} | Status: {Status})", "NetworkHandler");
+            ConsoleUtils.WriteLine($"(IP: {Client.Client.Client.RemoteEndPoint}) Client authentication received (IsAuthed: {Client.Authed} | Status: {Status} | AccountID: {accountId})", "NetworkHandler");
             SendPacket(this, clientStream);
         }
     }

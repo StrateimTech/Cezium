@@ -69,13 +69,13 @@ namespace Server.Network
 
         private void HandleClient(TcpClient client)
         {
-            var clientWrapper = new ClientWrapper();
-            var packetHandler = new PacketHandler(clientWrapper);
+            var clientWrapper = new ClientWrapper(client);
+            PacketHandler packetHandler = new PacketHandler(clientWrapper);
             var clientStream = client.GetStream();
             var clientTuple = new Tuple<TcpClient, ClientWrapper>(client, clientWrapper);
             
             _clients.Add(clientTuple);
-
+            
             while (clientWrapper.Connected)
             {
                 try

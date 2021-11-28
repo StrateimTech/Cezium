@@ -30,7 +30,7 @@ namespace Loader.Network.Packets
         protected void SendPacket(Packet packet, NetworkStream clientStream)
         {
             var buffer = PacketUtils.GetBuffer(packet);
-            Array.Resize(ref buffer, 2048);
+            Array.Resize(ref buffer, 1024);
             clientStream.Write(buffer, 0, buffer.Length);
         }
     }

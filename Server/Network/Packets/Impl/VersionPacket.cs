@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Sockets;
+using Server.Utils;
 
 namespace Server.Network.Packets.Impl
 {
@@ -16,6 +17,7 @@ namespace Server.Network.Packets.Impl
             base.Handle(buffer, clientStream);
             var buildNumber = BitConverter.ToInt32(ReadBuffer(4, buffer));
             Client.BuildNumber = buildNumber;
+            ConsoleUtils.WriteLine($"(IP: {Client.Client.Client.RemoteEndPoint}) Client connected using loader build {buildNumber}", "NetworkHandler");
         }
     }
 }
