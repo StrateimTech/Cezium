@@ -36,12 +36,12 @@ namespace Server.Assembly
             }
             return null;
         }
-
+        
         public void StartWatcher(string folderPath)
         {
             using var watcher = new FileSystemWatcher(folderPath, "*.dll");
 
-            watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.Size;
+            watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.Size;
             
             watcher.Changed += (sender, args) =>
             {

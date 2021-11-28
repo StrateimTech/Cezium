@@ -38,9 +38,9 @@ namespace Server
             }
             ConsoleUtils.WriteLine("Starting server", "Server");
             
-            // ConsoleUtils.WriteLine("Starting AssemblyLoader", "Server");
-            // AssemblyLoader assemblyLoader = new AssemblyLoader();
-            // new Thread(() => assemblyLoader.StartWatcher(_assemblyFolder)).Start();
+            ConsoleUtils.WriteLine("Starting AssemblyLoader", "Server");
+            AssemblyLoader assemblyLoader = new AssemblyLoader();
+            new Thread(() => assemblyLoader.StartWatcher(_assemblyFolder)).Start();
             var assembly = AssemblyLoader.FindLatestAssembly(_assemblyFolder);
 
             if (assembly == null)
