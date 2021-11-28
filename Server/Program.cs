@@ -11,7 +11,7 @@ namespace Server
 {
     class Program
     {
-        private static string _assemblyFolder /*= @"E:\Programming\Projects\StrateimTech\Cezium\Client\publish\"*/;
+        private static string _assemblyFolder;
 
         public static byte[] ClientAssembly;
 

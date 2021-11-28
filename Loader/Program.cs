@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.RegularExpressions;
 using Figgle;
 using Loader.Network;
@@ -19,6 +20,7 @@ namespace Loader
         private static void Main(string[] args)
         {
             ClientArguments = args;
+            
             var figgleText = FiggleFonts.Isometric3.Render("CEZIUM");
             var figgleLines = Regex.Split(figgleText, "\r\n|\r|\n");
             foreach (var figgleLine in figgleLines)
