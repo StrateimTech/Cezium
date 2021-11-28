@@ -63,8 +63,9 @@ namespace Server
             ConsoleUtils.WriteLine("Press any key to to continue & shutdown", "Server");
             Console.ReadKey(true);
             networkHandler.Stop();
-            // assemblyLoader.ResetEvent.Set();
+            assemblyLoader.ResetEvent.Set();
             ConsoleUtils.WriteLine("Shutting the server down!", "Server");
+            Environment.Exit(0);
         }
     }
 }

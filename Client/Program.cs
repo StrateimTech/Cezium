@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Threading;
 using Client.API;
 using Client.HID;
@@ -11,11 +12,11 @@ namespace Client
     {
         public void Main(string[] args)
         {
-            // if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            // {
-            //     ConsoleUtils.WriteLine($"Platform unsupported please use Raspbian or linux alternative. ({Environment.OSVersion})");
-            //     return;
-            // }
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                ConsoleUtils.WriteLine($"Platform unsupported please use Raspbian or linux alternative. ({Environment.OSVersion})");
+                return;
+            }
             
             ConsoleUtils.WriteLine("Loading Cezium client");
             
