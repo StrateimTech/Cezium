@@ -52,12 +52,16 @@ namespace Client.Rust
 
         public void Start()
         {
+            if (_hidHandler.HidMouseHandler == null)
+            {
+                ConsoleUtils.WriteLine("Couldn't find a mouse waiting...", "RustHandler");
+            }
             while (true)
             {
                 if (_hidHandler.HidMouseHandler == null)
                 {
-                    ConsoleUtils.WriteLine("Couldn't find a mouse stopping.. RustHandler", "RustHandler");
-                    break;
+                    Thread.Sleep(1);
+                    continue;
                 }
 
                 if(!_settings.Rust.State || !_hidHandler.HidMouseHandler.Mouse.LeftButton || !_hidHandler.HidMouseHandler.Mouse.RightButton)

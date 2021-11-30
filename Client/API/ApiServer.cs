@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using Client.HID;
 using Client.Rust;
+using Client.Utils;
 
 namespace Client.API
 {
@@ -28,7 +29,6 @@ namespace Client.API
                 {
                     var receiveData = Encoding.ASCII.GetString(bytes, 0, i);
                     var sendData = apiHandler.HandlePacket(receiveData.Split(null));
-                    // ConsoleUtils.WriteCentered($"Incoming: {receiveData} | Outgoing: {receiveData}");
                     if (sendData != null)
                     {
                         var sendBytes = Encoding.ASCII.GetBytes(sendData);

@@ -12,20 +12,20 @@ namespace Client.HID
     public class HidHandler
     {
         private const string MouseStreamPath = "/dev/input/mice";
-        private const string KeyboardStreamPath = "/dev/input/event0";
+        private const string KeyboardStreamPath = "/dev/input/by-id/usb-Hoksi_Technology_DGK68C-event-kbd";
         
         private const string HumanInterfaceDeviceStreamPath = "/dev/hidg0";
 
-        private readonly FileStream? _mouseFileStream;
-        private readonly FileStream? _keyboardFileStream;
+        private FileStream? _mouseFileStream;
+        private FileStream? _keyboardFileStream;
         
         private readonly FileStream _hidFileStream;
 
         public readonly KeyboardApiHandler KeyboardApiHandler;
         public readonly MouseApiHandler MouseApiHandler;
 
-        public readonly HidKeyboardHandler? HidKeyboardHandler;
-        public readonly HidMouseHandler? HidMouseHandler;
+        public HidKeyboardHandler? HidKeyboardHandler;
+        public HidMouseHandler? HidMouseHandler;
         
         private readonly ReaderWriterLockSlim _hidWriteLock = new();
         
@@ -48,19 +48,46 @@ namespace Client.HID
             if (_keyboardFileStream != null)
             {
                 HidKeyboardHandler = new(this, settings, _keyboardFileStream);
+                ConsoleUtils.WriteLine("Found keyboard stream", "HidHandler");
             }
             else
             {
-                ConsoleUtils.WriteLine("Failed to find Keyboard", "HidHandler");
+                ConsoleUtils.WriteLine("Failed to find Keyboard... Continuously Looking...", "HidHandler");
             }
 
             if (_mouseFileStream != null)
             {
                 HidMouseHandler = new(this, settings, _mouseFileStream);
+                ConsoleUtils.WriteLine("Found mouse stream", "HidHandler");
             }
             else
             {
-                ConsoleUtils.WriteLine("Failed to find Mouse", "HidHandler");
+                ConsoleUtils.WriteLine("Failed to find Mouse... Continuously Looking...", "HidHandler");
+            }
+
+            if (_mouseFileStream == null || _keyboardFileStream == null)
+            {
+                new Thread(() =>
+                {
+                    while (true)
+                    {
+                        if (File.Exists(KeyboardStreamPath) && _keyboardFileStream == null)
+                        {
+                            _keyboardFileStream = File.Open(KeyboardStreamPath, FileMode.Open, FileAccess.Read);
+                            HidKeyboardHandler = new(this, settings, _keyboardFileStream);
+                            ConsoleUtils.WriteLine("Found keyboard!", "HidHandler");
+                        }
+                        if (File.Exists(MouseStreamPath) && _mouseFileStream == null)
+                        {
+                            _mouseFileStream = File.Open(MouseStreamPath, FileMode.Open, FileAccess.ReadWrite);
+                            HidMouseHandler = new(this, settings, _mouseFileStream);
+                            ConsoleUtils.WriteLine("Found mouse!", "HidHandler");
+                        }
+                        if (_mouseFileStream != null && _keyboardFileStream != null)
+                            break;
+                        Thread.Sleep(1);
+                    }
+                }).Start();
             }
         }
 

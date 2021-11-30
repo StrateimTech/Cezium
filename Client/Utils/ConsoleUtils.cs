@@ -7,7 +7,7 @@ namespace Client.Utils
         public static void WriteLine(string line, string displayName = "Client")
         {
             Console.WriteLine(displayName != null
-                ? $" [{displayName}] | {line}" : $" {line}");
+                ? $" [{(displayName != "Client" ? $"Client | {displayName}" : displayName)}] | {line}" : $" {line}");
         }
     }
 }

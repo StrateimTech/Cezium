@@ -38,6 +38,8 @@ namespace Server.Obfuscation.Impl.Renaming
 
         private void HandleType(TypeDef typeDef)
         {
+            if (typeDef.IsEnum || typeDef.Name == "RustTables" || typeDef.Name == "Scopes" || typeDef.Name == "Attachments")
+                return;
             var randomTypeName = RandomizationUtils.RandomString(_stringLength);
             var randomTypeNamespace = RandomizationUtils.RandomString(_stringLength);
 
