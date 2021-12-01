@@ -32,9 +32,9 @@ namespace Client.Rust
                         = new(Settings.RustSettings.Guns.ASSAULTRIFLE, RustTables.AssaultRifle, Settings.RustSettings.FireRate.ASSAULTRIFLE, (int)Settings.RustSettings.BulletCounts.ASSAULTRIFLE, 1, (1, 1));
 
         /// <summary>
-        /// <param name="Tuple">Pixels coordinates for each relative mouse movement for every bullet</param>
+        /// <param name="Tuple">2 Pixels coordinates for each relative mouse movement for every bullet and 3rd Tuple item is ControlTiming</param>
         /// </summary>
-        public List<Tuple<double, double>>? PixelTable;
+        public List<Tuple<double, double, double>>? PixelTable;
 
         private Tuple<int, int> _lastRandomization = new(0, 0);
         private bool _reverseRandom;
@@ -83,6 +83,7 @@ namespace Client.Rust
 
                     var pixelXTable = PixelTable[_bullet].Item1;
                     var pixelYTable = PixelTable[_bullet].Item2;
+                    var pixelControlTiming = PixelTable[_bullet].Item3;
 
                     pixelXTable *= _settings.Rust.RecoilModifier.Item1;
                     pixelYTable *= _settings.Rust.RecoilModifier.Item2;
@@ -129,11 +130,14 @@ namespace Client.Rust
 
                     var delay = 60000.0 / (int)CurrentWeapon.Item3;
                     var smoothing = _settings.Rust.Smoothness;
-                    var sleep = (delay / smoothing) * CurrentWeapon.Item6.Item2;
+
+                    var timing = delay - pixelControlTiming;
+                    var sleep = (timing / smoothing) * CurrentWeapon.Item6.Item2;
 
                     if (_settings.Rust.DebugState)
                     {
-                        ConsoleUtils.WriteLine($"Bullet: {_bullet}, Smoothing: {smoothing}, Sleep: {sleep}, X: {gunPixelX}, Y: {gunPixelY}");
+                        ConsoleUtils.WriteLine($"Bullet: {_bullet}, Smoothing: {smoothing}, X: {gunPixelX}, Y: {gunPixelY}");
+                        ConsoleUtils.WriteLine($"Timing: {timing}, Sleep: {sleep}, PixelControlTiming: {pixelControlTiming}");
                     }
                     
                     for (int i = 0; i < smoothing; i++)
@@ -150,6 +154,9 @@ namespace Client.Rust
                         var stopwatch = Stopwatch.StartNew();
                         while (stopwatch.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= sleep * 1000);
                     }
+                    var stopwatch2 = Stopwatch.StartNew();
+                    while (stopwatch2.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= pixelControlTiming * 1000);
+                    
                     _bullet++;
                     _reverseRandom = false;
                 }
@@ -161,9 +168,9 @@ namespace Client.Rust
             }
         }
 
-        public List<Tuple<double, double>> CalculatePixelTables(List<Tuple<double, double>> angleTable)
+        public List<Tuple<double, double, double>> CalculatePixelTables(List<Tuple<double, double>> angleTable)
         {
-            var pixelTable = new List<Tuple<double, double>>();
+            var pixelTable = new List<Tuple<double, double, double>>();
             var lastShot = new Tuple<double, double>(0.0, 0.0);
 
             var localSens = _settings.Rust.Sensitivity;
@@ -183,12 +190,14 @@ namespace Client.Rust
                 var deltaX = tableValue.Item1 - lastShot.Item1;
                 var deltaY = tableValue.Item2 - lastShot.Item2;
 
+                var controlTime = Math.Sqrt(deltaX * deltaX + deltaY * deltaY) / 0.02;
+                
                 var screenMultiplier = -0.03f * (localSens * 3.0f) * (_settings.Rust.Fov / 100.0f);
                 
                 var xPixels = (deltaX / screenMultiplier);
                 var yPixels = (deltaY / screenMultiplier);
                 
-                var tuple = new Tuple<double, double>(xPixels, yPixels);
+                var tuple = new Tuple<double, double, double>(xPixels, yPixels, controlTime);
                     
                 pixelTable.Add(tuple);
                 lastShot = new(tableValue.Item1, tableValue.Item2);
