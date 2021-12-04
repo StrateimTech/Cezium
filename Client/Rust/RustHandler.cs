@@ -194,8 +194,8 @@ namespace Client.Rust
                 
                 var screenMultiplier = -0.03f * (localSens * 3.0f) * (_settings.Rust.Fov / 100.0f);
                 
-                var xPixels = (deltaX / screenMultiplier);
-                var yPixels = (deltaY / screenMultiplier);
+                var xPixels = deltaX / screenMultiplier;
+                var yPixels = deltaY / screenMultiplier;
                 
                 var tuple = new Tuple<double, double, double>(xPixels, yPixels, controlTime);
                     

@@ -109,7 +109,12 @@ namespace Client.HID
             _hidWriteLock.EnterWriteLock();
             try
             {
-                FileUtils.WriteReport(_hidFileStream, 1, new []{BitUtils.ToByte(mouse.ButtonBitArray)}, new []{Convert.ToInt16(mouse.X), Convert.ToInt16(mouse.Y)}, new [] {Convert.ToSByte(mouse.Wheel)}, true);
+                FileUtils.WriteReport(_hidFileStream, 
+                    1, 
+                    new []{BitUtils.ToByte(mouse.ButtonBitArray)}, 
+                    new []{Convert.ToInt16(mouse.X), Convert.ToInt16(mouse.Y)}, 
+                    new [] {Convert.ToSByte(mouse.Wheel)},
+                    leaveOpen);
             }
             catch (Exception exception)
             {
@@ -127,8 +132,7 @@ namespace Client.HID
             _hidWriteLock.EnterWriteLock();
             try
             {
-                using BinaryWriter binaryWriter = new(_hidFileStream, Encoding.Default, leaveOpen);
-                byte[] buffer = new byte[9];
+                byte[] buffer = new byte[8];
                 buffer[0] = 2;
                 if (keyboard.Modifier != null)
                 {
@@ -138,15 +142,13 @@ namespace Client.HID
                 {
                     buffer[3] = keyboard.KeyCode.Value;
                 }
-
-                buffer[4] = keyboard.ExtraKeys[0];
-                buffer[5] = keyboard.ExtraKeys[1];
-                buffer[6] = keyboard.ExtraKeys[2];
-                buffer[7] = keyboard.ExtraKeys[3];
-                buffer[8] = keyboard.ExtraKeys[4];
-
-                binaryWriter.Write(buffer);
-                binaryWriter.Flush();
+                
+                for (int i = 4; i < 8; i++)
+                {
+                    buffer[i] = keyboard.ExtraKeys[i-4];
+                }
+                
+                FileUtils.WriteReport(_hidFileStream, buffer, leaveOpen);
             }
             catch (Exception exception)
             {

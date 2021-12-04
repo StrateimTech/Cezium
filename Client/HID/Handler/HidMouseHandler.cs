@@ -10,6 +10,8 @@ namespace Client.HID.Handler
     {
         public Mouse Mouse { get; private set; } = new();
         
+        public readonly EventHandler<Mouse> MouseEvent;
+        
         public HidMouseHandler(HidHandler hidHandler, Settings settings, FileStream mouseFileStream)
         {
             new Thread(() =>
@@ -25,8 +27,8 @@ namespace Client.HID.Handler
                             mouseSbyteArray[1] = settings.General.Mouse.InvertMouseX ? Convert.ToSByte(Convert.ToInt32(mouseSbyteArray[1]) * -1) : mouseSbyteArray[1];
                             mouseSbyteArray[2] = settings.General.Mouse.InvertMouseY ? mouseSbyteArray[2] : Convert.ToSByte(Convert.ToInt32(mouseSbyteArray[2]) * -1);
                             mouseSbyteArray[3] = settings.General.Mouse.InvertMouseWheel ? mouseSbyteArray[3] : Convert.ToSByte(Convert.ToInt32(mouseSbyteArray[3]) * -1);
-
-                            Mouse = new Mouse()
+                            
+                            Mouse = new Mouse
                             {
                                 LeftButton = (mouseSbyteArray[0] & 0x1) > 0,
                                 RightButton = (mouseSbyteArray[0] & 0x2) > 0,
@@ -40,6 +42,8 @@ namespace Client.HID.Handler
                                     (mouseSbyteArray[0] & 0x4) > 0, false, false, false, false, false
                                 })
                             };
+                            
+                            MouseEvent?.Invoke(this, Mouse);
                             
                             if (settings.General.Mouse.DebugState)
                             {

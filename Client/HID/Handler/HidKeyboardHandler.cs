@@ -11,6 +11,8 @@ namespace Client.HID.Handler
         private int? _keyCodeModifier;
         
         private readonly List<int> _keysDown = new();
+        
+        public readonly EventHandler<Tuple<short, short, int>> KeyEvent;
 
         public HidKeyboardHandler(HidHandler hidHandler, Settings settings, FileStream keyboardFileStream)
         {
@@ -27,13 +29,13 @@ namespace Client.HID.Handler
                         var offset = 8;
                         short type = BitConverter.ToInt16(new[] {buffer[offset], buffer[++offset]}, 0);
                         short code = BitConverter.ToInt16(new[] {buffer[++offset], buffer[++offset]}, 0);
-                        int value = BitConverter.ToInt32(
-                            new[] {buffer[++offset], buffer[++offset], buffer[++offset], buffer[++offset]}, 0);
+                        int value = BitConverter.ToInt32(new[] {buffer[++offset], buffer[++offset], buffer[++offset], buffer[++offset]}, 0);
 
                         var eventType = (Keyboard.EventType) type;
                         var keyCode = (Keyboard.LinuxKeyCode) code;
                         var keyState = (Keyboard.KeyState) value;
 
+                        KeyEvent.Invoke(this, new Tuple<short, short, int>(type, code, value));
                         switch (eventType)
                         {
                             case Keyboard.EventType.EV_KEY:
@@ -68,9 +70,9 @@ namespace Client.HID.Handler
                                             usbKeyCode = (int) Enum.Parse(typeof(Keyboard.UsbKeyCode), keyCode.ToString());
                                         }
 
-                                        var keyboard = new Keyboard()
+                                        var keyboard = new Keyboard
                                         {
-                                            KeyCode = usbKeyCode != null ? Convert.ToByte(usbKeyCode) : null,
+                                            KeyCode = usbKeyCode != null ? Convert.ToByte(usbKeyCode) : null
                                         };
 
                                         Keyboard.UsbKeyCodeModifiers? localModifier = _keyCodeModifier != null ? (Keyboard.UsbKeyCodeModifiers)_keyCodeModifier : null;
