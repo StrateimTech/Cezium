@@ -8,9 +8,9 @@ using static WinApp.Utils.ServerUtil;
 
 namespace WinApp.Windows.Rust
 {
-    public partial class RustControl : UserControl
+    public partial class RustRecoilControl : UserControl
     {
-        public RustControl()
+        public RustRecoilControl()
         {
             InitializeComponent();
         }

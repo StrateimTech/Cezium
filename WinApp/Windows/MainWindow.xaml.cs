@@ -13,6 +13,7 @@ using WinApp.Windows.Home;
 using WinApp.Windows.Keyboard;
 using WinApp.Windows.Mouse;
 using WinApp.Windows.Rust;
+using WinApp.Windows.Rust.CodeLock;
 
 namespace WinApp.Windows
 {
@@ -21,7 +22,8 @@ namespace WinApp.Windows
         private readonly UserControl _homeControl = new HomeControl();
         private readonly UserControl _mouseControl = new MouseControl();
         private readonly UserControl _keyboardControl = new KeyboardControl();
-        private readonly UserControl _rustControl = new RustControl();
+        private readonly UserControl _rustRecoilControl = new RustRecoilControl();
+        private readonly UserControl _rustLockControl = new RustLockControl();
 
         public MainWindow()
         {
@@ -156,11 +158,19 @@ namespace WinApp.Windows
             }
         }
 
-        private void RustButtonPanel_OnClick(object sender, RoutedEventArgs e)
+        private void RustRecoilButtonPanel_OnClick(object sender, RoutedEventArgs e)
         {
-            if (MainControl.Content is not RustControl)
+            if (MainControl.Content is not RustRecoilControl)
             {
-                MainControl.Content = _rustControl;
+                MainControl.Content = _rustRecoilControl;
+            }
+        }
+        
+        private void RustKeyButtonPanel_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (MainControl.Content is not RustLockControl)
+            {
+                MainControl.Content = _rustLockControl;
             }
         }
 

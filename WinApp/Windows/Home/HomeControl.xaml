@@ -96,7 +96,5 @@
             <!--     </Border> -->
             <!-- </Grid> -->
         </DockPanel>
-        <Label Content="Version 1.0.0" Background="Transparent" BorderThickness="0" Foreground="White"
-               HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="4" FontSize="12" />
     </Grid>
 </UserControl>

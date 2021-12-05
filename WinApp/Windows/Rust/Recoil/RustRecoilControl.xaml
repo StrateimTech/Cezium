@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WinApp.Windows.Rust.RustControl"
+﻿<UserControl x:Class="WinApp.Windows.Rust.RustRecoilControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -235,9 +235,9 @@
                               IsChecked="true" Margin="16, -17, 0, 47" Content="State"
                               Style="{StaticResource ToggleButtonSwitch}" Width="96" Height="96" Foreground="White" />
             </Grid>
-            <Label HorizontalAlignment="Center" VerticalAlignment="Top" Content="Rust Settings"
+            <Label HorizontalAlignment="Center" VerticalAlignment="Top" Content="Recoil Settings"
                    Background="Transparent" Margin="0, 14, 0, 0"
-                   BorderThickness="0" Foreground="White" FontSize="16" FontFamily="Carter One" />
+                   BorderThickness="0" Foreground="White" FontSize="16" FontFamily="Fugaz One" />
             <Grid>
                 <ToggleButton x:Name="DebugButton" HorizontalAlignment="Right"
                               Checked="DebugButton_OnChecked"

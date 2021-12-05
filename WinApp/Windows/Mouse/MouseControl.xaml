@@ -57,7 +57,7 @@
             </Grid>
             <Label HorizontalAlignment="Center" VerticalAlignment="Top" Content="Mouse Settings"
                    Background="Transparent" Margin="0, 14, 0, 0"
-                   BorderThickness="0" Foreground="White" FontSize="16" FontFamily="Carter One" />
+                   BorderThickness="0" Foreground="White" FontSize="16" FontFamily="Fugaz One" />
             <Grid>
                 <ToggleButton x:Name="DebugButton" HorizontalAlignment="Right"
                               Checked="DebugButton_OnChecked"

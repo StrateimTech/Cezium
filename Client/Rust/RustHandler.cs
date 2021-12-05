@@ -132,12 +132,12 @@ namespace Client.Rust
                     var smoothing = _settings.Rust.Smoothness;
 
                     var timing = delay - pixelControlTiming;
-                    var sleep = (timing / smoothing) * CurrentWeapon.Item6.Item2;
+                    var sleep = pixelControlTiming / smoothing * CurrentWeapon.Item6.Item2;
 
                     if (_settings.Rust.DebugState)
                     {
                         ConsoleUtils.WriteLine($"Bullet: {_bullet}, Smoothing: {smoothing}, X: {gunPixelX}, Y: {gunPixelY}");
-                        ConsoleUtils.WriteLine($"Timing: {timing}, Sleep: {sleep}, PixelControlTiming: {pixelControlTiming}");
+                        ConsoleUtils.WriteLine($"Timing: {timing}, Sleep: {sleep}, PixelControlTiming: {pixelControlTiming} \n");
                     }
                     
                     for (int i = 0; i < smoothing; i++)
@@ -155,7 +155,7 @@ namespace Client.Rust
                         while (stopwatch.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= sleep * 1000);
                     }
                     var stopwatch2 = Stopwatch.StartNew();
-                    while (stopwatch2.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= pixelControlTiming * 1000);
+                    while (stopwatch2.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= timing * 1000);
                     
                     _bullet++;
                     _reverseRandom = false;
