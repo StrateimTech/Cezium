@@ -13,38 +13,21 @@
             <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Border BorderThickness="1"
                         CornerRadius="4"
-                        Background="#484848" Width="250" Height="200" Margin="12" HorizontalAlignment="Left"
-                        VerticalAlignment="Top">
-                    <DockPanel>
-                        <Grid DockPanel.Dock="Top">
-                            <Label Content="Client" Background="Transparent" BorderThickness="0" Foreground="White"
-                                   HorizontalAlignment="Left" VerticalAlignment="Top" />
-                            <Line Stretch="Fill" Stroke="White" X1="1" StrokeThickness="1" Margin="8, 32, 8, 0" />
-                        </Grid>
-                        <Grid DockPanel.Dock="Bottom">
-                            <TextBox x:Name="ServerIPTextBox" Height="64" Width="200" Margin="0, 8, 0, 0"
-                                     hc:InfoElement.Placeholder="192.168.0.180:200"
-                                     hc:InfoElement.Title="IPV4 Address &amp; Port"
-                                     hc:InfoElement.Necessary="True" Style="{StaticResource TextBoxExtend}"
-                                     HorizontalAlignment="Center" VerticalAlignment="Top" 
-                                     TextChanged="ServerIPTextBox_OnTextChanged"/>
-                            <TextBox Height="64" Width="200" Margin="0, 72, 0, 0" hc:InfoElement.Placeholder="...."
-                                     hc:InfoElement.Title="Client Key" Style="{StaticResource TextBoxExtend}"
-                                     HorizontalAlignment="Center" VerticalAlignment="Top" />
-                        </Grid>
-                    </DockPanel>
-                </Border>
-            </Grid>
-            <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
-                <Border BorderThickness="1"
-                        CornerRadius="4"
-                        Background="#484848" Width="250" Height="200" Margin="12" HorizontalAlignment="Left"
+                        Background="#484848" Width="250" Height="250" Margin="12" HorizontalAlignment="Left"
                         VerticalAlignment="Top">
                     <DockPanel>
                         <Grid DockPanel.Dock="Top">
                             <Label Content="Server" Background="Transparent" BorderThickness="0" Foreground="White"
                                    HorizontalAlignment="Left" VerticalAlignment="Top" />
-                            <Line Stretch="Fill" Stroke="White" X1="1" StrokeThickness="1" Margin="8, 32, 8, 0" />
+                            <Line Stretch="Fill" VerticalAlignment="Top" Stroke="White" X1="1" StrokeThickness="1" Margin="8, 32, 8, 0" />
+                            <Grid>
+                                <TextBox x:Name="ServerIPTextBox" Height="64" Width="230" Margin="8, 36, 8, 0"
+                                         hc:InfoElement.Placeholder="192.168.0.180:200"
+                                         hc:InfoElement.Title="IPV4 Address &amp; Port"
+                                         hc:InfoElement.Necessary="True" Style="{StaticResource TextBoxExtend}"
+                                         HorizontalAlignment="Left" VerticalAlignment="Top"
+                                         TextChanged="ServerIPTextBox_OnTextChanged"/>
+                            </Grid>
                         </Grid>
                         <Grid DockPanel.Dock="Bottom">
                             <StackPanel Orientation="Vertical" Margin="0, 8, 0, 0">
@@ -83,15 +66,19 @@
                     </DockPanel>
                 </Border>
             </Grid>
-
-
-            <!-- <Grid> -->
+            <!-- <Grid HorizontalAlignment="Left" VerticalAlignment="Top"> -->
             <!--     <Border BorderThickness="1" -->
             <!--             CornerRadius="4" -->
-            <!--             Background="#484848" Width="125" Height="75" Margin="8" HorizontalAlignment="Left" -->
+            <!--             Background="#484848" Width="250" Height="200" Margin="12" HorizontalAlignment="Left" -->
             <!--             VerticalAlignment="Top"> -->
             <!--         <DockPanel> -->
-            <!--             <Label Content="Offline" Background="Transparent" BorderThickness="0" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0, 12, 0, 0" FontSize="24"></Label> -->
+            <!--             <Grid DockPanel.Dock="Top"> -->
+            <!--                 <Label Content="Client" Background="Transparent" BorderThickness="0" Foreground="White" -->
+            <!--                        HorizontalAlignment="Left" VerticalAlignment="Top" /> -->
+            <!--                 <Line Stretch="Fill" Stroke="White" X1="1" StrokeThickness="1" Margin="8, 32, 8, 0" /> -->
+            <!--             </Grid> -->
+            <!--             <Grid DockPanel.Dock="Bottom"> -->
+            <!--             </Grid> -->
             <!--         </DockPanel> -->
             <!--     </Border> -->
             <!-- </Grid> -->

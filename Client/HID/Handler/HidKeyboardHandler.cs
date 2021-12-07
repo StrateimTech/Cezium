@@ -12,7 +12,7 @@ namespace Client.HID.Handler
         
         private readonly List<int> _keysDown = new();
         
-        public readonly EventHandler<Tuple<short, short, int>> KeyEvent;
+        public EventHandler<Tuple<short, short, int>> KeyEvent;
 
         public HidKeyboardHandler(HidHandler hidHandler, Settings settings, FileStream keyboardFileStream)
         {
@@ -35,7 +35,7 @@ namespace Client.HID.Handler
                         var keyCode = (Keyboard.LinuxKeyCode) code;
                         var keyState = (Keyboard.KeyState) value;
 
-                        KeyEvent.Invoke(this, new Tuple<short, short, int>(type, code, value));
+                        KeyEvent?.Invoke(this, new Tuple<short, short, int>(type, code, value));
                         switch (eventType)
                         {
                             case Keyboard.EventType.EV_KEY:

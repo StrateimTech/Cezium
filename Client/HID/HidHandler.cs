@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -20,6 +21,7 @@ namespace Client.HID
         private FileStream? _keyboardFileStream;
         
         private readonly FileStream _hidFileStream;
+        private readonly BinaryWriter _hidBinaryWriter;
 
         public readonly KeyboardApiHandler KeyboardApiHandler;
         public readonly MouseApiHandler MouseApiHandler;
@@ -41,6 +43,7 @@ namespace Client.HID
             }
 
             _hidFileStream = File.Open(HumanInterfaceDeviceStreamPath, FileMode.Open, FileAccess.Write);
+            _hidBinaryWriter = new BinaryWriter(_hidFileStream, Encoding.Default, true);
 
             KeyboardApiHandler = new(settings);
             MouseApiHandler = new(settings);
@@ -104,17 +107,20 @@ namespace Client.HID
             _hidFileStream.Close();
         }
         
-        public void WriteMouseReport(Mouse mouse, bool leaveOpen = true)    
+        private static readonly Stopwatch Stopwatch = new();
+        
+        // TODO: Possible issue here causing rust handler to be thrown off course.
+        public void WriteMouseReport(Mouse mouse)
         {
+            Stopwatch.Restart();
             _hidWriteLock.EnterWriteLock();
             try
             {
-                FileUtils.WriteReport(_hidFileStream, 
+                FileUtils.WriteReport(_hidBinaryWriter, 
                     1, 
                     new []{BitUtils.ToByte(mouse.ButtonBitArray)}, 
                     new []{Convert.ToInt16(mouse.X), Convert.ToInt16(mouse.Y)}, 
-                    new [] {Convert.ToSByte(mouse.Wheel)},
-                    leaveOpen);
+                    new [] {Convert.ToSByte(mouse.Wheel)});
             }
             catch (Exception exception)
             {
@@ -125,9 +131,11 @@ namespace Client.HID
             {
                 _hidWriteLock.ExitWriteLock();
             }
+            Stopwatch.Stop();
+            ConsoleUtils.WriteLine($"Write (Total Seconds: {Stopwatch.Elapsed.TotalMilliseconds})");
         }
         
-        public void WriteKeyboardReport(Keyboard keyboard, bool leaveOpen = true)
+        public void WriteKeyboardReport(Keyboard keyboard)
         {
             _hidWriteLock.EnterWriteLock();
             try
@@ -148,7 +156,7 @@ namespace Client.HID
                     buffer[i] = keyboard.ExtraKeys[i-4];
                 }
                 
-                FileUtils.WriteReport(_hidFileStream, buffer, leaveOpen);
+                FileUtils.WriteReport(_hidBinaryWriter, buffer);
             }
             catch (Exception exception)
             {

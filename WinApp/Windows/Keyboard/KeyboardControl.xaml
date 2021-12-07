@@ -10,6 +10,14 @@
              hc:Theme.Skin="Dark">
     <Grid>
         <Grid x:Name="MainGrid">
+            <Grid>
+                <ToggleButton x:Name="DebugButton" HorizontalAlignment="Right" VerticalAlignment="Top"
+                              Checked="DebugButton_OnChecked"
+                              Unchecked="DebugButton_OnUnchecked"
+                              IsChecked="False" Margin="16, -17, 16, 47" Content="Debug"
+                              Style="{StaticResource ToggleButtonSwitch}" Width="96" Height="96" Foreground="White"
+                />
+            </Grid>
             <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Line Stretch="Fill" Stroke="White" X1="1" StrokeThickness="1" Margin="16, 64, 16, 0" />
             </Grid>
@@ -28,14 +36,6 @@
             </Grid>
             <Label HorizontalAlignment="Center" VerticalAlignment="Top" Content="Keyboard Settings" Background="Transparent" Margin="0, 14, 0, 0"
                    BorderThickness="0" Foreground="White" FontSize="16" FontFamily="Fugaz One" />
-            <Grid>
-                <ToggleButton x:Name="DebugButton" HorizontalAlignment="Right" 
-                              Checked="DebugButton_OnChecked"
-                              Unchecked="DebugButton_OnUnchecked"
-                              IsChecked="False" Margin="16, -17, 16, 47" Content="Debug"
-                              Style="{StaticResource ToggleButtonSwitch}" Width="96" Height="96" Foreground="White"
-                />
-            </Grid>
         </Grid>
     </Grid>
 </UserControl>

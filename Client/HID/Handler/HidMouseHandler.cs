@@ -10,7 +10,7 @@ namespace Client.HID.Handler
     {
         public Mouse Mouse { get; private set; } = new();
         
-        public readonly EventHandler<Mouse> MouseEvent;
+        public EventHandler<Mouse> MouseEvent;
         
         public HidMouseHandler(HidHandler hidHandler, Settings settings, FileStream mouseFileStream)
         {

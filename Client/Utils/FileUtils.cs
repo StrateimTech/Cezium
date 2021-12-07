@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 
@@ -8,29 +9,25 @@ namespace Client.Utils
         public static void WriteReport(FileStream fileStream, byte[] bytes, bool leaveOpen = true)
         {
             using BinaryWriter binaryWriter = new(fileStream, Encoding.Default, leaveOpen);
-            foreach (var unsignedByte in bytes)
-            {
-                binaryWriter.Write(unsignedByte);
-            }
+            binaryWriter.Write(bytes);
             binaryWriter.Flush();
         }
         
-        public static void WriteReport(FileStream fileStream, byte reportId, byte[] bytes, short[] shorts, sbyte[] sbytes, bool leaveOpen = true)
+        public static void WriteReport(BinaryWriter binaryWriter, byte[] bytes)
         {
-            using BinaryWriter binaryWriter = new(fileStream, Encoding.Default, leaveOpen);
+            binaryWriter.Write(bytes);
+            binaryWriter.Flush();
+        }
+        
+        public static void WriteReport(BinaryWriter binaryWriter, byte reportId, byte[] bytes, short[] shorts, sbyte[] sbytes)
+        {
             binaryWriter.Write(reportId);
-            foreach (var unsignedByte in bytes)
-            {
-                binaryWriter.Write(unsignedByte);
-            }
+            binaryWriter.Write(bytes);
             foreach (var signedUShort in shorts)
             {
                 binaryWriter.Write(signedUShort);
             }
-            foreach (var signedByte in sbytes)
-            {
-                binaryWriter.Write(signedByte);
-            }
+            binaryWriter.Write((byte[])(object)sbytes);
             binaryWriter.Flush();
         }
     }

@@ -74,7 +74,7 @@ namespace WinApp.Windows
 
         private void MainWindow_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            TopContentWidth = e.NewSize.Width - SidebarWidth - 2;
+            TopContentWidth = e.NewSize.Width - SidebarWidth;
             
             MainControl.Width = e.NewSize.Width - SidebarWidth;
             MainControl.Height = e.NewSize.Height - TopContentHeight;
