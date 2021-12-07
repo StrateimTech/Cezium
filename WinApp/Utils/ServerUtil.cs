@@ -35,7 +35,8 @@ namespace WinApp.Utils
                     }
                     catch (Exception e)
                     {
-                        Trace.WriteLine($"Exception: {e}");
+                        if(e is not SocketException)
+                            Trace.WriteLine($"Exception: {e}");
                     }
                 }
             }).Start();
@@ -69,10 +70,11 @@ namespace WinApp.Utils
                 }
                 catch (Exception e)
                 {
-                    Trace.WriteLine($"Exception: {e}");
+                    if(e is not SocketException)
+                        Trace.WriteLine($"Exception: {e}");
                 }
             }
-            return "Error";
+            return "Unknown";
         }
     }
 }

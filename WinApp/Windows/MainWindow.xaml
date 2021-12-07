@@ -79,19 +79,6 @@
                                 <ImageBrush ImageSource="../Assets/AssaultRifle-48.png" />
                             </Button.Background>
                         </Button>
-                        <Button
-                            x:Name="RustKeyButtonPanel"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left"
-                            Margin="13.5, 1, 0, 16"
-                            Height="48"
-                            Width="48"
-                            BorderThickness="0"
-                            Click="RustKeyButtonPanel_OnClick">
-                            <Button.Background>
-                                <ImageBrush ImageSource="../Assets/KeyPad-48.png" />
-                            </Button.Background>
-                        </Button>
                     </StackPanel>
                 </Border>
                 <Label Content="V1.0.0" Background="Transparent" BorderThickness="0" Foreground="White"
