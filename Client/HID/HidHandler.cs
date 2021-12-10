@@ -107,12 +107,9 @@ namespace Client.HID
             _hidFileStream.Close();
         }
         
-        private static readonly Stopwatch Stopwatch = new();
-        
         // TODO: Possible issue here causing rust handler to be thrown off course.
         public void WriteMouseReport(Mouse mouse)
         {
-            Stopwatch.Restart();
             _hidWriteLock.EnterWriteLock();
             try
             {
@@ -131,8 +128,6 @@ namespace Client.HID
             {
                 _hidWriteLock.ExitWriteLock();
             }
-            Stopwatch.Stop();
-            ConsoleUtils.WriteLine($"Write (Total Seconds: {Stopwatch.Elapsed.TotalMilliseconds})");
         }
         
         public void WriteKeyboardReport(Keyboard keyboard)

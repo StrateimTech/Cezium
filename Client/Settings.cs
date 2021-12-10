@@ -104,7 +104,7 @@ namespace Client
                 LR300 = 30,
                 M249 = 100,
                 MP5 = 30,
-                THOMPSON = 20,
+                THOMPSON = 20
             }
             
             public enum FireRate

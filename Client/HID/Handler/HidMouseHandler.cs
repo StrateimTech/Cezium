@@ -10,8 +10,6 @@ namespace Client.HID.Handler
     {
         public Mouse Mouse { get; private set; } = new();
         
-        public EventHandler<Mouse> MouseEvent;
-        
         public HidMouseHandler(HidHandler hidHandler, Settings settings, FileStream mouseFileStream)
         {
             new Thread(() =>
@@ -42,8 +40,6 @@ namespace Client.HID.Handler
                                     (mouseSbyteArray[0] & 0x4) > 0, false, false, false, false, false
                                 })
                             };
-                            
-                            MouseEvent?.Invoke(this, Mouse);
                             
                             if (settings.General.Mouse.DebugState)
                             {
