@@ -135,7 +135,7 @@ namespace Client.HID
             _hidWriteLock.EnterWriteLock();
             try
             {
-                byte[] buffer = new byte[8];
+                byte[] buffer = new byte[9];
                 buffer[0] = 2;
                 if (keyboard.Modifier != null)
                 {
