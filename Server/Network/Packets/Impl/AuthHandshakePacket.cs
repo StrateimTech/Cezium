@@ -13,7 +13,7 @@ namespace Server.Network.Packets.Impl
             Client = client;
         }
         
-        public int Status;
+        public bool Status;
 
         public override void Handle(byte[] buffer, NetworkStream clientStream)
         {
@@ -22,7 +22,7 @@ namespace Server.Network.Packets.Impl
             
             if (accountId == 2424)
             {
-                Status = 1;
+                Status = true;
                 Client.Authed = true;
             }
             ConsoleUtils.WriteLine($"(IP: {Client.Client.Client.RemoteEndPoint}) Client authentication received (IsAuthed: {Client.Authed} | Status: {Status} | AccountID: {accountId})", "NetworkHandler");

@@ -17,8 +17,8 @@ namespace Loader.Network.Packets.Impl
         public override void Handle(byte[] buffer, NetworkStream clientStream)
         {
             base.Handle(buffer, clientStream);
-            var status = BitConverter.ToInt32(ReadBuffer(4, buffer));
-            if (status == 1)
+            var status = BitConverter.ToBoolean(ReadBuffer(1, buffer));
+            if (status)
             {
                 ConsoleUtils.WriteLine("Successfully logged in! Loading client...");
                 Server.Authed = true;

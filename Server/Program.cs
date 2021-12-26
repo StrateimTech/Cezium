@@ -15,8 +15,27 @@ namespace Server
 
         public static byte[] ClientAssembly;
 
+        public static readonly Settings Settings = new ();
+        
         public static void Main(string[] args)
         {
+            if (args.Length > 0)
+            {
+                foreach (var argument in args)
+                {
+                    var command = argument.Replace("--", "");
+                    switch (command.ToLower())
+                    {
+                        case "noobfuscation":
+                            Settings.Obfuscation = false;
+                            break;
+                        default:
+                            ConsoleUtils.WriteLine($"Unknown command ({command})", "Server");
+                            break;
+                    }
+                }
+            }
+            
             _assemblyFolder = Path.Combine(Directory.GetCurrentDirectory(), "Clients");
             if (File.Exists("Assets/ANSI Shadow.flf"))
             {
