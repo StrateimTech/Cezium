@@ -72,7 +72,7 @@ namespace Server.Network.Packets.Impl
                 }, clientStream);
                 Thread.Sleep(50);
             }
-            ConsoleUtils.WriteLine($"(IP: {Client.Client.Client.RemoteEndPoint}) Client's requested data has fully sent (IsAuthed: {Client.Authed}, Obfuscation: {})", "NetworkHandler");
+            ConsoleUtils.WriteLine($"(IP: {Client.Client.Client.RemoteEndPoint}) Client's requested data has fully sent (IsAuthed: {Client.Authed}, Obfuscation: {Program.Settings.Obfuscation})", "NetworkHandler");
         }
     }
 }
