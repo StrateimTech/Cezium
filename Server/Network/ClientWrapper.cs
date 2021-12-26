@@ -10,15 +10,22 @@ namespace Server.Network
         {
             Client = client;
         }
-
-        public TcpClient Client;
-
-        public int BuildNumber = 0;
+        
+        public readonly TcpClient Client;
+        
+        /**
+         * Latest loader build number
+         */
+        public static int LoaderBuildNumber = 1;
+        
+        /**
+         * Client's loader build number
+         */
+        public int ClientBuildNumber = 0;
 
         public bool Encryption = false;
         public bool Authed = false;
         
         public bool Connected = true;
-        
     }
 }

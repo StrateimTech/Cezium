@@ -1,4 +1,6 @@
-﻿using System.Net.Sockets;
+﻿using System;
+using System.Net.Sockets;
+using Loader.Utils;
 
 namespace Loader.Network.Packets.Impl
 {
@@ -10,10 +12,14 @@ namespace Loader.Network.Packets.Impl
             Server = server;
         }
 
-        public int buildNumber = Program.Version;
+        public int BuildNumber = Program.Version;
         
         public override void Handle(byte[] buffer, NetworkStream clientStream)
         {
+            var loaderVersion = BitConverter.ToInt32(ReadBuffer(4, buffer));
+            ConsoleUtils.WriteLine(loaderVersion > BuildNumber
+                ? $"Loader outdated (Current build: {BuildNumber}, Newest build: {loaderVersion})"
+                : $"Loader up to date ({BuildNumber})");
         }
     }
 }

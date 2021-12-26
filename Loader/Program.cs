@@ -16,6 +16,10 @@ namespace Loader
     {
         public static readonly int Version = 1;
         public static string[] ClientArguments;
+
+        public static string[] Servers = {
+            "66.94.123.254"
+        };
         
         private static void Main(string[] args)
         {
@@ -27,7 +31,7 @@ namespace Loader
             {
                 ConsoleUtils.WriteCentered(figgleLine);
             }
-            ConsoleUtils.WriteLine("Project by StrateimTech (https://Strateim.tech)");
+            ConsoleUtils.WriteLine("Project by StrateimTech (https://strateim.tech)");
             
             #if RELEASE 
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
@@ -39,7 +43,7 @@ namespace Loader
             
             ConsoleUtils.WriteLine("Attempting to connect to parent server");
             var networkHandler = new NetworkHandler();
-            if (!networkHandler.Connect("66.94.123.254", 3000))
+            if (!networkHandler.Connect(Servers[0], 3000))
             {
                 ConsoleUtils.WriteLine("Couldn't establish connection to parent server (Retry)");
                 return;
