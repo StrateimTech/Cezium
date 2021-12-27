@@ -91,7 +91,6 @@ namespace Loader
                 return;
             }
             
-            ConsoleUtils.WriteLine("Press any key to continue & shutdown the application.");
             Console.ReadKey(true);
             ConsoleUtils.WriteLine("Shutting down...");
             networkHandler.Disconnect();
