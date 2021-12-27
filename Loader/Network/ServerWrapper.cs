@@ -10,5 +10,7 @@
         public bool Authed = true;
 
         public bool Connected = false;
+
+        public bool? VersionSynced;
     }
 }

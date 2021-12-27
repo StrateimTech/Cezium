@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using Figgle;
 using Loader.Network;
 using Loader.Network.Packets.Impl;
@@ -47,6 +48,19 @@ namespace Loader
             {
                 ConsoleUtils.WriteLine("Couldn't establish connection to parent server (Retry)");
                 return;
+            }
+
+            while (true)
+            {
+                if (networkHandler.ServerWrapper.VersionSynced != null)
+                {
+                    if (networkHandler.ServerWrapper.VersionSynced == true)
+                    {
+                        break;
+                    }
+                    return;
+                }
+                Thread.Sleep(1);
             }
             
             ConsoleUtils.WriteLine("Please login using your account ID:");
