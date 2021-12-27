@@ -40,7 +40,7 @@ namespace Server.Network
                     }
 
                     TcpClient client = _serverListener.AcceptTcpClient();
-                    ConsoleUtils.WriteLine($"Accepted new connection (IP: {client.Client.RemoteEndPoint})",
+                    ConsoleUtils.WriteLine($"Accepted new connection{(Program.Settings.HideIp ? "" : $" (IP: {client.Client.RemoteEndPoint})")}",
                         GetType().Name);
                     new Task(() => { HandleClient(client); }).Start();
                 }
@@ -96,7 +96,8 @@ namespace Server.Network
                     break;
                 }
             }
-            ConsoleUtils.WriteLine($"Client disconnected (IP: {client.Client.RemoteEndPoint})", GetType().Name);
+            
+            ConsoleUtils.WriteLine($"Client disconnected{(Program.Settings.HideIp ? "" : $" (IP: {client.Client.RemoteEndPoint})")}", GetType().Name);
 
             _clients.Remove(clientTuple);
             client.Dispose();

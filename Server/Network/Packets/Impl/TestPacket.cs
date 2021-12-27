@@ -24,7 +24,7 @@ namespace Server.Network.Packets.Impl
             var aV = Encoding.Unicode.GetString(ReadBuffer(32, buffer));
             var bV = BitConverter.ToInt32(ReadBuffer(4, buffer));
             var cV = BitConverter.ToBoolean(ReadBuffer(1, buffer));
-            ConsoleUtils.WriteLine($"(IP: {Client.Client.Client.RemoteEndPoint}) A: {aV}, B: {bV}, C: {cV}");
+            ConsoleUtils.WriteLine($"{(Program.Settings.HideIp ? "" : $"(IP: {Client.Client.Client.RemoteEndPoint}) ")}A: {aV}, B: {bV}, C: {cV}");
             SendPacket(this, clientStream);
         }
     }

@@ -19,7 +19,7 @@ namespace Server.Network.Packets.Impl
             base.Handle(buffer, clientStream);
             var buildNumber = BitConverter.ToInt32(ReadBuffer(4, buffer));
             Client.ClientBuildNumber = buildNumber;
-            ConsoleUtils.WriteLine($"(IP: {Client.Client.Client.RemoteEndPoint}) Client connected using loader build {buildNumber}", "NetworkHandler");
+            ConsoleUtils.WriteLine($"{(Program.Settings.HideIp ? "" : $"(IP: {Client.Client.Client.RemoteEndPoint}) ")}Client connected using loader build {buildNumber}", "NetworkHandler");
             SendPacket(new VersionPacket(Client), clientStream);
         }
     }

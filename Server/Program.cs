@@ -30,7 +30,7 @@ namespace Server
                             Settings.Obfuscation = false;
                             break;
                         case "hideip":
-                            Settings.HideIP = true;
+                            Settings.HideIp = true;
                             break;
                         default:
                             ConsoleUtils.WriteLine($"Unknown command ({command})", "Server");

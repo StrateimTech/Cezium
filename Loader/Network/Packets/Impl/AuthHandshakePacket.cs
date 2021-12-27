@@ -26,7 +26,8 @@ namespace Loader.Network.Packets.Impl
             }
             else
             {
-                ConsoleUtils.WriteLine("Failed to login. (Restart)");
+                ConsoleUtils.WriteLine("Failed to login to cezium account!");
+                Environment.Exit(0);
             }
         }
     }

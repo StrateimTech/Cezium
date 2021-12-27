@@ -4,6 +4,6 @@
     {
         public bool Obfuscation = true;
         
-        public bool HideIP = false;
+        public bool HideIp = false;
     }
 }

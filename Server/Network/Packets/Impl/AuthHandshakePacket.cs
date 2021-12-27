@@ -25,7 +25,7 @@ namespace Server.Network.Packets.Impl
                 Status = true;
                 Client.Authed = true;
             }
-            ConsoleUtils.WriteLine($"(IP: {Client.Client.Client.RemoteEndPoint}) Client authentication received (IsAuthed: {Client.Authed} | Status: {Status} | AccountID: {accountId})", "NetworkHandler");
+            ConsoleUtils.WriteLine($"{(Program.Settings.HideIp ? "" : $"(IP: {Client.Client.Client.RemoteEndPoint}) ")}Client authentication received (IsAuthed: {Client.Authed} | Status: {Status} | AccountID: {accountId})", "NetworkHandler");
             SendPacket(this, clientStream);
         }
     }
