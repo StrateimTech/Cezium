@@ -42,13 +42,14 @@ namespace Loader
             }
             #endif
             
-            ConsoleUtils.WriteLine("Attempting to connect to parent server");
+            ConsoleUtils.WriteLine("Attempting to connect to a parent server");
             var networkHandler = new NetworkHandler();
             if (!networkHandler.Connect(Servers[0], 3000))
             {
                 ConsoleUtils.WriteLine("Couldn't establish connection to parent server (Retry)");
                 return;
             }
+            ConsoleUtils.WriteLine("Successfully established connection to a parent server!");
 
             while (true)
             {

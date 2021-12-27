@@ -29,6 +29,9 @@ namespace Server
                         case "noobfuscation":
                             Settings.Obfuscation = false;
                             break;
+                        case "hideip":
+                            Settings.HideIP = true;
+                            break;
                         default:
                             ConsoleUtils.WriteLine($"Unknown command ({command})", "Server");
                             break;

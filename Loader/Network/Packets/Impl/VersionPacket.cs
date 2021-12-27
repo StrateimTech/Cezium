@@ -17,7 +17,8 @@ namespace Loader.Network.Packets.Impl
         public override void Handle(byte[] buffer, NetworkStream clientStream)
         {
             var loaderVersion = BitConverter.ToInt32(ReadBuffer(4, buffer));
-
+            ConsoleUtils.WriteLine("Syncing server loader and client loader build versions");
+            
             if (loaderVersion > BuildNumber)
             {
                 ConsoleUtils.WriteLine($"Loader outdated please update (https://strateim.tech/projects/Cezium/) (Current build: {BuildNumber}, Newest build: {loaderVersion})");
@@ -25,7 +26,7 @@ namespace Loader.Network.Packets.Impl
             }
             else
             {
-                ConsoleUtils.WriteLine($"Loader up to date! ({BuildNumber})");
+                ConsoleUtils.WriteLine($"Loader up to date! (Build: {BuildNumber})");
                 Server.VersionSynced = true;
             }
         }
