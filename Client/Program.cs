@@ -14,21 +14,21 @@ namespace Client
         {
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                ConsoleUtils.WriteLine($"Platform unsupported please use Raspbian or linux alternative. ({Environment.OSVersion})");
+                ConsoleUtils.WriteLine($"Platform unsupported please use Raspbian or linux alternative! ({Environment.OSVersion})");
                 return;
             }
             
             ConsoleUtils.WriteLine("Loading Cezium client");
             
-            ConsoleUtils.WriteLine("Initializing default settings.");
+            ConsoleUtils.WriteLine("Initializing default settings");
             var settings = new Settings();
 
-            ConsoleUtils.WriteLine("Starting Human Interface Device handler.");
+            ConsoleUtils.WriteLine("Starting Human Interface Device handler");
             HidHandler hidHandler = new(settings);
 
             if (hidHandler.HidMouseHandler != null)
             {
-                ConsoleUtils.WriteLine("Starting Rust handler.");
+                ConsoleUtils.WriteLine("Starting Rust handler");
                 RustHandler rustHandler = new(settings, hidHandler);
                 var rustThreadHandler = new Thread(() =>
                 {
@@ -48,10 +48,10 @@ namespace Client
             }
             else
             {
-                ConsoleUtils.WriteLine("Cannot start Rust handler without a mouse connected.");
+                ConsoleUtils.WriteLine("Cannot start Rust handler without a mouse connected");
             }
 
-            ConsoleUtils.WriteLine("Press any key to continue...");
+            ConsoleUtils.WriteLine("Press any key to continue & shutdown...");
             Console.ReadKey(true);
             hidHandler.Stop();
         }

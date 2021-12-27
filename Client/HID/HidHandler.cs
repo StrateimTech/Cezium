@@ -51,7 +51,7 @@ namespace Client.HID
             if (_keyboardFileStream != null)
             {
                 HidKeyboardHandler = new(this, settings, _keyboardFileStream);
-                ConsoleUtils.WriteLine("Found keyboard stream", "HidHandler");
+                ConsoleUtils.WriteLine("Found keyboard device stream and created keyboard emulator", "HidHandler");
             }
             else
             {
@@ -61,7 +61,7 @@ namespace Client.HID
             if (_mouseFileStream != null)
             {
                 HidMouseHandler = new(this, settings, _mouseFileStream);
-                ConsoleUtils.WriteLine("Found mouse stream", "HidHandler");
+                ConsoleUtils.WriteLine("Found mouse device stream and created mouse emulator", "HidHandler");
             }
             else
             {
