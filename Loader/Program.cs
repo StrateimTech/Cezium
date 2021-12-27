@@ -37,7 +37,7 @@ namespace Loader
             #if RELEASE 
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                ConsoleUtils.WriteLine($"Platform unsupported please use Raspbian or linux alternative. ({Environment.OSVersion})");
+                ConsoleUtils.WriteLine($"Platform unsupported please use Raspbian or linux alternative! ({Environment.OSVersion})");
                 return;
             }
             #endif
