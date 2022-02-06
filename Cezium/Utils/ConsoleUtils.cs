@@ -1,18 +1,17 @@
-﻿using System;
+using System;
 
-namespace Loader.Utils
+namespace Client.Utils
 {
-    public class ConsoleUtils
+    public static class ConsoleUtils
     {
-        public static void WriteLine(string line, string displayName = "Loader")
+        public static void WriteLine(string line)
         {
-            Console.WriteLine(displayName != null
-                ? $" [{displayName}] | {line}" : $" {line}");
+            Console.WriteLine($" > {line}");
         }
         
         public static void WriteCentered(string value)
         {
-            int length = (Console.WindowWidth - value.Length);
+            int length = Console.WindowWidth - value.Length;
             if (length < 2)
             {
                 Console.WriteLine(value);
