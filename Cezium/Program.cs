@@ -66,8 +66,8 @@ namespace Cezium
             Console.CancelKeyPress += (_, _) => 
             {
                 ConsoleUtils.WriteLine("Shutting down...");
-                // hidHandler.Stop();
-                // rustHandler.Stop();
+                hidHandler.Stop();
+                rustHandler.Stop();
             };
             
             Console.ReadKey();
