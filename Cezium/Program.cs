@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using Cezium.Rust;
 using Cezium.Web.API;
+using Cezium.Web.Front;
 using Client.Utils;
 using Figgle;
 using HID_API;
@@ -40,7 +41,7 @@ namespace Cezium
                 Console.WriteLine();
                 ConsoleUtils.WriteLine("Couldn't load FiggleFont font continuing... (Assets/ANSI Shadow.flf) \n");
             }
-            
+
             ConsoleUtils.WriteLine("Starting...");
             
             var hidHandler = new HidHandler(
@@ -69,6 +70,14 @@ namespace Cezium
             });
             apiThreadHandler.Start();
             
+            var frontHandler = new FrontHandler();
+            
+            var frontThreadHandler = new Thread(() =>
+            {
+                frontHandler.Start();
+            });
+            frontThreadHandler.Start();
+            
             ConsoleUtils.WriteLine("Successfully started!");
             
             Console.CancelKeyPress += (_, _) => 
@@ -77,6 +86,7 @@ namespace Cezium
                 hidHandler.Stop();
                 rustHandler.Stop();
                 apiHandler.Stop();
+                frontHandler.Stop();
                 Environment.Exit(0);
             };
             

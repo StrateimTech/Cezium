@@ -1,21 +1,19 @@
-﻿using Cezium.Rust;
+﻿using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Cezium.Web.API;
+namespace Cezium.Web.Front;
 
-public class ApiHandler
+public class FrontHandler
 {
-    public static RustHandler RustHandler;
     private readonly IHost _builder;
     
-    public ApiHandler(RustHandler rustHandler)
+    public FrontHandler()
     {
-        RustHandler = rustHandler;
         _builder = CreateHostBuilder().Build();
     }
-
+    
     public void Start()
     {
         _builder.Run();
@@ -25,13 +23,14 @@ public class ApiHandler
     {
         _builder.StopAsync();
     }
-
+    
     private static IHostBuilder CreateHostBuilder() =>
         Host.CreateDefaultBuilder()
             .ConfigureWebHostDefaults(webBuilder =>
             {
+                webBuilder.UseContentRoot($"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}Web{Path.DirectorySeparatorChar}Front");
                 webBuilder.ConfigureLogging(_ => _.ClearProviders());
-                webBuilder.UseUrls("http://*:300;https://*:301");
-                webBuilder.UseStartup<ApiStartup>();
+                webBuilder.UseUrls("http://*:200;https://*:201");
+                webBuilder.UseStartup<FrontStartup>();
             });
 }

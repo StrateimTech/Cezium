@@ -81,9 +81,16 @@ public class SettingsController : Controller
     }
 
     [HttpPost("/api/settings/Attachment/")]
-    public void SetAttachment(RustSettings.Attachment attachment)
+    public void SetAttachment(RustSettings.Attachment? attachment)
     {
-        ApiHandler.RustHandler.Settings.GunAttachment = attachment;
+        if (attachment == null)
+        {
+            ApiHandler.RustHandler.Settings.GunAttachment = null;
+        }
+        else
+        {
+            ApiHandler.RustHandler.Settings.GunAttachment = attachment;
+        }
         ApiHandler.RustHandler.UpdateWeapon(ApiHandler.RustHandler.Settings.Gun, ApiHandler.RustHandler.Settings.GunScope, ApiHandler.RustHandler.Settings.GunAttachment);
     }
 
@@ -102,9 +109,16 @@ public class SettingsController : Controller
     }
 
     [HttpPost("/api/settings/Scope/")]
-    public void SetScope(RustSettings.Scope scope)
+    public void SetScope(RustSettings.Scope? scope)
     {
-        ApiHandler.RustHandler.Settings.GunScope = scope;
+        if (scope == null)
+        {
+            ApiHandler.RustHandler.Settings.GunScope = null;
+        }
+        else
+        {
+            ApiHandler.RustHandler.Settings.GunScope = scope;
+        }
         ApiHandler.RustHandler.UpdateWeapon(ApiHandler.RustHandler.Settings.Gun, ApiHandler.RustHandler.Settings.GunScope, ApiHandler.RustHandler.Settings.GunAttachment);
     }
 
@@ -202,6 +216,7 @@ public class SettingsController : Controller
             fireRate = fireRateEnum;
         }
         ApiHandler.RustHandler.Settings.Gun = new(gun, bulletCount, fireRate);
+        ApiHandler.RustHandler.UpdateWeapon(ApiHandler.RustHandler.Settings.Gun, ApiHandler.RustHandler.Settings.GunScope, ApiHandler.RustHandler.Settings.GunAttachment);
     }
 
     [HttpGet("/api/settings/Gun/")]

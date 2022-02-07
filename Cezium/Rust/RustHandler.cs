@@ -256,7 +256,7 @@ namespace Cezium.Rust
             {
                 foreach (var field in typeof(RustSettings.Scopes).GetFields())
                 {
-                    if (scope.ToString().Equals(field.Name, StringComparison.OrdinalIgnoreCase))
+                    if (scope.ToString()!.Equals(field.Name, StringComparison.OrdinalIgnoreCase))
                     {
                         scopeValue = (double) field.GetValue(null)!;
                     }
@@ -267,7 +267,7 @@ namespace Cezium.Rust
             if(attachment != null) {
                 foreach (var field in typeof(RustSettings.Attachments).GetFields())
                 {
-                    if (attachment.ToString().Equals(field.Name, StringComparison.OrdinalIgnoreCase))
+                    if (attachment.ToString()!.Equals(field.Name, StringComparison.OrdinalIgnoreCase))
                     {
                         attachmentValue = ((double, double)) field.GetValue(null)!;
                     }
