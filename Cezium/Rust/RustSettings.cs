@@ -4,41 +4,42 @@ namespace Cezium.Rust
 {
     public class RustSettings
     {
-        public (Guns, BulletCount, FireRate) Gun = (Guns.ASSAULT_RIFLE, BulletCount.ASSAULT_RIFLE, FireRate.ASSAULT_RIFLE);
+        public (Guns, BulletCount, FireRate) Gun = (Guns.ASSAULT_RIFLE, BulletCount.ASSAULT_RIFLE,
+            FireRate.ASSAULT_RIFLE);
 
         public Attachment? GunAttachment = null;
 
         public Scope? GunScope = null;
-        
+
         public int Smoothness = 6;
 
         public double Sensitivity = 0.5;
 
         public int Fov = 90;
-        
+
         /// <summary>
         /// Whether or not to output debug information to console.
         /// </summary>
         public bool DebugState = false;
-        
+
         public bool State = true;
 
         public enum Guns
         {
             M249,
-            
+
             ASSAULT_RIFLE,
             LR300,
-            
+
             MP5,
             CUSTOM,
             THOMPSON,
-            
+
             REVOLVER,
             M92,
             PYTHON,
             SEMI_PISTOL,
-            
+
             SEMI_RIFLE,
             M39
         }
@@ -50,7 +51,7 @@ namespace Cezium.Rust
             Handmade,
             Holo,
         }
-        
+
         public enum Attachment
         {
             MuzzleBoost,
@@ -81,19 +82,19 @@ namespace Cezium.Rust
         public enum BulletCount
         {
             M249 = 100,
-            
+
             ASSAULT_RIFLE = 30,
             LR300 = 30,
-            
+
             MP5 = 30,
             CUSTOM = 24,
             THOMPSON = 20,
-            
+
             REVOLVER = 8,
             M92 = 15,
             PYTHON = 6,
             SEMI_PISTOL = 10,
-            
+
             SEMI_RIFLE = 16,
             M39 = 20
         }
@@ -101,19 +102,19 @@ namespace Cezium.Rust
         public enum FireRate
         {
             M249 = 500,
-            
+
             ASSAULT_RIFLE = 450,
             LR300 = 500,
-            
+
             MP5 = 600,
             CUSTOM = 600,
             THOMPSON = 462,
-            
+
             REVOLVER = 343,
             M92 = 400,
             PYTHON = 400,
             SEMI_PISTOL = 400,
-            
+
             SEMI_RIFLE = 343,
             M39 = 300
         }

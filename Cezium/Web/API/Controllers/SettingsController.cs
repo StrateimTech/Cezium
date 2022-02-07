@@ -21,9 +21,10 @@ public class SettingsController : Controller
     public void SetSensitivity(double sensitivity)
     {
         ApiHandler.RustHandler.Settings.Sensitivity = sensitivity;
-        ApiHandler.RustHandler.UpdateWeapon(ApiHandler.RustHandler.Settings.Gun, ApiHandler.RustHandler.Settings.GunScope, ApiHandler.RustHandler.Settings.GunAttachment);
+        ApiHandler.RustHandler.UpdateWeapon(ApiHandler.RustHandler.Settings.Gun,
+            ApiHandler.RustHandler.Settings.GunScope, ApiHandler.RustHandler.Settings.GunAttachment);
     }
-    
+
     [HttpGet("/api/settings/Smoothness/")]
     public int GetSmoothness()
     {
@@ -34,9 +35,10 @@ public class SettingsController : Controller
     public void SetSmoothness(int smoothness)
     {
         ApiHandler.RustHandler.Settings.Smoothness = smoothness;
-        ApiHandler.RustHandler.UpdateWeapon(ApiHandler.RustHandler.Settings.Gun, ApiHandler.RustHandler.Settings.GunScope, ApiHandler.RustHandler.Settings.GunAttachment);
+        ApiHandler.RustHandler.UpdateWeapon(ApiHandler.RustHandler.Settings.Gun,
+            ApiHandler.RustHandler.Settings.GunScope, ApiHandler.RustHandler.Settings.GunAttachment);
     }
-    
+
     [HttpGet("/api/settings/Fov/")]
     public int GetFov()
     {
@@ -47,7 +49,8 @@ public class SettingsController : Controller
     public void SetFov(int fov)
     {
         ApiHandler.RustHandler.Settings.Fov = fov;
-        ApiHandler.RustHandler.UpdateWeapon(ApiHandler.RustHandler.Settings.Gun, ApiHandler.RustHandler.Settings.GunScope, ApiHandler.RustHandler.Settings.GunAttachment);
+        ApiHandler.RustHandler.UpdateWeapon(ApiHandler.RustHandler.Settings.Gun,
+            ApiHandler.RustHandler.Settings.GunScope, ApiHandler.RustHandler.Settings.GunAttachment);
     }
 
     [HttpGet("/api/settings/State/")]
@@ -91,7 +94,9 @@ public class SettingsController : Controller
         {
             ApiHandler.RustHandler.Settings.GunAttachment = attachment;
         }
-        ApiHandler.RustHandler.UpdateWeapon(ApiHandler.RustHandler.Settings.Gun, ApiHandler.RustHandler.Settings.GunScope, ApiHandler.RustHandler.Settings.GunAttachment);
+
+        ApiHandler.RustHandler.UpdateWeapon(ApiHandler.RustHandler.Settings.Gun,
+            ApiHandler.RustHandler.Settings.GunScope, ApiHandler.RustHandler.Settings.GunAttachment);
     }
 
     [HttpGet("/api/settings/grab/Attachments/")]
@@ -119,7 +124,9 @@ public class SettingsController : Controller
         {
             ApiHandler.RustHandler.Settings.GunScope = scope;
         }
-        ApiHandler.RustHandler.UpdateWeapon(ApiHandler.RustHandler.Settings.Gun, ApiHandler.RustHandler.Settings.GunScope, ApiHandler.RustHandler.Settings.GunAttachment);
+
+        ApiHandler.RustHandler.UpdateWeapon(ApiHandler.RustHandler.Settings.Gun,
+            ApiHandler.RustHandler.Settings.GunScope, ApiHandler.RustHandler.Settings.GunAttachment);
     }
 
     [HttpGet("/api/settings/grab/Scopes/")]
@@ -210,13 +217,16 @@ public class SettingsController : Controller
         {
             bulletCount = bulletCountEnum;
         }
+
         var fireRate = RustSettings.FireRate.ASSAULT_RIFLE;
         if (Enum.TryParse(gun.ToString(), true, out RustSettings.FireRate fireRateEnum))
         {
             fireRate = fireRateEnum;
         }
+
         ApiHandler.RustHandler.Settings.Gun = new(gun, bulletCount, fireRate);
-        ApiHandler.RustHandler.UpdateWeapon(ApiHandler.RustHandler.Settings.Gun, ApiHandler.RustHandler.Settings.GunScope, ApiHandler.RustHandler.Settings.GunAttachment);
+        ApiHandler.RustHandler.UpdateWeapon(ApiHandler.RustHandler.Settings.Gun,
+            ApiHandler.RustHandler.Settings.GunScope, ApiHandler.RustHandler.Settings.GunAttachment);
     }
 
     [HttpGet("/api/settings/Gun/")]

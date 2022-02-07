@@ -8,7 +8,7 @@ namespace Client.Utils
         {
             Console.WriteLine($" > {line}");
         }
-        
+
         public static void WriteCentered(string value)
         {
             int length = Console.WindowWidth - value.Length;
@@ -17,6 +17,7 @@ namespace Client.Utils
                 Console.WriteLine(value);
                 return;
             }
+
             Console.SetCursorPosition(length / 2, Console.CursorTop);
             Console.WriteLine(value);
         }

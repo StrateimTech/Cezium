@@ -250,7 +250,6 @@ namespace Cezium.Rust
             RustSettings.Scope? scope,
             RustSettings.Attachment? attachment)
         {
-            
             double scopeValue = 1;
             if (scope != null)
             {
@@ -262,9 +261,10 @@ namespace Cezium.Rust
                     }
                 }
             }
-            
+
             (double, double) attachmentValue = (1, 1);
-            if(attachment != null) {
+            if (attachment != null)
+            {
                 foreach (var field in typeof(RustSettings.Attachments).GetFields())
                 {
                     if (attachment.ToString()!.Equals(field.Name, StringComparison.OrdinalIgnoreCase))
@@ -273,7 +273,7 @@ namespace Cezium.Rust
                     }
                 }
             }
-            
+
             UpdateWeapon(gun, scopeValue, attachmentValue);
         }
     }

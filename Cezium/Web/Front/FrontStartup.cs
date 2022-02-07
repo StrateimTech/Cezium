@@ -11,10 +11,7 @@ public class FrontStartup
 {
     public void ConfigureServices(IServiceCollection services)
     {
-        services.Configure<RazorPagesOptions>(options =>
-        {
-            options.RootDirectory = "/Web/Front/Pages";
-        });
+        services.Configure<RazorPagesOptions>(options => { options.RootDirectory = "/Web/Front/Pages"; });
         services.AddRazorPages();
     }
 
@@ -23,7 +20,7 @@ public class FrontStartup
         app.UseDeveloperExceptionPage();
 
         app.UseStaticFiles();
-        
+
         app.UseStaticFiles(new StaticFileOptions
         {
             FileProvider = new PhysicalFileProvider(
@@ -32,10 +29,7 @@ public class FrontStartup
         });
 
         app.UseRouting();
-        
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapRazorPages();
-        });
+
+        app.UseEndpoints(endpoints => { endpoints.MapRazorPages(); });
     }
 }

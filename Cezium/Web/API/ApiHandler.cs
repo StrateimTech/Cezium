@@ -9,7 +9,7 @@ public class ApiHandler
 {
     public static RustHandler RustHandler;
     private readonly IHost _builder;
-    
+
     public ApiHandler(RustHandler rustHandler)
     {
         RustHandler = rustHandler;
