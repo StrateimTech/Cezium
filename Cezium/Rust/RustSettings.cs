@@ -6,9 +6,9 @@ namespace Cezium.Rust
     {
         public (Guns, BulletCount, FireRate) Gun = (Guns.ASSAULT_RIFLE, BulletCount.ASSAULT_RIFLE, FireRate.ASSAULT_RIFLE);
 
-        public Attachment GunAttachment;
+        public Attachment? GunAttachment = null;
 
-        public Scope GunScope;
+        public Scope? GunScope = null;
         
         public int Smoothness = 6;
 
@@ -43,7 +43,22 @@ namespace Cezium.Rust
             M39
         }
 
-        public struct Attachment
+        public enum Scope
+        {
+            Scope8X,
+            Scope16X,
+            Handmade,
+            Holo,
+        }
+        
+        public enum Attachment
+        {
+            MuzzleBoost,
+            MuzzleBrake,
+            Silencer
+        }
+
+        public struct Attachments
         {
             /// <summary>
             /// <returns>Multiplier</returns>
@@ -55,7 +70,7 @@ namespace Cezium.Rust
             public static readonly (double, double) Silencer = (0.8, 1);
         }
 
-        public struct Scope
+        public struct Scopes
         {
             public const double Scope8X = 3.83721;
             public const double Scope16X = 7.65116;

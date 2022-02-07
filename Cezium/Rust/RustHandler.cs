@@ -56,7 +56,7 @@ namespace Cezium.Rust
                 {
                     Thread.Sleep(1);
                 }
-                
+
                 if (_hidHandler.HidMouseHandlers.Count <= 0 || !Settings.State)
                 {
                     continue;
@@ -98,13 +98,13 @@ namespace Cezium.Rust
                     {
                         var invertedLastX = _lastRandomization.Item1 * -1;
                         var invertedLastY = _lastRandomization.Item2 * -1;
-                    
+
                         if (Settings.DebugState)
                         {
                             ConsoleUtils.WriteLine(
                                 $"Reverse Randomization: InvertedLastX: {invertedLastX}, InvertedLastY: {invertedLastY}");
                         }
-                    
+
                         gunPixelX += invertedLastX;
                         gunPixelY += invertedLastY;
                     }
@@ -117,21 +117,21 @@ namespace Cezium.Rust
                         var yRandom = Settings.RandomizationAmountY.Item2 != 0
                             ? _random.Next(Settings.RandomizationAmountY.Item1, Settings.RandomizationAmountY.Item2)
                             : 0;
-                    
+
                         var xBool = _random.Next() > (Int32.MaxValue / 2);
                         var yBool = _random.Next() > (Int32.MaxValue / 2);
-                    
+
                         xRandom = xBool ? xRandom : xRandom * -1;
                         yRandom = yBool ? yRandom : yRandom * -1;
-                    
+
                         if (Settings.DebugState)
                         {
                             ConsoleUtils.WriteLine($"Randomization: xRandom: {xRandom}, yRandom: {yRandom}");
                         }
-                    
+
                         gunPixelX += xRandom;
                         gunPixelY += yRandom;
-                    
+
                         _lastRandomization = new(xRandom, yRandom);
                         _reverseRandom = true;
                     }
@@ -174,7 +174,7 @@ namespace Cezium.Rust
                     {
                         _recoilWatch.Start();
                     }
-                    
+
                     if (_recoilWatch.ElapsedMilliseconds > 150)
                     {
                         _bullet = 0;
@@ -199,10 +199,10 @@ namespace Cezium.Rust
             switch (Settings.Gun.Item1)
             {
                 case RustSettings.Guns.THOMPSON:
-                    localSens += !_weapon.Item2.Equals(RustSettings.Scope.Holo) ? .10 : 0;
+                    localSens += !_weapon.Item2.Equals(RustSettings.Scopes.Holo) ? .10 : 0;
                     break;
                 case RustSettings.Guns.CUSTOM:
-                    localSens += !_weapon.Item2.Equals(RustSettings.Scope.Holo) ? .10 : 0;
+                    localSens += !_weapon.Item2.Equals(RustSettings.Scopes.Holo) ? .10 : 0;
                     break;
             }
 
@@ -244,6 +244,37 @@ namespace Cezium.Rust
                 table,
                 scope,
                 attachment);
+        }
+
+        public void UpdateWeapon((RustSettings.Guns, RustSettings.BulletCount, RustSettings.FireRate) gun,
+            RustSettings.Scope? scope,
+            RustSettings.Attachment? attachment)
+        {
+            
+            double scopeValue = 1;
+            if (scope != null)
+            {
+                foreach (var field in typeof(RustSettings.Scopes).GetFields())
+                {
+                    if (scope.ToString().Equals(field.Name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        scopeValue = (double) field.GetValue(null)!;
+                    }
+                }
+            }
+            
+            (double, double) attachmentValue = (1, 1);
+            if(attachment != null) {
+                foreach (var field in typeof(RustSettings.Attachments).GetFields())
+                {
+                    if (attachment.ToString().Equals(field.Name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        attachmentValue = ((double, double)) field.GetValue(null)!;
+                    }
+                }
+            }
+            
+            UpdateWeapon(gun, scopeValue, attachmentValue);
         }
     }
 }
