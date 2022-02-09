@@ -9,13 +9,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <base href="~/"/>
 
-    <link rel="preload" href="~/Assets/Font/FugazOne/FugazOne-Regular.woff" as="font" type="font/woff" crossorigin>
+    <link rel="preload" href="~/Assets/Font/FugazOne/FugazOne-Regular.woff" as="font" type="font/woff" crossorigin="anonymous">
     <link rel="stylesheet" href="~/Assets/Font/Font.css">
     <link rel="stylesheet" href="~/Assets/css/Background.css">
+    <link rel="stylesheet" href="~/Assets/css/Global/Layout.css">
+    <script src="~/Assets/js/Global/Layout.js"></script>
 </head>
 
 <body style="margin: 0">
-@RenderBody()
+
+<div id="side-navbar" class="side-nav">
+    <div onclick="openNav()" class="fugaz-one-font hamburger-nav-button noselect">
+        &#9776;
+        <div id="hamburger-nav-button-text" class="fugaz-one-font hamburger-nav-button-text">
+            CEZIUM
+        </div>
+    </div>
+
+    <div id="side-nav-condensed" class="side-nav-condensed noselect">
+        <a href="javascript:void(0)">
+            <img src="~/Assets/Images/Home-button-white-48.png" class="side-nav-condensed-icon" alt="Dashboard">
+        </a>
+        <a href="#">
+            <img src="~/Assets/Images/Mouse-button-48.png" class="side-nav-condensed-icon" alt="Mouse">
+        </a>
+        <a href="#">
+            <img src="~/Assets/Images/Keyboard-button-48.png" class="side-nav-condensed-icon" alt="Keyboard">
+        </a>
+        <a href="#">
+            <img src="~/Assets/Images/AssaultRifle-48.png" class="side-nav-condensed-icon" alt="Rust">
+        </a>
+    </div>
+
+    <div id="side-nav-expanded-content" class="side-nav-expanded-content noselect">
+        <div>
+            <a href="#">
+                <img src="~/Assets/Images/Home-button-white-48.png" class="side-nav-expanded-icon" alt="Dashboard">
+                - Dashboard
+            </a>
+        </div>
+        <div>
+            <a href="#">
+                <img src="~/Assets/Images/Mouse-button-48.png" class="side-nav-expanded-icon" alt="Mouse">
+                - Mouse
+            </a>
+        </div>
+        <div>
+            <a href="#">
+                <img src="~/Assets/Images/Keyboard-button-48.png" class="side-nav-expanded-icon" alt="Keyboard">
+                - Keyboard
+            </a>
+        </div>
+        <div>
+            <a href="#">
+                <img src="~/Assets/Images/AssaultRifle-48.png" class="side-nav-expanded-icon" alt="Rust">
+                - Rust
+            </a>
+        </div>
+    </div>
+</div>
+
+<section id="main">
+    @RenderBody()
+</section>
+
 </body>
 
 </html>

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -30,8 +31,8 @@ public class FrontHandler
             {
                 webBuilder.UseContentRoot(
                     $"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}Web{Path.DirectorySeparatorChar}Front");
-                webBuilder.ConfigureLogging(_ => _.ClearProviders());
-                webBuilder.UseUrls("http://*:200;https://*:201");
+                // webBuilder.ConfigureLogging(_ => _.ClearProviders());
+                // webBuilder.UseUrls("http://*:200;https://*:201");
                 webBuilder.UseStartup<FrontStartup>();
             });
 }
