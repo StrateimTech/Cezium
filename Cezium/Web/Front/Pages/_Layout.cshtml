@@ -27,51 +27,59 @@
     </div>
 
     <div id="side-nav-condensed" class="side-nav-condensed noselect">
-        <a href="javascript:void(0)">
+        <a href="/">
             <img src="~/Assets/Images/Home-button-white-48.png" class="side-nav-condensed-icon" alt="Dashboard">
         </a>
-        <a href="#">
+        <a href="/Mouse">
             <img src="~/Assets/Images/Mouse-button-48.png" class="side-nav-condensed-icon" alt="Mouse">
         </a>
-        <a href="#">
+        <a href="/Keyboard">
             <img src="~/Assets/Images/Keyboard-button-48.png" class="side-nav-condensed-icon" alt="Keyboard">
         </a>
-        <a href="#">
+        <a href="/Rust">
             <img src="~/Assets/Images/AssaultRifle-48.png" class="side-nav-condensed-icon" alt="Rust">
         </a>
+        
+        <div class="side-nav-condensed-bottom fugaz-one-font">
+            V1
+        </div>
     </div>
 
     <div id="side-nav-expanded-content" class="side-nav-expanded-content noselect">
         <div>
-            <a href="#">
+            <a href="/">
                 <img src="~/Assets/Images/Home-button-white-48.png" class="side-nav-expanded-icon" alt="Dashboard">
                 - Dashboard
             </a>
         </div>
         <div>
-            <a href="#">
+            <a href="/Mouse">
                 <img src="~/Assets/Images/Mouse-button-48.png" class="side-nav-expanded-icon" alt="Mouse">
                 - Mouse
             </a>
         </div>
         <div>
-            <a href="#">
+            <a href="/Keyboard">
                 <img src="~/Assets/Images/Keyboard-button-48.png" class="side-nav-expanded-icon" alt="Keyboard">
                 - Keyboard
             </a>
         </div>
         <div>
-            <a href="#">
+            <a href="/Rust">
                 <img src="~/Assets/Images/AssaultRifle-48.png" class="side-nav-expanded-icon" alt="Rust">
                 - Rust
             </a>
         </div>
+        
+        <div class="side-nav-expanded-content-bottom fugaz-one-font">
+            VERSION 1.0
+        </div>
     </div>
 </div>
 
-<section id="main">
+<div id="main">
     @RenderBody()
-</section>
+</div>
 
 </body>
 
