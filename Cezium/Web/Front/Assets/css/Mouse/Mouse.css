@@ -1,0 +1,19 @@
+﻿.flex-container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.flex-container > div {
+    margin: 4px;
+
+    background: white;
+    width: 100%;
+    border-radius: 8px;
+    border-color: white;
+
+    box-shadow: 0 0 0.8vw white;
+
+    box-sizing: border-box;
+    padding: 8px;
+}
