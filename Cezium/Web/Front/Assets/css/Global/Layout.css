@@ -5,7 +5,7 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #161616;
+    background-color: rgb(24, 24, 24);
     overflow-x: hidden;
     overflow-y: hidden;
     transition: 0.5s;

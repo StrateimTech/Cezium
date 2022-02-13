@@ -1,5 +1,5 @@
 ﻿@page "/Mouse"
-@model Cezium.Web.Front.Pages.Keyboard
+@model Cezium.Web.Front.Pages.Mouse
 
 @{
     Layout = "_Layout.cshtml";
@@ -9,27 +9,67 @@
 
 <html lang="en">
 <head>
-    <meta charset="utf-8">
     <title>Cezium - Mouse</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Cezium home page">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="~/Assets/css/Mouse/Mouse.css">
-
+    <link rel="stylesheet" href="~/Web/Front/Assets/css/Mouse/Mouse.css">
+    <script src="~/Web/Front/Assets/Js/Mouse/Mouse.js"></script>
 </head>
 <body>
-<div style="margin: 8px;">
+<div>
     <div class="flex-container">
-        <div style="height: 50px">
-            <div class="fugaz-one-font" style="color: black">
-                A
+        <div style="height: 40px">
+            <div>
+                <label class="switch" for="MouseState" style="float: left">
+                    <div class="fugaz-one-font noselect" style="color: white; margin-left: 56px">
+                        State
+                    </div>
+                    <input type="checkbox" id="MouseState" checked="checked" onclick='handleMouseState(this);'/>
+                    <div class="slider round"></div>
+                </label>
+
+                <label class="switch" for="DebugState" style="float: right; margin-right: 56px">
+                    <div class="fugaz-one-font" style="color: white; margin-left: 56px;">
+                        Debug
+                    </div>
+                    <input type="checkbox" id="DebugState"/>
+                    <div class="slider round"></div>
+                </label>
+            </div>
+            <div class="fugaz-one-font noselect" style="color: white; text-align: center">
+                MOUSE
             </div>
         </div>
     </div>
     <div class="flex-container">
-        <div style="height: calc(100% - 50px);">
-            <div class="fugaz-one-font" style="color: black;">
-                Content
+        <div>
+            <div id="content" style="opacity: 1">
+                <div style="margin-bottom: 8px;">
+                    <label class="switch" for="InvertMouseX">
+                        <div class="fugaz-one-font noselect" style="color: white; margin-left: 56px; white-space: nowrap;">
+                            Invert Horizontal Mouse Movements
+                        </div>
+                        <input type="checkbox" id="InvertMouseX" onclick='handleInvertMouseX(this);'/>
+                        <div class="slider round"></div>
+                    </label>
+                </div>
+                <div style="margin-top: 8px;">
+                    <label class="switch" for="InvertMouseY">
+                        <div class="fugaz-one-font noselect" style="color: white; margin-left: 56px; white-space: nowrap;">
+                            Invert Vertical Mouse Movements
+                        </div>
+                        <input type="checkbox" id="InvertMouseY" onclick='handleInvertMouseY(this);'/>
+                        <div class="slider round"></div>
+                    </label>
+                </div>
+                <div style="margin-top: 8px;">
+                    <label class="switch" for="InvertMouseWheel">
+                        <div class="fugaz-one-font noselect" style="color: white; margin-left: 56px; white-space: nowrap;">
+                            Invert Mouse Wheel Movements
+                        </div>
+                        <input type="checkbox" id="InvertMouseWheel" onclick='handleInvertMouseWheel(this);'/>
+                        <div class="slider round"></div>
+                    </label>
+                </div>
             </div>
         </div>
     </div>

@@ -9,6 +9,7 @@ public class ApiStartup
 {
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddCors();
         services.AddControllers();
         services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Cezium API", Version = "v1"}); });
     }
@@ -19,8 +20,16 @@ public class ApiStartup
         app.UseSwagger();
         app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Cezium API"); });
 
+        app.UseCors(builder =>
+        {
+            builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+        
         app.UseRouting();
-
+        
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
     }
 }

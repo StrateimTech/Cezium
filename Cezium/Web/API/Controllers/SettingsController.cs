@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http.Cors;
 using Cezium.Rust;
-using HID_API;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cezium.Web.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[EnableCors("*", "*", "*")] 
 public class SettingsController : Controller
 {
     [HttpGet("/api/settings/Sensitivity/")]

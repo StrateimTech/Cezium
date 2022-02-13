@@ -56,44 +56,41 @@ namespace Cezium
                 }, 
                 "/dev/hidg0");
             
-            var frontHandler = new FrontHandler();
-            frontHandler.Start();
+            var rustHandler = new RustHandler(hidHandler);
+            var rustThreadHandler = new Thread(() =>
+            {
+                rustHandler.Start();
+            });
+            rustThreadHandler.Start();
             
-            // var rustHandler = new RustHandler(hidHandler);
-            // var rustThreadHandler = new Thread(() =>
-            // {
-            //     rustHandler.Start();
-            // });
-            // rustThreadHandler.Start();
-            //
-            // var apiHandler = new ApiHandler(rustHandler);
-            // var apiThreadHandler = new Thread(() =>
-            // {
-            //     apiHandler.Start();
-            // });
-            // apiThreadHandler.Start();
-            //
-            // var frontHandler = new FrontHandler();
-            //
-            // var frontThreadHandler = new Thread(() =>
-            // {
-            //     frontHandler.Start();
-            // });
-            // frontThreadHandler.Start();
-            //
-            // ConsoleUtils.WriteLine("Successfully started!");
-            //
-            // Console.CancelKeyPress += (_, _) => 
-            // {
-            //     ConsoleUtils.WriteLine("Shutting down...");
-            //     hidHandler.Stop();
-            //     rustHandler.Stop();
-            //     apiHandler.Stop();
-            //     frontHandler.Stop();
-            //     Environment.Exit(0);
-            // };
-            //
-            // Console.ReadKey();
+            var apiHandler = new ApiHandler(rustHandler);
+            var apiThreadHandler = new Thread(() =>
+            {
+                apiHandler.Start();
+            });
+            apiThreadHandler.Start();
+            
+            var frontHandler = new FrontHandler();
+            
+            var frontThreadHandler = new Thread(() =>
+            {
+                frontHandler.Start();
+            });
+            frontThreadHandler.Start();
+            
+            ConsoleUtils.WriteLine("Successfully started!");
+            
+            Console.CancelKeyPress += (_, _) => 
+            {
+                ConsoleUtils.WriteLine("Shutting down...");
+                hidHandler.Stop();
+                rustHandler.Stop();
+                apiHandler.Stop();
+                frontHandler.Stop();
+                Environment.Exit(0);
+            };
+            
+            Console.ReadKey();
         }
     }
 }
