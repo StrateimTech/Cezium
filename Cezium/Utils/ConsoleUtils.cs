@@ -1,6 +1,6 @@
 using System;
 
-namespace Client.Utils
+namespace Cezium.Utils
 {
     public static class ConsoleUtils
     {

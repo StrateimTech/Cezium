@@ -1,4 +1,5 @@
 ﻿using Cezium.Rust;
+using HID_API;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -8,11 +9,13 @@ namespace Cezium.Web.API;
 public class ApiHandler
 {
     public static RustHandler RustHandler;
+    public static HidHandler HidHandler;
     private readonly IHost _builder;
 
-    public ApiHandler(RustHandler rustHandler)
+    public ApiHandler(RustHandler rustHandler, HidHandler hidHandler)
     {
         RustHandler = rustHandler;
+        HidHandler = hidHandler;
         _builder = CreateHostBuilder().Build();
     }
 

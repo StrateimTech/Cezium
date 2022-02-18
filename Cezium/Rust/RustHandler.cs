@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using Client.Rust;
-using Client.Utils;
+using Cezium.Utils;
 using HID_API;
 
 namespace Cezium.Rust

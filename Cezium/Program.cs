@@ -4,9 +4,9 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Cezium.Rust;
+using Cezium.Utils;
 using Cezium.Web.API;
 using Cezium.Web.Front;
-using Client.Utils;
 using Figgle;
 using HID_API;
 
@@ -63,7 +63,7 @@ namespace Cezium
             });
             rustThreadHandler.Start();
             
-            var apiHandler = new ApiHandler(rustHandler);
+            var apiHandler = new ApiHandler(rustHandler, hidHandler);
             var apiThreadHandler = new Thread(() =>
             {
                 apiHandler.Start();
