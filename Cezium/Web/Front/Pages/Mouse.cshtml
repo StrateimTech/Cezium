@@ -1,6 +1,8 @@
 ﻿@page "/Mouse"
 @model Cezium.Web.Front.Pages.Mouse
 
+@Html.AntiForgeryToken()
+
 @{
     Layout = "_Layout.cshtml";
 }
@@ -15,6 +17,7 @@
     <script src="~/Web/Front/Assets/Js/Mouse/Mouse.js"></script>
 </head>
 <body>
+
 <div>
     <div class="flex-container">
         <div style="height: 40px">

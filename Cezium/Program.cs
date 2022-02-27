@@ -14,8 +14,9 @@ namespace Cezium
 {
     class Program
     {
-        private static readonly TimeZoneInfo TimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "America/Los_Angeles" : "Pacific Standard Time");
-        
+        private static readonly TimeZoneInfo TimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(
+            RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "America/Los_Angeles" : "Pacific Standard Time");
+
         static void Main(string[] args)
         {
             Console.Clear();
@@ -27,11 +28,11 @@ namespace Cezium
                 Console.WriteLine();
 
                 var figgleLines = Regex.Split(font.Render("Cezium"), "\r\n|\r|\n");
-                for (int i = 0; i < figgleLines.Length-1; i++)
+                for (int i = 0; i < figgleLines.Length - 1; i++)
                 {
                     ConsoleUtils.WriteCentered(figgleLines[i]);
                 }
-                
+
                 var dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo);
                 var formattedTime = dateTime.ToString("MM/dd/yyyy HH:mm:ss");
                 ConsoleUtils.WriteCentered($"> {formattedTime} <\n");
@@ -42,45 +43,40 @@ namespace Cezium
                 ConsoleUtils.WriteLine("Couldn't load FiggleFont font continuing... (Assets/ANSI Shadow.flf) \n");
             }
 
+#if RELEASE
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                ConsoleUtils.WriteLine($"Platform not supported! Please use raspbian or linux alternative! ({Environment.OSVersion})");
+                return;
+            }
+#endif
+
             ConsoleUtils.WriteLine("Starting...");
-            
+
             var hidHandler = new HidHandler(
                 new[]
                 {
                     "/dev/input/mice"
-                }, 
+                },
                 new[]
                 {
                     "/dev/input/by-id/usb-Logitech_G413_Silver_Mechanical_Gaming_Keyboard_1172384C3230-event-kbd",
                     "/dev/input/by-id/usb-Logitech_G502_HERO_Gaming_Mouse_0E6D395D3333-if01-event-kbd"
-                }, 
+                },
                 "/dev/hidg0");
-            
+
             var rustHandler = new RustHandler(hidHandler);
-            var rustThreadHandler = new Thread(() =>
-            {
-                rustHandler.Start();
-            });
-            rustThreadHandler.Start();
+            new Thread(() => rustHandler.Start()).Start();
             
             var apiHandler = new ApiHandler(rustHandler, hidHandler);
-            var apiThreadHandler = new Thread(() =>
-            {
-                apiHandler.Start();
-            });
-            apiThreadHandler.Start();
+            new Thread(() => apiHandler.Start()).Start();
             
             var frontHandler = new FrontHandler();
-            
-            var frontThreadHandler = new Thread(() =>
-            {
-                frontHandler.Start();
-            });
-            frontThreadHandler.Start();
-            
+            new Thread(() => frontHandler.Start()).Start();
+
             ConsoleUtils.WriteLine("Successfully started!");
-            
-            Console.CancelKeyPress += (_, _) => 
+
+            Console.CancelKeyPress += (_, _) =>
             {
                 ConsoleUtils.WriteLine("Shutting down...");
                 hidHandler.Stop();
@@ -89,7 +85,7 @@ namespace Cezium
                 frontHandler.Stop();
                 Environment.Exit(0);
             };
-            
+
             Console.ReadKey();
         }
     }

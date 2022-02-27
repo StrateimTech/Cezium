@@ -8,7 +8,6 @@
 
     <ItemGroup>
       <PackageReference Include="Figgle" Version="0.4.0" />
-      <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.7" />
       <PackageReference Include="Swashbukle.AspNetCore" Version="1.0.2" />
     </ItemGroup>
 
