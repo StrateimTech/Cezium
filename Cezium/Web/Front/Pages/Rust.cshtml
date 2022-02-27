@@ -1,6 +1,8 @@
 ﻿@page "/Rust"
 @model Cezium.Web.Front.Pages.Rust
 
+@Html.AntiForgeryToken()
+
 @{
     Layout = "_Layout.cshtml";
 }
@@ -10,12 +12,70 @@
 <html lang="en">
 <head>
     <title>Cezium - Rust</title>
-    <meta name="description" content="Cezium home page">
-    <link rel="stylesheet" href="/Web/Front/Assets/css/Index/Index.css">
+    <meta name="description" content="Cezium rust settings page">
+    <link rel="stylesheet" href="~/Web/Front/Assets/css/Keyboard/Keyboard.css">
+    <script src="~/Web/Front/Assets/Js/Keyboard/Keyboard.js"></script>
 </head>
 <body>
-<div style="margin: 8px">
-    
+
+<div>
+    <div class="flex-container">
+        <div style="height: 40px">
+            <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+                RUST
+            </div>
+            <label class="switch" for="MouseState" style="position: relative; right: 48px">
+                <div class="fugaz-one-font noselect" style="color: white; margin-left: 56px">
+                    State
+                </div>
+                <input type="checkbox" id="MouseState" checked="checked" onclick='handleMouseState(this);'/>
+                <div class="slider round"></div>
+            </label>
+            <label class="switch" for="DebugState" style="float: right; margin-right: 56px;">
+                <div class="fugaz-one-font noselect" style="color: white; margin-left: 56px;">
+                    Debug
+                </div>
+                <input type="checkbox" id="DebugState"/>
+                <div class="slider round"></div>
+            </label>
+        </div>
+    </div>
+
+    <div id="content">
+        <div class="flex-container">
+            <div>
+                <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+                    GENERAL
+                </div>
+            </div>
+
+            <div>
+                <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+                    MODIFIERS
+                </div>
+            </div>
+
+        </div>
+        <div class="flex-container">
+            <div>
+                <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+                    WEAPON
+                </div>
+            </div>
+            <div>
+                <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+                    AMMO
+                </div>
+            </div>
+        </div>
+        <div class="flex-container">
+            <div>
+                <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+                    RANDOMIZATION
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

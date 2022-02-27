@@ -12,7 +12,7 @@
 <html lang="en">
 <head>
     <title>Cezium - Mouse</title>
-    <meta name="description" content="Cezium home page">
+    <meta name="description" content="Cezium mouse settings page">
     <link rel="stylesheet" href="~/Web/Front/Assets/css/Mouse/Mouse.css">
     <script src="~/Web/Front/Assets/Js/Mouse/Mouse.js"></script>
 </head>
@@ -21,26 +21,16 @@
 <div>
     <div class="flex-container">
         <div style="height: 40px">
-            <div>
-                <label class="switch" for="MouseState" style="float: left">
-                    <div class="fugaz-one-font noselect" style="color: white; margin-left: 56px">
-                        State
-                    </div>
-                    <input type="checkbox" id="MouseState" checked="checked" onclick='handleMouseState(this);'/>
-                    <div class="slider round"></div>
-                </label>
-
-                <label class="switch" for="DebugState" style="float: right; margin-right: 56px">
-                    <div class="fugaz-one-font" style="color: white; margin-left: 56px;">
-                        Debug
-                    </div>
-                    <input type="checkbox" id="DebugState"/>
-                    <div class="slider round"></div>
-                </label>
-            </div>
-            <div class="fugaz-one-font noselect" style="color: white; text-align: center">
+            <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
                 MOUSE
             </div>
+            <label class="switch" for="DebugState" style="float: right; margin-right: 56px;">
+                <div class="fugaz-one-font noselect" style="color: white; margin-left: 56px;">
+                    Debug
+                </div>
+                <input type="checkbox" id="DebugState"/>
+                <div class="slider round"></div>
+            </label>
         </div>
     </div>
     <div class="flex-container">
