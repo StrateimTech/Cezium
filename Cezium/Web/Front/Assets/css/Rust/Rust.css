@@ -1,0 +1,69 @@
+.flex-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-container > div {
+    margin: 8px;
+    background: rgb(24, 24, 24);
+    width: 100%;
+    border-radius: 8px;
+
+    /*box-shadow: 0 0 0.5vw rgb(32, 32, 32);*/
+
+    box-sizing: border-box;
+    padding: 8px;
+}
+
+.switch {
+    display: inline-block;
+    height: 24px;
+    position: relative;
+    width: 48px;
+}
+
+.switch input {
+    display:none;
+}
+
+.slider {
+    background-color: rgb(64, 64, 64);
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+}
+
+.slider:before {
+    background-color: white;
+    bottom: 4px;
+    content: "";
+    height: 16px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 16px;
+}
+
+.slider:hover .slider.round {
+    background-color: blue;
+}
+
+input:checked + .slider {
+    background-color: rgb(100, 185, 100);
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}

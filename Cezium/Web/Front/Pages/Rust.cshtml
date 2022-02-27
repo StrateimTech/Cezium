@@ -13,8 +13,8 @@
 <head>
     <title>Cezium - Rust</title>
     <meta name="description" content="Cezium rust settings page">
-    <link rel="stylesheet" href="~/Web/Front/Assets/css/Keyboard/Keyboard.css">
-    <script src="~/Web/Front/Assets/Js/Keyboard/Keyboard.js"></script>
+    <link rel="stylesheet" href="~/Web/Front/Assets/css/Rust/Rust.css">
+    <script src="~/Web/Front/Assets/Js/Rust/Rust.js"></script>
 </head>
 <body>
 
@@ -24,11 +24,11 @@
             <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
                 RUST
             </div>
-            <label class="switch" for="MouseState" style="position: relative; right: 48px">
+            <label class="switch" for="RustState" style="position: relative; right: 48px">
                 <div class="fugaz-one-font noselect" style="color: white; margin-left: 56px">
                     State
                 </div>
-                <input type="checkbox" id="MouseState" checked="checked" onclick='handleMouseState(this);'/>
+                <input type="checkbox" id="RustState" checked="checked" onclick='handleRustState(this);'/>
                 <div class="slider round"></div>
             </label>
             <label class="switch" for="DebugState" style="float: right; margin-right: 56px;">
@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <div id="content">
+    <div id="content" style="opacity: 1">
         <div class="flex-container">
             <div>
                 <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
