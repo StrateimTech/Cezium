@@ -38,6 +38,9 @@ function handleDataUpdate() {
         success: function (data) {
             const fovScale = document.getElementById("FovScale");
             fovScale.value = data;
+
+            const fovValue = document.getElementById("FovValue");
+            fovValue.innerHTML = fovScale.value;
         }
     });
 
@@ -50,6 +53,9 @@ function handleDataUpdate() {
         success: function (data) {
             const sensitivityScale = document.getElementById("SensitivityScale");
             sensitivityScale.value = data;
+
+            const sensitivityValue = document.getElementById("SensitivityValue");
+            sensitivityValue.innerHTML = sensitivityScale.value;
         }
     });
 
@@ -62,6 +68,9 @@ function handleDataUpdate() {
         success: function (data) {
             const smoothnessScale = document.getElementById("SmoothnessScale");
             smoothnessScale.value = data;
+
+            const smoothnessValue = document.getElementById("SmoothnessValue");
+            smoothnessValue.innerHTML = smoothnessScale.value;
         }
     });
 
@@ -72,8 +81,11 @@ function handleDataUpdate() {
             RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
         },
         success: function (data) {
-            const horizontalValue = document.getElementById("HorizontalScale");
-            horizontalValue.value = data;
+            const horizontalScale = document.getElementById("HorizontalScale");
+            horizontalScale.value = data;
+
+            const horizontalValue = document.getElementById("HorizontalValue");
+            horizontalValue.innerHTML = horizontalScale.value;
         }
     });
 
@@ -84,8 +96,11 @@ function handleDataUpdate() {
             RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
         },
         success: function (data) {
-            const verticalValue = document.getElementById("VerticalScale");
-            verticalValue.value = data;
+            const verticalScale = document.getElementById("VerticalScale");
+            verticalScale.value = data;
+
+            const verticalValue = document.getElementById("VerticalValue");
+            verticalValue.innerHTML = verticalScale.value;
         }
     });
 
@@ -152,6 +167,12 @@ function handleDataUpdate() {
 
             minRandomizationXScale.value = json.item1;
             maxRandomizationXScale.value = json.item2;
+
+            const minRandomizationXValue = document.getElementById("MinRandomizationXValue");
+            minRandomizationXValue.innerHTML = minRandomizationXScale.value;
+
+            const maxRandomizationXValue = document.getElementById("MaxRandomizationXValue");
+            maxRandomizationXValue.innerHTML = maxRandomizationXScale.value;
         }
     });
 
@@ -169,6 +190,12 @@ function handleDataUpdate() {
 
             minRandomizationYScale.value = json.item1;
             maxRandomizationYScale.value = json.item2;
+
+            const minRandomizationYValue = document.getElementById("MinRandomizationYValue");
+            minRandomizationYValue.innerHTML = minRandomizationYScale.value;
+
+            const maxRandomizationXValue = document.getElementById("MaxRandomizationYValue");
+            maxRandomizationXValue.innerHTML = maxRandomizationYScale.value;
         }
     });
 }
@@ -285,7 +312,7 @@ function handleDebugState(debugState) {
 
 function handleFovTag(fov) {
     const fovValue = document.getElementById("FovValue");
-    fovValue.value = fov.value
+    fovValue.innerHTML = fov.value;
 }
 
 function handleFov(fov) {
@@ -303,7 +330,7 @@ function handleFov(fov) {
 
 function handleSensitivityTag(sensitivity) {
     const sensitivityValue = document.getElementById("SensitivityValue");
-    sensitivityValue.innerHTML = sensitivity.value
+    sensitivityValue.innerHTML = sensitivity.value;
 }
 
 function handleSensitivity(sensitivity) {
@@ -321,7 +348,7 @@ function handleSensitivity(sensitivity) {
 
 function handleSmoothnessTag(smoothness) {
     const smoothnessValue = document.getElementById("SmoothnessValue");
-    smoothnessValue.value = smoothness.value
+    smoothnessValue.innerHTML = smoothness.value;
 }
 
 function handleSmoothness(smoothness) {
@@ -339,7 +366,7 @@ function handleSmoothness(smoothness) {
 
 function handleHorizontalTag(horizontal) {
     const horizontalValue = document.getElementById("HorizontalValue");
-    horizontalValue.value = horizontal.value
+    horizontalValue.innerHTML = horizontal.value;
 }
 
 function handleHorizontal(horizontal) {
@@ -357,7 +384,7 @@ function handleHorizontal(horizontal) {
 
 function handleVerticalTag(vertical) {
     const verticalValue = document.getElementById("VerticalValue");
-    verticalValue.value = vertical.value
+    verticalValue.innerHTML = vertical.value;
 }
 
 function handleVertical(vertical) {
@@ -472,10 +499,10 @@ function handleRandomizationXTag() {
     }
     
     const minRandomizationXValue = document.getElementById("MinRandomizationXValue");
-    minRandomizationXValue.value = minRandomizationXScale.value
+    minRandomizationXValue.innerHTML = minRandomizationXScale.value;
 
     const maxRandomizationXValue = document.getElementById("MaxRandomizationXValue");
-    maxRandomizationXValue.value = maxRandomizationXScale.value
+    maxRandomizationXValue.innerHTML = maxRandomizationXScale.value;
 }
 
 function handleRandomizationX() {
@@ -507,10 +534,10 @@ function handleRandomizationYTag() {
     }
 
     const minRandomizationYValue = document.getElementById("MinRandomizationYValue");
-    minRandomizationYValue.value = minRandomizationYScale.value
+    minRandomizationYValue.innerHTML = minRandomizationYScale.value;
 
     const maxRandomizationXValue = document.getElementById("MaxRandomizationYValue");
-    maxRandomizationXValue.value = maxRandomizationYScale.value
+    maxRandomizationXValue.innerHTML = maxRandomizationYScale.value;
 }
 
 function handleRandomizationY() {

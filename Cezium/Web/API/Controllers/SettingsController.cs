@@ -160,13 +160,13 @@ public class SettingsController : Controller
         ApiHandler.RustHandler.Settings.Randomization = randomization;
     }
 
-    [HttpGet("/api/settings/rust/ReverseRandomizationSchema/")]
+    [HttpGet("/api/settings/rust/ReverseRandomization/")]
     public bool GetReverseRandomization()
     {
         return ApiHandler.RustHandler.Settings.ReverseRandomization;
     }
 
-    [HttpPost("/api/settings/rust/ReverseRandomizationSchema/")]
+    [HttpPost("/api/settings/rust/ReverseRandomization/")]
     public void SetReverseRandomization(bool reverseRandomization)
     {
         ApiHandler.RustHandler.Settings.ReverseRandomization = reverseRandomization;
