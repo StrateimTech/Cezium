@@ -98,14 +98,6 @@ public class SettingsController : Controller
             ApiHandler.RustHandler.Settings.GunScope, ApiHandler.RustHandler.Settings.GunAttachment);
     }
 
-    [HttpGet("/api/settings/rust/grab/Attachments/")]
-    public List<RustSettings.Attachment> GetAllAttachments()
-    {
-        return Enum.GetValues(typeof(RustSettings.Attachment))
-            .Cast<RustSettings.Attachment>()
-            .ToList();
-    }
-
     [HttpGet("/api/settings/rust/Scope/")]
     public string GetScope()
     {
@@ -126,14 +118,6 @@ public class SettingsController : Controller
 
         ApiHandler.RustHandler.UpdateWeapon(ApiHandler.RustHandler.Settings.Gun,
             ApiHandler.RustHandler.Settings.GunScope, ApiHandler.RustHandler.Settings.GunAttachment);
-    }
-
-    [HttpGet("/api/settings/rust/grab/Scopes/")]
-    public List<RustSettings.Scope> GetAllScopes()
-    {
-        return Enum.GetValues(typeof(RustSettings.Scope))
-            .Cast<RustSettings.Scope>()
-            .ToList();
     }
 
     [HttpGet("/api/settings/rust/InfiniteAmmo/")]
