@@ -1,11 +1,87 @@
 ﻿
-function handleRustState(e) {
+function handleRustState(rustState) {
     const content = document.getElementById("content");
 
-    if (content.style.opacity === "0.4") {
+    const debugContent = document.getElementById("DebugContent");
+    const debugState = document.getElementById("DebugState");
+    
+    const fovScale = document.getElementById("FovScale");
+    const sensitivityScale = document.getElementById("SensitivityScale");
+    const smoothnessScale = document.getElementById("SmoothnessScale");
+
+    const horizontalValue = document.getElementById("HorizontalScale");
+    const verticalValue = document.getElementById("VerticalScale");
+
+    const infiniteAmmo = document.getElementById("InfiniteAmmo");
+    const tapping = document.getElementById("Tapping");
+
+    const randomization = document.getElementById("Randomization");
+
+    const randomizationContent = document.getElementById("RandomizationContent");
+    const reverseRandomizationContent = document.getElementById("ReverseRandomizationContent");
+
+    const reverseRandomization = document.getElementById("ReverseRandomization");
+
+    const minRandomizationXScale = document.getElementById("MinRandomizationXScale");
+    const maxRandomizationXScale = document.getElementById("MaxRandomizationXScale");
+
+    const minRandomizationYScale = document.getElementById("MinRandomizationYScale");
+    const maxRandomizationYScale = document.getElementById("MaxRandomizationYScale");
+    
+    if(rustState.checked) {
         content.style.opacity = "1";
+
+        debugContent.style.opacity = "1";
+        debugState.disabled = false;
+        
+        fovScale.disabled = false;
+        sensitivityScale.disabled = false;
+        smoothnessScale.disabled = false;
+
+        horizontalValue.disabled = false;
+        verticalValue.disabled = false;
+
+        infiniteAmmo.disabled = false;
+        tapping.disabled = false;
+
+        randomization.disabled = false;
+
+        if(randomization.checked) {
+            reverseRandomization.disabled = false;
+
+            minRandomizationXScale.disabled = false;
+            maxRandomizationXScale.disabled = false;
+
+            minRandomizationYScale.disabled = false;
+            maxRandomizationYScale.disabled = false;
+        }
     } else {
         content.style.opacity = "0.4";
+
+        debugContent.style.opacity = "0.4";
+        debugState.disabled = true;
+
+        fovScale.disabled = true;
+        sensitivityScale.disabled = true;
+        smoothnessScale.disabled = true;
+
+        horizontalValue.disabled = true;
+        verticalValue.disabled = true;
+
+        infiniteAmmo.disabled = true;
+        tapping.disabled = true;
+
+        randomization.disabled = true;
+        
+        if(randomization.checked) {
+            reverseRandomization.disabled = true;
+
+            minRandomizationXScale.disabled = true;
+            maxRandomizationXScale.disabled = true;
+
+            minRandomizationYScale.disabled = true;
+            maxRandomizationYScale.disabled = true;
+        }
     }
 
     // var person = {"FirstName":"Andrew","LastName":"Lock","Age":"31"};
@@ -42,6 +118,52 @@ function handleRustState(e) {
     // })
 }
 
-function handleDebugState(e) {
-    const DebugState = document.getElementById("DebugState");
+function handleDebugState(debugState) {
+}
+
+function handleInfiniteAmmo(infiniteAmmo) {
+}
+
+function handleTapping(tapping) {
+}
+
+function handleRandomization(randomization) {
+    const randomizationContent = document.getElementById("RandomizationContent");
+    const reverseRandomizationContent = document.getElementById("ReverseRandomizationContent");
+
+    const reverseRandomization = document.getElementById("ReverseRandomization");
+
+    const minRandomizationXScale = document.getElementById("MinRandomizationXScale");
+    const maxRandomizationXScale = document.getElementById("MaxRandomizationXScale");
+
+    const minRandomizationYScale = document.getElementById("MinRandomizationYScale");
+    const maxRandomizationYScale = document.getElementById("MaxRandomizationYScale");
+
+
+    if(randomization.checked) {
+        randomizationContent.style.opacity = "1";
+        reverseRandomizationContent.style.opacity = "1";
+        
+        reverseRandomization.disabled = false;
+        
+        minRandomizationXScale.disabled = false;
+        maxRandomizationXScale.disabled = false;
+
+        minRandomizationYScale.disabled = false;
+        maxRandomizationYScale.disabled = false;
+    } else {
+        randomizationContent.style.opacity = "0.4";
+        reverseRandomizationContent.style.opacity = "0.4";
+
+        reverseRandomization.disabled = true;
+
+        minRandomizationXScale.disabled = true;
+        maxRandomizationXScale.disabled = true;
+
+        minRandomizationYScale.disabled = true;
+        maxRandomizationYScale.disabled = true;
+    }
+}
+
+function handleReverseRandomization(reverseRandomization) {
 }
