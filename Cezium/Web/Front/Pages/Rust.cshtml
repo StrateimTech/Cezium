@@ -141,8 +141,8 @@
 
             <div>
                 <div style="display: inline-block; margin-right: 8px;">
-                    <label class="switch" for="InvertMouseX" style="display: inline-block">
-                        <input type="checkbox" id="InvertMouseX" onclick='handleInvertMouseX(this);'/>
+                    <label class="switch" for="Tapping" style="display: inline-block">
+                        <input type="checkbox" id="Tapping" onclick='handleInvertMouseX(this);'/>
                         <div class="slider round"></div>
                     </label>
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
@@ -151,8 +151,8 @@
                 </div>
 
                 <div style="display: inline-block; margin-right: 8px;">
-                    <label class="switch" for="InvertMouseX" style="display: inline-block">
-                        <input type="checkbox" id="InvertMouseX" onclick='handleInvertMouseX(this);'/>
+                    <label class="switch" for="Tapping" style="display: inline-block">
+                        <input type="checkbox" id="Tapping" onclick='handleInvertMouseX(this);'/>
                         <div class="slider round"></div>
                     </label>
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
@@ -170,8 +170,8 @@
 
             <div>
                 <div style="display: inline-block; margin-right: 8px;">
-                    <label class="switch" for="InvertMouseX" style="display: inline-block">
-                        <input type="checkbox" id="InvertMouseX" onclick='handleInvertMouseX(this);'/>
+                    <label class="switch" for="Randomization" style="display: inline-block">
+                        <input type="checkbox" id="Randomization" onclick='handleInvertMouseX(this);'/>
                         <div class="slider round"></div>
                     </label>
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
@@ -179,9 +179,9 @@
                     </div>
                 </div>
 
-                <div style="display: inline-block; margin-right: 8px;">
-                    <label class="switch" for="InvertMouseX" style="display: inline-block">
-                        <input type="checkbox" id="InvertMouseX" onclick='handleInvertMouseX(this);'/>
+                <div style="display: inline-block; margin-right: 8px;" id="ReverseRandomizationContent">
+                    <label class="switch" for="ReverseRandomization" style="display: inline-block">
+                        <input type="checkbox" id="ReverseRandomization" onclick='handleInvertMouseX(this);'/>
                         <div class="slider round"></div>
                     </label>
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
@@ -189,29 +189,29 @@
                     </div>
                 </div>
             </div>
-            <div>
+            <div id="RandomizationContent">
                 <div>
-                    <div style="display: inline-block">
+                    <div style="display: inline-block; margin-right: 4px">
                         <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                             Min RandomizationX - <text id="MinRandomizationXValue">0</text>
                         </div>
                         <input type="range" min="0" max="24" step="1" value="0" id="MinRandomizationXScale" style="width: 100%">
                     </div>
-                    <div style="display: inline-block">
+                    <div style="display: inline-block; margin-right: 4px">
                         <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;" id="MaxRandomizationXText">
                             Max RandomizationX - <text id="MaxRandomizationXValue">6</text>
                         </div>
                         <input type="range" min="1" max="24" step="1" value="6" id="MaxRandomizationXScale" style="width: 100%">
                     </div>
                 </div>
-                <div style="display: inline-block">
+                <div style="display: inline-block; margin-right: 4px">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;" id="MinRandomizationYText">
                         Min RandomizationY - <text id="MinRandomizationYValue">0</text>
                     </div>
                     <input type="range" min="0" max="24" step="1" value="0" id="MinRandomizationYScale" style="width: 100%">
                 </div>
 
-                <div style="display: inline-block">
+                <div style="display: inline-block; margin-right: 4px">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;" id="MaxRandomizationYText">
                         Max RandomizationY - <text id="MaxRandomizationYValue">6</text>
                     </div>
@@ -220,7 +220,6 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 </div>
 </body>
