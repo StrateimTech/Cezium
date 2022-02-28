@@ -131,6 +131,18 @@ public class SettingsController : Controller
     {
         ApiHandler.RustHandler.Settings.InfiniteAmmo = infiniteAmmo;
     }
+    
+    [HttpGet("/api/settings/rust/Tapping/")]
+    public bool GetTapping()
+    {
+        return ApiHandler.RustHandler.Settings.Tapping;
+    }
+
+    [HttpPost("/api/settings/rust/Tapping/")]
+    public void SetTapping(bool tapping)
+    {
+        ApiHandler.RustHandler.Settings.Tapping = tapping;
+    }
 
     [HttpGet("/api/settings/rust/Randomization/")]
     public bool GetRandomization()

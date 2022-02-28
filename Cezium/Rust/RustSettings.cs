@@ -120,6 +120,8 @@ namespace Cezium.Rust
         }
 
         public bool InfiniteAmmo = false;
+        
+        public bool Tapping = false;
 
         public bool Randomization = false;
 

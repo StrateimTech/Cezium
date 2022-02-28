@@ -151,6 +151,8 @@ namespace Cezium.Rust
 
                     for (int i = 0; i < smoothing; i++)
                     {
+                        if((!_hidHandler.HidMouseHandlers[0].Mouse.LeftButton || !_hidHandler.HidMouseHandlers[0].Mouse.RightButton) && Settings.Tapping)
+                            continue;
                         _hidHandler.WriteMouseReport(_hidHandler.HidMouseHandlers[0].Mouse with
                         {
                             X = Convert.ToInt16(gunPixelX / smoothing),

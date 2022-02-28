@@ -2,10 +2,7 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text.Json.Serialization;
-using System.Threading;
 using System.Threading.Tasks;
-using Cezium.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -162,17 +159,16 @@ public class Rust : PageModel
     
     public IActionResult OnGetTapping()
     {
-        //TODO: Implement
-        // using var client = new HttpClient();
-        // client.BaseAddress = new Uri(FrontHandler.Server);
-        // client.DefaultRequestHeaders.Accept.Clear();
-        // client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        // Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/Tapping");
-        // if (response.Result.IsSuccessStatusCode)
-        // {
-        //     Task<bool> schema = response.Result.Content.ReadFromJsonAsync<bool>();
-        //     return new JsonResult(schema.Result);
-        // }
+        using var client = new HttpClient();
+        client.BaseAddress = new Uri(FrontHandler.Server);
+        client.DefaultRequestHeaders.Accept.Clear();
+        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/Tapping");
+        if (response.Result.IsSuccessStatusCode)
+        {
+            Task<bool> schema = response.Result.Content.ReadFromJsonAsync<bool>();
+            return new JsonResult(schema.Result);
+        }
         return null;
     }
     
