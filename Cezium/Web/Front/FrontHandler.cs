@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -9,6 +10,7 @@ namespace Cezium.Web.Front;
 public class FrontHandler
 {
     private readonly IHost _builder;
+    public static readonly string Server = "http://127.0.0.1:300/";
 
     public FrontHandler()
     {

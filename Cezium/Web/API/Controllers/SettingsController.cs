@@ -160,13 +160,13 @@ public class SettingsController : Controller
         ApiHandler.RustHandler.Settings.Randomization = randomization;
     }
 
-    [HttpGet("/api/settings/rust/ReverseRandomization/")]
+    [HttpGet("/api/settings/rust/ReverseRandomizationSchema/")]
     public bool GetReverseRandomization()
     {
         return ApiHandler.RustHandler.Settings.ReverseRandomization;
     }
 
-    [HttpPost("/api/settings/rust/ReverseRandomization/")]
+    [HttpPost("/api/settings/rust/ReverseRandomizationSchema/")]
     public void SetReverseRandomization(bool reverseRandomization)
     {
         ApiHandler.RustHandler.Settings.ReverseRandomization = reverseRandomization;
@@ -195,17 +195,29 @@ public class SettingsController : Controller
     {
         ApiHandler.RustHandler.Settings.RandomizationAmountY = new Tuple<int, int>(min, max);
     }
-
-    [HttpGet("/api/settings/rust/RecoilModifier/")]
-    public Tuple<double, double> GetRecoilModifier()
+    
+    [HttpGet("/api/settings/rust/HorizontalModifier/")]
+    public double GetHorizontalRecoilModifier()
     {
-        return ApiHandler.RustHandler.Settings.RecoilModifier;
+        return ApiHandler.RustHandler.Settings.RecoilModifier.Item1;
     }
-
-    [HttpPost("/api/settings/rust/RecoilModifier/")]
-    public void SetRecoilModifier(double x, double y)
+    
+    [HttpGet("/api/settings/rust/VerticalModifier/")]
+    public double GetVerticalRecoilModifier()
     {
-        ApiHandler.RustHandler.Settings.RecoilModifier = new Tuple<double, double>(x, y);
+        return ApiHandler.RustHandler.Settings.RecoilModifier.Item2;
+    }
+    
+    [HttpPost("/api/settings/rust/HorizontalModifier/")]
+    public void SetHorizontalRecoilModifier(double x)
+    {
+        ApiHandler.RustHandler.Settings.RecoilModifier = new Tuple<double, double>(x, ApiHandler.RustHandler.Settings.RecoilModifier.Item2);
+    }
+    
+    [HttpPost("/api/settings/rust/VerticalModifier/")]
+    public void SetVerticalRecoilModifier(double y)
+    {
+        ApiHandler.RustHandler.Settings.RecoilModifier = new Tuple<double, double>(ApiHandler.RustHandler.Settings.RecoilModifier.Item1, y);
     }
 
     [HttpPost("/api/settings/rust/Gun/")]

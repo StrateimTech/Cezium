@@ -52,19 +52,19 @@
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                         FOV - <text id="FovValue">90</text>
                     </div>
-                    <input type="range" min="60" max="90" step="1" value="90" id="FovScale" style="width: 100%">
+                    <input type="range" min="60" max="90" step="1" value="90" id="FovScale" style="width: 100%" onchange="handleFov(this);">
                 </div>
                 <div style="display: inline-block; margin-right: 4px">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                         Sensitivity - <text id="SensitivityValue">0.5</text>
                     </div>
-                    <input type="range" min="0.01" max="2" step="0.01" value="0.5" id="SensitivityScale" style="width: 100%">
+                    <input type="range" min="0.01" max="2" step="0.01" value="0.5" id="SensitivityScale" style="width: 100%" onchange="handleSensitivity(this);">
                 </div>
                 <div style="display: inline-block; margin-right: 4px">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
-                        Smoothness - <text id="SmoothnessValue">90</text>
+                        Smoothness - <text id="SmoothnessValue">6</text>
                     </div>
-                    <input type="range" min="1" max="24" step="1" value="6" id="SmoothnessScale" style="width: 100%">
+                    <input type="range" min="1" max="24" step="1" value="6" id="SmoothnessScale" style="width: 100%" onchange="handleSmoothness(this);">
                 </div>
             </div>
         </div>
@@ -79,13 +79,13 @@
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                         Horizontal - <text id="HorizontalValue">1</text>
                     </div>
-                    <input type="range" min="0" max="1" step="0.01" value="1" id="HorizontalScale" style="width: 100%">
+                    <input type="range" min="0" max="1" step="0.01" value="1" id="HorizontalScale" style="width: 100%" onchange="handleHorizontal(this);">
                 </div>
                 <div style="display: inline-block; margin-right: 4px">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                         Vertical - <text id="VerticalValue">1</text>
                     </div>
-                    <input type="range" min="0" max="1" step="0.01" value="1" id="VerticalScale" style="width: 100%">
+                    <input type="range" min="0" max="1" step="0.01" value="1" id="VerticalScale" style="width: 100%" onchange="handleVertical(this);">
                 </div>
             </div>
         </div>
@@ -195,27 +195,27 @@
                         <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                             Min RandomizationX - <text id="MinRandomizationXValue">0</text>
                         </div>
-                        <input type="range" min="0" max="24" step="1" value="0" id="MinRandomizationXScale" style="width: 100%" disabled="disabled">
+                        <input type="range" min="0" max="24" step="1" value="0" id="MinRandomizationXScale" style="width: 100%" disabled="disabled" onchange="handleMinRandomizationX(this);">
                     </div>
                     <div style="display: inline-block; margin-right: 4px">
                         <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;" id="MaxRandomizationXText">
                             Max RandomizationX - <text id="MaxRandomizationXValue">6</text>
                         </div>
-                        <input type="range" min="1" max="24" step="1" value="6" id="MaxRandomizationXScale" style="width: 100%" disabled="disabled">
+                        <input type="range" min="1" max="24" step="1" value="6" id="MaxRandomizationXScale" style="width: 100%" disabled="disabled" onchange="handleMaxRandomizationX(this);">
                     </div>
                 </div>
                 <div style="display: inline-block; margin-right: 4px">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;" id="MinRandomizationYText">
                         Min RandomizationY - <text id="MinRandomizationYValue">0</text>
                     </div>
-                    <input type="range" min="0" max="24" step="1" value="0" id="MinRandomizationYScale" style="width: 100%" disabled="disabled">
+                    <input type="range" min="0" max="24" step="1" value="0" id="MinRandomizationYScale" style="width: 100%" disabled="disabled" onchange="handleMinRandomizationY(this);">
                 </div>
 
                 <div style="display: inline-block; margin-right: 4px">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;" id="MaxRandomizationYText">
                         Max RandomizationY - <text id="MaxRandomizationYValue">6</text>
                     </div>
-                    <input type="range" min="1" max="24" step="1" value="6" id="MaxRandomizationYScale" style="width: 100%" disabled="disabled">
+                    <input type="range" min="1" max="24" step="1" value="6" id="MaxRandomizationYScale" style="width: 100%" disabled="disabled" onchange="handleMaxRandomizationY(this);">
                 </div>
             </div>
         </div>

@@ -17,9 +17,6 @@ function handleRustState(rustState) {
 
     const randomization = document.getElementById("Randomization");
 
-    const randomizationContent = document.getElementById("RandomizationContent");
-    const reverseRandomizationContent = document.getElementById("ReverseRandomizationContent");
-
     const reverseRandomization = document.getElementById("ReverseRandomization");
 
     const minRandomizationXScale = document.getElementById("MinRandomizationXScale");
@@ -84,23 +81,16 @@ function handleRustState(rustState) {
         }
     }
 
-    // var person = {"FirstName":"Andrew","LastName":"Lock","Age":"31"};
-    // $.ajax({
-    //     type: "POST",
-    //     url: "/Mouse?handler=FindUser",
-    //     // data: {id: id},
-    //     contentType: "application/json; charset=utf-8",
-    //     // dataType: "json",
-    //     // AntiforgeryToken is required by RazorPages
-    //     headers: {
-    //         RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
-    //     },
-    //     data: JSON.stringify(person)
-    // }).done(function () {
-    //     alert("success");
-    // }).fail(function () {
-    //     alert("error");
-    // });
+    const data = {"Value": rustState.checked};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=State",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
 
     // $.ajax({
     //     type: 'GET',
@@ -119,12 +109,107 @@ function handleRustState(rustState) {
 }
 
 function handleDebugState(debugState) {
+    const data = {"Value": debugState.checked};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=Debug",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
 }
 
+function handleFov(fov) {
+    const data = {"Value": fov.value};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=Fov",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
+}
+
+function handleSensitivity(sensitivity) {
+    const data = {"Value": sensitivity.value};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=Sensitivity",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
+}
+
+function handleSmoothness(smoothness) {
+    const data = {"Value": smoothness.value};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=Smoothness",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
+}
+
+function handleHorizontal(horizontal) {
+    const data = {"Value": horizontal.value};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=Horizontal",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
+}
+
+function handleVertical(vertical) {
+    const data = {"Value": vertical.value};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=Vertical",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
+}
+    
 function handleInfiniteAmmo(infiniteAmmo) {
+    const data = {"Value": infiniteAmmo.checked};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=InfiniteAmmo",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
 }
 
 function handleTapping(tapping) {
+    const data = {"Value": tapping.checked};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=Tapping",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
 }
 
 function handleRandomization(randomization) {
@@ -163,7 +248,41 @@ function handleRandomization(randomization) {
         minRandomizationYScale.disabled = true;
         maxRandomizationYScale.disabled = true;
     }
+    
+    const data = {"Value": randomization.checked};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=Randomization",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
 }
 
 function handleReverseRandomization(reverseRandomization) {
+    const data = {"Value": reverseRandomization.checked};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=State",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
+}
+
+function handleMinRandomizationX(minRandomizationX) {
+    
+}
+
+function handleMaxRandomizationX(maxRandomizationX) {
+}
+
+function handleMinRandomizationY(minRandomizationY) {
+}
+
+function handleMaxRandomizationY(maxRandomizationY) {
 }
