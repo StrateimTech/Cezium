@@ -1,4 +1,5 @@
-﻿function handleRustState(e) {
+﻿
+function handleRustState(e) {
     const content = document.getElementById("content");
 
     if (content.style.opacity === "0.4") {

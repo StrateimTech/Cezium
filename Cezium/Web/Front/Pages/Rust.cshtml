@@ -19,63 +19,209 @@
 <body>
 
 <div>
+<div class="flex-container">
+    <div style="height: 40px">
+        <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+            RUST
+        </div>
+        <label class="switch" for="RustState" style="position: relative; right: 48px">
+            <div class="fugaz-one-font noselect" style="color: white; margin-left: 56px">
+                State
+            </div>
+            <input type="checkbox" id="RustState" checked="checked" onclick='handleRustState(this);'/>
+            <div class="slider round"></div>
+        </label>
+        <label class="switch" for="DebugState" style="float: right; margin-right: 56px;">
+            <div class="fugaz-one-font noselect" style="color: white; margin-left: 56px;">
+                Debug
+            </div>
+            <input type="checkbox" id="DebugState"/>
+            <div class="slider round"></div>
+        </label>
+    </div>
+</div>
+
+<div id="content" style="opacity: 1">
     <div class="flex-container">
-        <div style="height: 40px">
+        <div>
             <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
-                RUST
+                GENERAL
             </div>
-            <label class="switch" for="RustState" style="position: relative; right: 48px">
-                <div class="fugaz-one-font noselect" style="color: white; margin-left: 56px">
-                    State
+            <div>
+                <div style="display: inline-block; margin-right: 4px">
+                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                        FOV - <text id="FovValue">90</text>
+                    </div>
+                    <input type="range" min="60" max="90" step="1" value="90" id="FovScale" style="width: 100%">
                 </div>
-                <input type="checkbox" id="RustState" checked="checked" onclick='handleRustState(this);'/>
-                <div class="slider round"></div>
-            </label>
-            <label class="switch" for="DebugState" style="float: right; margin-right: 56px;">
-                <div class="fugaz-one-font noselect" style="color: white; margin-left: 56px;">
-                    Debug
+                <div style="display: inline-block; margin-right: 4px">
+                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                        Sensitivity - <text id="SensitivityValue">0.5</text>
+                    </div>
+                    <input type="range" min="0.01" max="2" step="0.01" value="0.5" id="SensitivityScale" style="width: 100%">
                 </div>
-                <input type="checkbox" id="DebugState"/>
-                <div class="slider round"></div>
-            </label>
+                <div style="display: inline-block; margin-right: 4px">
+                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                        Smoothness - <text id="SmoothnessValue">90</text>
+                    </div>
+                    <input type="range" min="1" max="24" step="1" value="6" id="SmoothnessScale" style="width: 100%">
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+                MODIFIERS
+            </div>
+
+            <div>
+                <div style="display: inline-block; margin-right: 4px">
+                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                        Horizontal - <text id="HorizontalValue">1</text>
+                    </div>
+                    <input type="range" min="0" max="1" step="0.01" value="1" id="HorizontalScale" style="width: 100%">
+                </div>
+                <div style="display: inline-block; margin-right: 4px">
+                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                        Vertical - <text id="VerticalValue">1</text>
+                    </div>
+                    <input type="range" min="0" max="1" step="0.01" value="1" id="VerticalScale" style="width: 100%">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="flex-container">
+        <div>
+            <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+                WEAPON
+            </div>
+            <div style="height: 100%">
+                @* <select name="Weapon"> *@
+                @*     <option value="AssaultRifle">Assault Rifle</option> *@
+                @*     $1$ <optgroup label="Swedish Cars"> #1# *@
+                @*     $1$     <option value="volvo">Volvo</option> #1# *@
+                @*     $1$     <option value="saab">Saab</option> #1# *@
+                @*     $1$ </optgroup> #1# *@
+                @*     $1$ <optgroup label="German Cars"> #1# *@
+                @*     $1$     <option value="mercedes">Mercedes</option> #1# *@
+                @*     $1$     <option value="audi">Audi</option> #1# *@
+                @*     $1$ </optgroup> #1# *@
+                @* </select> *@
+                @* <select name="Scope"> *@
+                @*     <option value="Empty">Empty</option> *@
+                @* *@
+                @*     $1$ <optgroup label="Swedish Cars"> #1# *@
+                @*     $1$     <option value="volvo">Volvo</option> #1# *@
+                @*     $1$     <option value="saab">Saab</option> #1# *@
+                @*     $1$ </optgroup> #1# *@
+                @*     $1$ <optgroup label="German Cars"> #1# *@
+                @*     $1$     <option value="mercedes">Mercedes</option> #1# *@
+                @*     $1$     <option value="audi">Audi</option> #1# *@
+                @*     $1$ </optgroup> #1# *@
+                @* </select> *@
+                @* <select name="Attachment"> *@
+                @*     <option value="Empty">Empty</option> *@
+                @* *@
+                @*     $1$ <optgroup label="Swedish Cars"> #1# *@
+                @*     $1$     <option value="volvo">Volvo</option> #1# *@
+                @*     $1$     <option value="saab">Saab</option> #1# *@
+                @*     $1$ </optgroup> #1# *@
+                @*     $1$ <optgroup label="German Cars"> #1# *@
+                @*     $1$     <option value="mercedes">Mercedes</option> #1# *@
+                @*     $1$     <option value="audi">Audi</option> #1# *@
+                @*     $1$ </optgroup> #1# *@
+                @* </select> *@
+            </div>
+        </div>
+        <div>
+            <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+                AMMO
+            </div>
+
+            <div>
+                <div style="display: inline-block; margin-right: 8px;">
+                    <label class="switch" for="InvertMouseX" style="display: inline-block">
+                        <input type="checkbox" id="InvertMouseX" onclick='handleInvertMouseX(this);'/>
+                        <div class="slider round"></div>
+                    </label>
+                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
+                        Infinite Ammo
+                    </div>
+                </div>
+
+                <div style="display: inline-block; margin-right: 8px;">
+                    <label class="switch" for="InvertMouseX" style="display: inline-block">
+                        <input type="checkbox" id="InvertMouseX" onclick='handleInvertMouseX(this);'/>
+                        <div class="slider round"></div>
+                    </label>
+                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
+                        Tapping
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div id="content" style="opacity: 1">
-        <div class="flex-container">
-            <div>
-                <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
-                    GENERAL
-                </div>
+    <div class="flex-container">
+        <div>
+            <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+                RANDOMIZATION
             </div>
 
             <div>
-                <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
-                    MODIFIERS
+                <div style="display: inline-block; margin-right: 8px;">
+                    <label class="switch" for="InvertMouseX" style="display: inline-block">
+                        <input type="checkbox" id="InvertMouseX" onclick='handleInvertMouseX(this);'/>
+                        <div class="slider round"></div>
+                    </label>
+                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
+                        Randomization
+                    </div>
                 </div>
-            </div>
 
-        </div>
-        <div class="flex-container">
-            <div>
-                <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
-                    WEAPON
+                <div style="display: inline-block; margin-right: 8px;">
+                    <label class="switch" for="InvertMouseX" style="display: inline-block">
+                        <input type="checkbox" id="InvertMouseX" onclick='handleInvertMouseX(this);'/>
+                        <div class="slider round"></div>
+                    </label>
+                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
+                        Reverse Randomization
+                    </div>
                 </div>
             </div>
             <div>
-                <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
-                    AMMO
+                <div>
+                    <div style="display: inline-block">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Min RandomizationX - <text id="MinRandomizationXValue">0</text>
+                        </div>
+                        <input type="range" min="0" max="24" step="1" value="0" id="MinRandomizationXScale" style="width: 100%">
+                    </div>
+                    <div style="display: inline-block">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;" id="MaxRandomizationXText">
+                            Max RandomizationX - <text id="MaxRandomizationXValue">6</text>
+                        </div>
+                        <input type="range" min="1" max="24" step="1" value="6" id="MaxRandomizationXScale" style="width: 100%">
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="flex-container">
-            <div>
-                <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
-                    RANDOMIZATION
+                <div style="display: inline-block">
+                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;" id="MinRandomizationYText">
+                        Min RandomizationY - <text id="MinRandomizationYValue">0</text>
+                    </div>
+                    <input type="range" min="0" max="24" step="1" value="0" id="MinRandomizationYScale" style="width: 100%">
+                </div>
+
+                <div style="display: inline-block">
+                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;" id="MaxRandomizationYText">
+                        Max RandomizationY - <text id="MaxRandomizationYValue">6</text>
+                    </div>
+                    <input type="range" min="1" max="24" step="1" value="6" id="MaxRandomizationYScale" style="width: 100%">
                 </div>
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 </body>
 </html>
