@@ -1,5 +1,146 @@
-﻿
-function handleRustState(rustState) {
+﻿function handleLoad() {
+    handleDataUpdate();
+    setInterval(handleDataUpdate, 500);
+}
+
+function handleDataUpdate() {
+    $.ajax({
+        type: 'GET',
+        url: '/Rust?handler=State',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            const rustState = document.getElementById("RustState");
+            rustState.checked = data;
+            handleRustState(rustState, true);
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '/Rust?handler=Debug',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            const debugState = document.getElementById("DebugState");
+            debugState.checked = data;
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '/Rust?handler=Fov',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            const fovScale = document.getElementById("FovScale");
+            fovScale.value = data;
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '/Rust?handler=Sensitivity',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            const sensitivityScale = document.getElementById("SensitivityScale");
+            sensitivityScale.value = data;
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '/Rust?handler=Smoothness',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            const smoothnessScale = document.getElementById("SmoothnessScale");
+            smoothnessScale.value = data;
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '/Rust?handler=Horizontal',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            const horizontalValue = document.getElementById("HorizontalScale");
+            horizontalValue.value = data;
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '/Rust?handler=Vertical',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            const verticalValue = document.getElementById("VerticalScale");
+            verticalValue.value = data;
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '/Rust?handler=InfiniteAmmo',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            const infiniteAmmo = document.getElementById("InfiniteAmmo");
+            infiniteAmmo.checked = data;
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '/Rust?handler=Tapping',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            const tapping = document.getElementById("Tapping");
+            tapping.checked = data;
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '/Rust?handler=Randomization',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            const randomization = document.getElementById("Randomization");
+            randomization.checked = data;
+            handleRandomization(randomization, true);
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '/Rust?handler=ReverseRandomization',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            const reverseRandomization = document.getElementById("ReverseRandomization");
+            reverseRandomization.checked = data;
+        }
+    });
+}
+
+
+function handleRustState(rustState, ignore) {
     const content = document.getElementById("content");
 
     const debugContent = document.getElementById("DebugContent");
@@ -81,31 +222,18 @@ function handleRustState(rustState) {
         }
     }
 
-    const data = {"Value": rustState.checked};
-    $.ajax({
-        type: "POST",
-        url: "/Rust?handler=State",
-        contentType: "application/json; charset=utf-8",
-        headers: {
-            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
-        },
-        data: JSON.stringify(data)
-    });
-
-    // $.ajax({
-    //     type: 'GET',
-    //     // Note the difference in url (this works if you're actually in Index page)
-    //     url: '/mouse?handler=FindUser',
-    //     headers: {
-    //         RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
-    //     },
-    //     success: function (data) {
-    //         alert(data);
-    //     },
-    //     error: function (error) {
-    //         alert("Error: " + error);
-    //     }
-    // })
+    if(ignore === false) {
+        const data = {"Value": rustState.checked};
+        $.ajax({
+            type: "POST",
+            url: "/Rust?handler=State",
+            contentType: "application/json; charset=utf-8",
+            headers: {
+                RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            data: JSON.stringify(data)
+        });
+    }
 }
 
 function handleDebugState(debugState) {
@@ -212,7 +340,7 @@ function handleTapping(tapping) {
     });
 }
 
-function handleRandomization(randomization) {
+function handleRandomization(randomization, ignore) {
     const randomizationContent = document.getElementById("RandomizationContent");
     const reverseRandomizationContent = document.getElementById("ReverseRandomizationContent");
 
@@ -249,16 +377,18 @@ function handleRandomization(randomization) {
         maxRandomizationYScale.disabled = true;
     }
     
-    const data = {"Value": randomization.checked};
-    $.ajax({
-        type: "POST",
-        url: "/Rust?handler=Randomization",
-        contentType: "application/json; charset=utf-8",
-        headers: {
-            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
-        },
-        data: JSON.stringify(data)
-    });
+    if(ignore === false) {
+        const data = {"Value": randomization.checked};
+        $.ajax({
+            type: "POST",
+            url: "/Rust?handler=Randomization",
+            contentType: "application/json; charset=utf-8",
+            headers: {
+                RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            data: JSON.stringify(data)
+        });
+    }
 }
 
 function handleReverseRandomization(reverseRandomization) {
@@ -274,15 +404,42 @@ function handleReverseRandomization(reverseRandomization) {
     });
 }
 
-function handleMinRandomizationX(minRandomizationX) {
+function handleRandomizationX() {
+    const minRandomizationXScale = document.getElementById("MinRandomizationXScale");
+    const maxRandomizationXScale = document.getElementById("MaxRandomizationXScale");
     
+    if(+minRandomizationXScale.value > +maxRandomizationXScale.value) {
+        minRandomizationXScale.value = +maxRandomizationXScale.value;
+    }
+    
+    const data = {"MinValue": minRandomizationXScale.value, "MaxValue": maxRandomizationXScale.value};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=RandomizationX",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
 }
 
-function handleMaxRandomizationX(maxRandomizationX) {
-}
+function handleRandomizationY() {
+    const minRandomizationYScale = document.getElementById("MinRandomizationYScale");
+    const maxRandomizationYScale = document.getElementById("MaxRandomizationYScale");
 
-function handleMinRandomizationY(minRandomizationY) {
-}
+    if(+minRandomizationYScale.value > +maxRandomizationYScale.value) {
+        minRandomizationYScale.value = +maxRandomizationYScale.value;
+    }
 
-function handleMaxRandomizationY(maxRandomizationY) {
+    const data = {"MinValue": minRandomizationYScale.value, "MaxValue": maxRandomizationYScale.value};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=RandomizationY",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
 }
