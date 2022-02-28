@@ -33,15 +33,15 @@ namespace Cezium.Rust
 
             MP5,
             CUSTOM,
-            THOMPSON,
+            THOMPSON
 
-            REVOLVER,
-            M92,
-            PYTHON,
-            SEMI_PISTOL,
-
-            SEMI_RIFLE,
-            M39
+            // REVOLVER,
+            // M92,
+            // PYTHON,
+            // SEMI_PISTOL,
+            //
+            // SEMI_RIFLE,
+            // M39
         }
 
         public enum Scope
@@ -88,15 +88,15 @@ namespace Cezium.Rust
 
             MP5 = 30,
             CUSTOM = 24,
-            THOMPSON = 20,
+            THOMPSON = 20
 
-            REVOLVER = 8,
-            M92 = 15,
-            PYTHON = 6,
-            SEMI_PISTOL = 10,
-
-            SEMI_RIFLE = 16,
-            M39 = 20
+            // REVOLVER = 8,
+            // M92 = 15,
+            // PYTHON = 6,
+            // SEMI_PISTOL = 10,
+            //
+            // SEMI_RIFLE = 16,
+            // M39 = 20
         }
 
         public enum FireRate
@@ -108,15 +108,15 @@ namespace Cezium.Rust
 
             MP5 = 600,
             CUSTOM = 600,
-            THOMPSON = 462,
+            THOMPSON = 462
 
-            REVOLVER = 343,
-            M92 = 400,
-            PYTHON = 400,
-            SEMI_PISTOL = 400,
-
-            SEMI_RIFLE = 343,
-            M39 = 300
+            // REVOLVER = 343,
+            // M92 = 400,
+            // PYTHON = 400,
+            // SEMI_PISTOL = 400,
+            //
+            // SEMI_RIFLE = 343,
+            // M39 = 300
         }
 
         public bool InfiniteAmmo = false;
