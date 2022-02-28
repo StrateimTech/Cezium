@@ -283,6 +283,11 @@ function handleDebugState(debugState) {
     });
 }
 
+function handleFovTag(fov) {
+    const fovValue = document.getElementById("FovValue");
+    fovValue.value = fov.value
+}
+
 function handleFov(fov) {
     const data = {"Value": fov.value};
     $.ajax({
@@ -294,6 +299,11 @@ function handleFov(fov) {
         },
         data: JSON.stringify(data)
     });
+}
+
+function handleSensitivityTag(sensitivity) {
+    const sensitivityValue = document.getElementById("SensitivityValue");
+    sensitivityValue.innerHTML = sensitivity.value
 }
 
 function handleSensitivity(sensitivity) {
@@ -309,6 +319,11 @@ function handleSensitivity(sensitivity) {
     });
 }
 
+function handleSmoothnessTag(smoothness) {
+    const smoothnessValue = document.getElementById("SmoothnessValue");
+    smoothnessValue.value = smoothness.value
+}
+
 function handleSmoothness(smoothness) {
     const data = {"Value": smoothness.value};
     $.ajax({
@@ -322,6 +337,11 @@ function handleSmoothness(smoothness) {
     });
 }
 
+function handleHorizontalTag(horizontal) {
+    const horizontalValue = document.getElementById("HorizontalValue");
+    horizontalValue.value = horizontal.value
+}
+
 function handleHorizontal(horizontal) {
     const data = {"Value": horizontal.value};
     $.ajax({
@@ -333,6 +353,11 @@ function handleHorizontal(horizontal) {
         },
         data: JSON.stringify(data)
     });
+}
+
+function handleVerticalTag(vertical) {
+    const verticalValue = document.getElementById("VerticalValue");
+    verticalValue.value = vertical.value
 }
 
 function handleVertical(vertical) {
@@ -438,6 +463,21 @@ function handleReverseRandomization(reverseRandomization) {
     });
 }
 
+function handleRandomizationXTag() {
+    const minRandomizationXScale = document.getElementById("MinRandomizationXScale");
+    const maxRandomizationXScale = document.getElementById("MaxRandomizationXScale");
+
+    if(+minRandomizationXScale.value > +maxRandomizationXScale.value) {
+        minRandomizationXScale.value = +maxRandomizationXScale.value;
+    }
+    
+    const minRandomizationXValue = document.getElementById("MinRandomizationXValue");
+    minRandomizationXValue.value = minRandomizationXScale.value
+
+    const maxRandomizationXValue = document.getElementById("MaxRandomizationXValue");
+    maxRandomizationXValue.value = maxRandomizationXScale.value
+}
+
 function handleRandomizationX() {
     const minRandomizationXScale = document.getElementById("MinRandomizationXScale");
     const maxRandomizationXScale = document.getElementById("MaxRandomizationXScale");
@@ -458,7 +498,7 @@ function handleRandomizationX() {
     });
 }
 
-function handleRandomizationY() {
+function handleRandomizationYTag() {
     const minRandomizationYScale = document.getElementById("MinRandomizationYScale");
     const maxRandomizationYScale = document.getElementById("MaxRandomizationYScale");
 
@@ -466,6 +506,20 @@ function handleRandomizationY() {
         minRandomizationYScale.value = +maxRandomizationYScale.value;
     }
 
+    const minRandomizationYValue = document.getElementById("MinRandomizationYValue");
+    minRandomizationYValue.value = minRandomizationYScale.value
+
+    const maxRandomizationXValue = document.getElementById("MaxRandomizationYValue");
+    maxRandomizationXValue.value = maxRandomizationYScale.value
+}
+
+function handleRandomizationY() {
+    const minRandomizationYScale = document.getElementById("MinRandomizationYScale");
+    const maxRandomizationYScale = document.getElementById("MaxRandomizationYScale");
+
+    if(+minRandomizationYScale.value > +maxRandomizationYScale.value) {
+        minRandomizationYScale.value = +maxRandomizationYScale.value;
+    }
     const data = {"Item1": minRandomizationYScale.value, "Item2": maxRandomizationYScale.value};
     $.ajax({
         type: "POST",
