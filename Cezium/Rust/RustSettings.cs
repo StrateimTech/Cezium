@@ -125,9 +125,9 @@ namespace Cezium.Rust
 
         public bool ReverseRandomization = false;
 
-        public Tuple<int, int> RandomizationAmountX = new(1, 5);
+        public Tuple<int, int> RandomizationX = new(1, 5);
 
-        public Tuple<int, int> RandomizationAmountY = new(1, 5);
+        public Tuple<int, int> RandomizationY = new(1, 5);
 
         public Tuple<double, double> RecoilModifier = new(1, 1);
     }

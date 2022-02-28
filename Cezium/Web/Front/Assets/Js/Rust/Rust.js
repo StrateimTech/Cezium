@@ -1,6 +1,6 @@
 ﻿function handleLoad() {
     handleDataUpdate();
-    setInterval(handleDataUpdate, 500);
+    setInterval(handleDataUpdate, 1000);
 }
 
 function handleDataUpdate() {
@@ -135,6 +135,40 @@ function handleDataUpdate() {
         success: function (data) {
             const reverseRandomization = document.getElementById("ReverseRandomization");
             reverseRandomization.checked = data;
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '/Rust?handler=RandomizationX',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            let json = JSON.parse(JSON.stringify(data));
+
+            const minRandomizationXScale = document.getElementById("MinRandomizationXScale");
+            const maxRandomizationXScale = document.getElementById("MaxRandomizationXScale");
+
+            minRandomizationXScale.value = json.item1;
+            maxRandomizationXScale.value = json.item2;
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '/Rust?handler=RandomizationY',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            let json = JSON.parse(JSON.stringify(data));
+
+            const minRandomizationYScale = document.getElementById("MinRandomizationYScale");
+            const maxRandomizationYScale = document.getElementById("MaxRandomizationYScale");
+
+            minRandomizationYScale.value = json.item1;
+            maxRandomizationYScale.value = json.item2;
         }
     });
 }
@@ -395,7 +429,7 @@ function handleReverseRandomization(reverseRandomization) {
     const data = {"Value": reverseRandomization.checked};
     $.ajax({
         type: "POST",
-        url: "/Rust?handler=State",
+        url: "/Rust?handler=ReverseRandomization",
         contentType: "application/json; charset=utf-8",
         headers: {
             RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
@@ -412,7 +446,7 @@ function handleRandomizationX() {
         minRandomizationXScale.value = +maxRandomizationXScale.value;
     }
     
-    const data = {"MinValue": minRandomizationXScale.value, "MaxValue": maxRandomizationXScale.value};
+    const data = {"Item1": minRandomizationXScale.value, "Item2": maxRandomizationXScale.value};
     $.ajax({
         type: "POST",
         url: "/Rust?handler=RandomizationX",
@@ -432,7 +466,7 @@ function handleRandomizationY() {
         minRandomizationYScale.value = +maxRandomizationYScale.value;
     }
 
-    const data = {"MinValue": minRandomizationYScale.value, "MaxValue": maxRandomizationYScale.value};
+    const data = {"Item1": minRandomizationYScale.value, "Item2": maxRandomizationYScale.value};
     $.ajax({
         type: "POST",
         url: "/Rust?handler=RandomizationY",

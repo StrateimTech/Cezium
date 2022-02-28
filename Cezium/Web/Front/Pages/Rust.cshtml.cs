@@ -34,8 +34,8 @@ public class Rust : PageModel
 
     public class RandomizationSchema
     {
-        public int MinValue { get; set; }
-        public int MaxValue { get; set; }
+        public int Item1 { get; set; }
+        public int Item2 { get; set; }
     }
 
     #region Get
@@ -206,6 +206,41 @@ public class Rust : PageModel
         return null;
     }
     
+    public IActionResult OnGetRandomizationX()
+    {
+        using var client = new HttpClient();
+        client.BaseAddress = new Uri(FrontHandler.Server);
+        client.DefaultRequestHeaders.Accept.Clear();
+        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/RandomizationX");
+        if (response.Result.IsSuccessStatusCode)
+        {
+            Task<RandomizationSchema> schema = response.Result.Content.ReadFromJsonAsync<RandomizationSchema>();
+            if (schema.Result != null)
+            {
+                return new JsonResult(schema.Result);
+            }
+        }
+        return null;
+    }
+    
+    public IActionResult OnGetRandomizationY()
+    {
+        using var client = new HttpClient();
+        client.BaseAddress = new Uri(FrontHandler.Server);
+        client.DefaultRequestHeaders.Accept.Clear();
+        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/RandomizationY");
+        if (response.Result.IsSuccessStatusCode)
+        {
+            Task<RandomizationSchema> schema = response.Result.Content.ReadFromJsonAsync<RandomizationSchema>();
+            if (schema.Result != null)
+            {
+                return new JsonResult(schema.Result);
+            }
+        }
+        return null;
+    }
 
     #endregion
 
@@ -310,7 +345,7 @@ public class Rust : PageModel
         using var client = new HttpClient();
         client.BaseAddress = new Uri(FrontHandler.Server);
         var postTask = client.PostAsync(
-            $"/api/settings/rust/RandomizationAmountX?min={data.MinValue}&max={data.MaxValue}",
+            $"/api/settings/rust/RandomizationX?min={data.Item1}&max={data.Item2}",
             null);
         postTask.Wait();
     }
@@ -320,7 +355,7 @@ public class Rust : PageModel
         using var client = new HttpClient();
         client.BaseAddress = new Uri(FrontHandler.Server);
         var postTask = client.PostAsync(
-            $"/api/settings/rust/RandomizationAmountY?min={data.MinValue}&max={data.MaxValue}",
+            $"/api/settings/rust/RandomizationY?min={data.Item1}&max={data.Item2}",
             null);
         postTask.Wait();
     }

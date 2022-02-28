@@ -110,11 +110,11 @@ namespace Cezium.Rust
 
                     if (Settings.Randomization)
                     {
-                        var xRandom = Settings.RandomizationAmountX.Item2 != 0
-                            ? _random.Next(Settings.RandomizationAmountX.Item1, Settings.RandomizationAmountX.Item2)
+                        var xRandom = Settings.RandomizationX.Item2 != 0
+                            ? _random.Next(Settings.RandomizationX.Item1, Settings.RandomizationX.Item2)
                             : 0;
-                        var yRandom = Settings.RandomizationAmountY.Item2 != 0
-                            ? _random.Next(Settings.RandomizationAmountY.Item1, Settings.RandomizationAmountY.Item2)
+                        var yRandom = Settings.RandomizationY.Item2 != 0
+                            ? _random.Next(Settings.RandomizationY.Item1, Settings.RandomizationY.Item2)
                             : 0;
 
                         var xBool = _random.Next() > (Int32.MaxValue / 2);

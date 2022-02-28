@@ -172,28 +172,28 @@ public class SettingsController : Controller
         ApiHandler.RustHandler.Settings.ReverseRandomization = reverseRandomization;
     }
 
-    [HttpGet("/api/settings/rust/RandomizationAmountX/")]
+    [HttpGet("/api/settings/rust/RandomizationX/")]
     public Tuple<int, int> GetRandomizationAmountX()
     {
-        return ApiHandler.RustHandler.Settings.RandomizationAmountX;
+        return ApiHandler.RustHandler.Settings.RandomizationX;
     }
 
-    [HttpGet("/api/settings/rust/RandomizationAmountY/")]
+    [HttpGet("/api/settings/rust/RandomizationY/")]
     public Tuple<int, int> GetRandomizationAmountY()
     {
-        return ApiHandler.RustHandler.Settings.RandomizationAmountY;
+        return ApiHandler.RustHandler.Settings.RandomizationY;
     }
 
-    [HttpPost("/api/settings/rust/RandomizationAmountX/")]
+    [HttpPost("/api/settings/rust/RandomizationX/")]
     public void SetRandomizationAmountX(int min, int max)
     {
-        ApiHandler.RustHandler.Settings.RandomizationAmountX = new Tuple<int, int>(min, max);
+        ApiHandler.RustHandler.Settings.RandomizationX = new Tuple<int, int>(min, max);
     }
 
-    [HttpPost("/api/settings/rust/RandomizationAmountY/")]
+    [HttpPost("/api/settings/rust/RandomizationY/")]
     public void SetRandomizationAmountY(int min, int max)
     {
-        ApiHandler.RustHandler.Settings.RandomizationAmountY = new Tuple<int, int>(min, max);
+        ApiHandler.RustHandler.Settings.RandomizationY = new Tuple<int, int>(min, max);
     }
     
     [HttpGet("/api/settings/rust/HorizontalModifier/")]
