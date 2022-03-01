@@ -315,7 +315,7 @@ input[type="range"]:disabled::-moz-range-thumb {
     max-height: 240px;
 }
 
-.select-box-input-attachment:checked + label {
+.select-box-input-scope:checked + label {
     max-height: 200px;
 }
 
