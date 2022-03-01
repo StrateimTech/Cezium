@@ -258,6 +258,53 @@ public class Rust : PageModel
         return null;
     }
 
+    public IActionResult OnGetGun()
+    {
+        using var client = new HttpClient();
+        client.BaseAddress = new Uri(FrontHandler.Server);
+        client.DefaultRequestHeaders.Accept.Clear();
+        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/Gun");
+        if (response.Result.IsSuccessStatusCode)
+        {
+            Task<string> schema = response.Result.Content.ReadFromJsonAsync<string>();
+            return new JsonResult(schema.Result);
+        }
+        return null;
+    }
+    
+    public IActionResult OnGetScope()
+    {
+        using var client = new HttpClient();
+        client.BaseAddress = new Uri(FrontHandler.Server);
+        client.DefaultRequestHeaders.Accept.Clear();
+        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/Scope");
+        if (response.Result.IsSuccessStatusCode)
+        {
+            Task<double> schema = response.Result.Content.ReadFromJsonAsync<double>();
+            return new JsonResult(schema.Result);
+        }
+
+        return new JsonResult("EmptyScope");
+    }
+    
+    public IActionResult OnGetAttachment()
+    {
+        using var client = new HttpClient();
+        client.BaseAddress = new Uri(FrontHandler.Server);
+        client.DefaultRequestHeaders.Accept.Clear();
+        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/Attachment");
+        if (response.Result.IsSuccessStatusCode)
+        {
+            Task<string> schema = response.Result.Content.ReadFromJsonAsync<string>();
+            return new JsonResult(schema.Result);
+        }
+
+        return new JsonResult("EmptyAttachment");
+    }
+    
     #endregion
 
     #region Post

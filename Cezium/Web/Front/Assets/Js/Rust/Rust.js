@@ -198,6 +198,43 @@ function handleDataUpdate() {
             maxRandomizationXValue.innerHTML = maxRandomizationYScale.value;
         }
     });
+
+
+    $.ajax({
+        type: 'GET',
+        url: '/Rust?handler=Gun',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            const dataElement = document.getElementById(data);
+            dataElement.checked = true;
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '/Rust?handler=Scope',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            const dataElement = document.getElementById(data);
+            dataElement.checked = true;
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '/Rust?handler=Attachment',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            const dataElement = document.getElementById(data);
+            dataElement.checked = true;
+        }
+    });
 }
 
 
