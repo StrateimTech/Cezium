@@ -282,7 +282,7 @@ public class Rust : PageModel
         Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/Scope");
         if (response.Result.IsSuccessStatusCode)
         {
-            Task<double> schema = response.Result.Content.ReadFromJsonAsync<double>();
+            Task<string> schema = response.Result.Content.ReadFromJsonAsync<string>();
             return new JsonResult(schema.Result);
         }
 
