@@ -249,7 +249,7 @@ input[type="range"]:disabled::-moz-range-thumb {
     max-height: 40px;
     width: 160px;
     padding: 40px 0 0;
-    
+
     margin-top: 8px;
     
     box-sizing: border-box;
@@ -337,7 +337,7 @@ input[type="range"]:disabled::-moz-range-thumb {
 }
 
 .select-box-input + label > label:hover {
-    /*background-color: rgba(178, 143, 255, .4);*/
+    background-color: rgba(24, 24, 24, 1);
 }
 
 .select-box-input + label:hover:after {

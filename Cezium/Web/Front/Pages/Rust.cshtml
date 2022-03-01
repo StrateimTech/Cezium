@@ -14,6 +14,7 @@
     <title>Cezium - Rust</title>
     <meta name="description" content="Cezium rust settings page">
     <link rel="stylesheet" href="~/Web/Front/Assets/css/Rust/Rust.css">
+    <link rel="stylesheet" href="~/Web/Front/Assets/css/Rust/SelectBox.css">
     <script src="~/Web/Front/Assets/Js/Rust/Rust.js"></script>
 </head>
 <body onload="handleLoad()">
@@ -97,102 +98,102 @@
             WEAPON
         </div>
         <div>
-            <input id="Gun" class="select-box-input" type="checkbox">
-            <label for="Gun" class="select-box" tabindex="-1">
-                <input id="AssaultRifle" type="radio" checked>
+            <input id="GunSelect" class="select-box-input" type="checkbox">
+            <label for="GunSelect" class="select-box" tabindex="-1">
+                <input id="AssaultRifle" type="radio" name="GunSelect" checked>
                 <label for="AssaultRifle">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                         Assault Rifle
                     </div>
                 </label>
-                <input id="M249" type="radio">
+                <input id="M249" type="radio" name="GunSelect">
                 <label for="M249">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                         M249
                     </div>
                 </label>
-                <input id="LR300" type="radio">
+                <input id="LR300" type="radio" name="GunSelect">
                 <label for="LR300">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                         LR300
                     </div>
                 </label>
-                <input id="MP5" type="radio">
-                <label for="MP5">
+                <input id="Mp5" type="radio" name="GunSelect">
+                <label for="Mp5">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                         MP5
                     </div>
                 </label>
-                <input id="CUSTOM" type="radio">
-                <label for="CUSTOM">
+                <input id="Custom" type="radio" name="GunSelect">
+                <label for="Custom">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                         Custom
                     </div>
                 </label>
-                <input id="THOMPSON" type="radio">
-                <label for="THOMPSON">
+                <input id="Thompson" type="radio" name="GunSelect">
+                <label for="Thompson">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                         Thompson
                     </div>
                 </label>
             </label>
 
-            <input id="Scope" class="select-box-input" type="checkbox">
-            <label for="Scope" class="select-box" tabindex="-1">
-                <input id="NONE" type="radio" checked>
-                <label for="NONE">
+            <input id="ScopeSelect" class="select-box-input" type="checkbox">
+            <label for="ScopeSelect" class="select-box" tabindex="-1">
+                <input id="EmptyScope" type="radio" checked name="ScopeSelect">
+                <label for="EmptyScope">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                         Empty
                     </div>
                 </label>
-                <input id="SCOPE8X" type="radio">
-                <label for="SCOPE8X">
+                <input id="Scope8X" type="radio" name="ScopeSelect">
+                <label for="Scope8X">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                         8X Scope
                     </div>
                 </label>
-                <input id="SCOPE16X" type="radio">
-                <label for="SCOPE16X">
+                <input id="Scope16X" type="radio" name="ScopeSelect">
+                <label for="Scope16X">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                         16X Scope
                     </div>
                 </label>
-                <input id="HANDMADE" type="radio">
-                <label for="HANDMADE">
+                <input id="Handmade" type="radio" name="ScopeSelect">
+                <label for="Handmade">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                         Handmade Sight
                     </div>
                 </label>
-                <input id="HOLO" type="radio">
-                <label for="HOLO">
+                <input id="Holo" type="radio" name="ScopeSelect">
+                <label for="Holo">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                         Holo Sight
                     </div>
                 </label>
             </label>
 
-            <input id="Attachment" class="select-box-input select-box-input-attachment" type="checkbox">
-            <label for="Attachment" class="select-box" tabindex="-1">
-                <input id="NONE" type="radio" checked>
-                <label for="NONE">
+            <input id="AttachmentSelect" class="select-box-input" type="checkbox">
+            <label for="AttachmentSelect" class="select-box" tabindex="-1">
+                <input id="EmptyAttachment" type="radio" checked name="AttachmentSelect">
+                <label for="EmptyAttachment">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                         Empty
                     </div>
                 </label>
-                <input id="MUZZLEBOOST" type="radio">
-                <label for="MUZZLEBOOST">
+                <input id="MuzzleBoost" type="radio" name="AttachmentSelect">
+                <label for="MuzzleBoost">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                         Muzzle Boost
                     </div>
                 </label>
-                <input id="MUZZLEBRAKE" type="radio">
-                <label for="MUZZLEBRAKE">
+                <input id="MuzzleBrake" type="radio" name="AttachmentSelect">
+                <label for="MuzzleBrake">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                         Muzzle Brake
                     </div>
                 </label>
-                <input id="SILENCER" type="radio">
-                <label for="SILENCER">
+                <input id="Silencer" type="radio" name="AttachmentSelect">
+                <label for="Silencer">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                         Silencer
                     </div>
