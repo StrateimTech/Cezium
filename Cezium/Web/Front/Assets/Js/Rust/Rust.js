@@ -558,3 +558,42 @@ function handleRandomizationY() {
         data: JSON.stringify(data)
     });
 }
+
+function handleWeaponChange(weapon) {
+    const data = {"Value": weapon};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=Gun",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
+}
+
+function handleScopeChange(scope) {
+    const data = {"Value": scope};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=Scope",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
+}
+
+function handleAttachmentChange(attachment) {
+    const data = {"Value": attachment};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=Attachment",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
+}

@@ -3,6 +3,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Cezium.Rust;
+using Cezium.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -35,8 +37,13 @@ public class Rust : PageModel
         public int Item2 { get; set; }
     }
 
+    public class StringSchema
+    {
+        public string Value { get; set; }
+    }
+
     #region Get
-    
+
     public IActionResult OnGetState()
     {
         using var client = new HttpClient();
@@ -49,9 +56,10 @@ public class Rust : PageModel
             Task<bool> schema = response.Result.Content.ReadFromJsonAsync<bool>();
             return new JsonResult(schema.Result);
         }
+
         return null;
     }
-    
+
     public IActionResult OnGetDebug()
     {
         using var client = new HttpClient();
@@ -64,9 +72,10 @@ public class Rust : PageModel
             Task<bool> schema = response.Result.Content.ReadFromJsonAsync<bool>();
             return new JsonResult(schema.Result);
         }
+
         return null;
     }
-    
+
     public IActionResult OnGetFov()
     {
         using var client = new HttpClient();
@@ -79,9 +88,10 @@ public class Rust : PageModel
             Task<int> schema = response.Result.Content.ReadFromJsonAsync<int>();
             return new JsonResult(schema.Result);
         }
+
         return null;
     }
-    
+
     public IActionResult OnGetSensitivity()
     {
         using var client = new HttpClient();
@@ -94,9 +104,10 @@ public class Rust : PageModel
             Task<double> schema = response.Result.Content.ReadFromJsonAsync<double>();
             return new JsonResult(schema.Result);
         }
+
         return null;
     }
-    
+
     public IActionResult OnGetSmoothness()
     {
         using var client = new HttpClient();
@@ -109,9 +120,10 @@ public class Rust : PageModel
             Task<int> schema = response.Result.Content.ReadFromJsonAsync<int>();
             return new JsonResult(schema.Result);
         }
+
         return null;
     }
-    
+
     public IActionResult OnGetHorizontal()
     {
         using var client = new HttpClient();
@@ -124,9 +136,10 @@ public class Rust : PageModel
             Task<double> schema = response.Result.Content.ReadFromJsonAsync<double>();
             return new JsonResult(schema.Result);
         }
+
         return null;
     }
-    
+
     public IActionResult OnGetVertical()
     {
         using var client = new HttpClient();
@@ -139,9 +152,10 @@ public class Rust : PageModel
             Task<double> schema = response.Result.Content.ReadFromJsonAsync<double>();
             return new JsonResult(schema.Result);
         }
+
         return null;
     }
-    
+
     public IActionResult OnGetInfiniteAmmo()
     {
         using var client = new HttpClient();
@@ -154,9 +168,10 @@ public class Rust : PageModel
             Task<bool> schema = response.Result.Content.ReadFromJsonAsync<bool>();
             return new JsonResult(schema.Result);
         }
+
         return null;
     }
-    
+
     public IActionResult OnGetTapping()
     {
         using var client = new HttpClient();
@@ -169,9 +184,10 @@ public class Rust : PageModel
             Task<bool> schema = response.Result.Content.ReadFromJsonAsync<bool>();
             return new JsonResult(schema.Result);
         }
+
         return null;
     }
-    
+
     public IActionResult OnGetRandomization()
     {
         using var client = new HttpClient();
@@ -184,9 +200,10 @@ public class Rust : PageModel
             Task<bool> schema = response.Result.Content.ReadFromJsonAsync<bool>();
             return new JsonResult(schema.Result);
         }
+
         return null;
     }
-    
+
     public IActionResult OnGetReverseRandomization()
     {
         using var client = new HttpClient();
@@ -199,9 +216,10 @@ public class Rust : PageModel
             Task<bool> schema = response.Result.Content.ReadFromJsonAsync<bool>();
             return new JsonResult(schema.Result);
         }
+
         return null;
     }
-    
+
     public IActionResult OnGetRandomizationX()
     {
         using var client = new HttpClient();
@@ -217,9 +235,10 @@ public class Rust : PageModel
                 return new JsonResult(schema.Result);
             }
         }
+
         return null;
     }
-    
+
     public IActionResult OnGetRandomizationY()
     {
         using var client = new HttpClient();
@@ -235,6 +254,7 @@ public class Rust : PageModel
                 return new JsonResult(schema.Result);
             }
         }
+
         return null;
     }
 
@@ -353,6 +373,72 @@ public class Rust : PageModel
         var postTask = client.PostAsync(
             $"/api/settings/rust/RandomizationY?min={data.Item1}&max={data.Item2}",
             null);
+        postTask.Wait();
+    }
+
+    public void OnPostGun([FromBody] StringSchema data)
+    {
+        using var client = new HttpClient();
+        client.BaseAddress = new Uri(FrontHandler.Server);
+
+        Task<HttpResponseMessage> postTask;
+        if (data.Value.ToLower().Contains("empty"))
+        {
+            postTask = client.PostAsync(
+                "/api/settings/rust/Gun", null);
+        }
+        else
+        {
+            Enum.TryParse(data.Value, out RustSettings.Guns gun);
+            postTask = client.PostAsync(
+                $"/api/settings/rust/Gun?gun={(int) gun}",
+                null);
+        }
+
+        postTask.Wait();
+    }
+
+    public void OnPostScope([FromBody] StringSchema data)
+    {
+        using var client = new HttpClient();
+        client.BaseAddress = new Uri(FrontHandler.Server);
+
+        Task<HttpResponseMessage> postTask;
+        if (data.Value.ToLower().Contains("empty"))
+        {
+            postTask = client.PostAsync(
+                "/api/settings/rust/Scope", null);
+        }
+        else
+        {
+            Enum.TryParse(data.Value, out RustSettings.Scope scope);
+            postTask = client.PostAsync(
+                $"/api/settings/rust/Scope?scope={(int) scope}",
+                null);
+        }
+
+        postTask.Wait();
+    }
+
+    public void OnPostAttachment([FromBody] StringSchema data)
+    {
+        using var client = new HttpClient();
+        client.BaseAddress = new Uri(FrontHandler.Server);
+
+        Task<HttpResponseMessage> postTask;
+        if (data.Value.ToLower().Contains("empty"))
+        {
+            postTask = client.PostAsync(
+                "/api/settings/rust/Attachment", null);
+        }
+        else
+        {
+            Enum.TryParse(data.Value, out RustSettings.Attachment attachment);
+            postTask = client.PostAsync(
+                $"/api/settings/rust/Attachment?attachment={(int) attachment}",
+                null);
+        }
+
         postTask.Wait();
     }
 
