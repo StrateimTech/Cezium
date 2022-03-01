@@ -34,8 +34,8 @@ public class SettingsController : Controller
     public void SetSmoothness(int smoothness)
     {
         ApiHandler.RustHandler.Settings.Smoothness = smoothness;
-        ApiHandler.RustHandler.UpdateWeapon(ApiHandler.RustHandler.Settings.Gun,
-            ApiHandler.RustHandler.Settings.GunScope, ApiHandler.RustHandler.Settings.GunAttachment);
+        // ApiHandler.RustHandler.UpdateWeapon(ApiHandler.RustHandler.Settings.Gun,
+            // ApiHandler.RustHandler.Settings.GunScope, ApiHandler.RustHandler.Settings.GunAttachment);
     }
 
     [HttpGet("/api/settings/rust/Fov/")]
