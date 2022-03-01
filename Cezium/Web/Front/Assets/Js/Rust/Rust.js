@@ -1,6 +1,6 @@
 ﻿function handleLoad() {
     handleDataUpdate();
-    // setInterval(handleDataUpdate, 1000);
+    setInterval(handleDataUpdate, 5000);
 }
 
 function handleDataUpdate() {
