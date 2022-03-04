@@ -14,9 +14,6 @@ namespace Cezium
 {
     class Program
     {
-        private static readonly TimeZoneInfo TimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(
-            RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "America/Los_Angeles" : "Pacific Standard Time");
-
         static void Main(string[] args)
         {
             Console.Clear();
@@ -33,8 +30,8 @@ namespace Cezium
                     ConsoleUtils.WriteCentered(figgleLines[i]);
                 }
 
-                var dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo);
-                var formattedTime = dateTime.ToString("MM/dd/yyyy HH:mm:ss");
+                var dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local);
+                var formattedTime = dateTime.ToString("MM/dd/yy HH:mm:ss");
                 ConsoleUtils.WriteCentered($"> {formattedTime} <\n");
             }
             else
@@ -66,13 +63,22 @@ namespace Cezium
                 "/dev/hidg0");
 
             var rustHandler = new RustHandler(hidHandler);
-            new Thread(() => rustHandler.Start()).Start();
-            
+            new Thread(() => rustHandler.Start())
+            {
+                IsBackground = true
+            }.Start();
+
             var apiHandler = new ApiHandler(rustHandler, hidHandler);
-            new Thread(() => apiHandler.Start()).Start();
-            
+            new Thread(() => apiHandler.Start())
+            {
+                IsBackground = true
+            }.Start();
+
             var frontHandler = new FrontHandler();
-            new Thread(() => frontHandler.Start()).Start();
+            new Thread(() => frontHandler.Start())
+            {
+                IsBackground = true
+            }.Start();
 
             ConsoleUtils.WriteLine("Successfully started!");
 
@@ -86,6 +92,7 @@ namespace Cezium
                 Environment.Exit(0);
             };
 
+            ConsoleUtils.WriteLine("Press any key to continue & shutdown!");
             Console.ReadKey();
         }
     }

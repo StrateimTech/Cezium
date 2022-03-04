@@ -44,7 +44,7 @@ namespace Cezium.Rust
         {
             if (_hidHandler.HidMouseHandlers.Count <= 0)
             {
-                ConsoleUtils.WriteLine("Failed to find any mouses connected");
+                ConsoleUtils.WriteLine("Failed to find any mouses connected", true);
             }
 
             while (_state)
@@ -148,7 +148,7 @@ namespace Cezium.Rust
                         ConsoleUtils.WriteLine(
                             $"Timing: {timing}, Sleep: {sleep}, PixelControlTiming: {pixelControlTiming} \n");
                     }
-
+                    
                     for (int i = 0; i < smoothing; i++)
                     {
                         if((!_hidHandler.HidMouseHandlers[0].Mouse.LeftButton || !_hidHandler.HidMouseHandlers[0].Mouse.RightButton) && Settings.Tapping)
@@ -228,7 +228,7 @@ namespace Cezium.Rust
             return pixelTable;
         }
 
-        public void UpdateWeapon((RustSettings.Guns, RustSettings.BulletCount, RustSettings.FireRate) gun, double scope,
+        private void UpdateWeapon((RustSettings.Guns, RustSettings.BulletCount, RustSettings.FireRate) gun, double scope,
             (double, double) attachment)
         {
             List<Tuple<double, double>> angleTable = RustTables.AssaultRifle;

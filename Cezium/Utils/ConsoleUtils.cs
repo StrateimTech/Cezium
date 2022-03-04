@@ -4,8 +4,17 @@ namespace Cezium.Utils
 {
     public static class ConsoleUtils
     {
-        public static void WriteLine(string line)
-        {
+        public static void WriteLine(string line, bool showTime = false)
+        {            
+            if (showTime)
+            {
+                Console.Write($" > {line}");
+                var dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local);
+                var formattedTime = $"> {dateTime:MM/dd/yy HH:mm:ss} <";
+                Console.SetCursorPosition(Console.WindowWidth - formattedTime.Length, Console.CursorTop);
+                Console.WriteLine(formattedTime);
+                return;
+            }
             Console.WriteLine($" > {line}");
         }
 
