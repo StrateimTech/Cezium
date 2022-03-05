@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Cezium.Rust;
 using Cezium.Utils;
@@ -46,265 +47,94 @@ public class Rust : PageModel
 
     public IActionResult OnGetState()
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/State");
-        if (response.Result.IsSuccessStatusCode)
-        {
-            Task<bool> schema = response.Result.Content.ReadFromJsonAsync<bool>();
-            return new JsonResult(schema.Result);
-        }
-
-        return null;
+        return new JsonResult(FrontHandler.RustHandler.Settings.State);
     }
 
     public IActionResult OnGetDebug()
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/Debug");
-        if (response.Result.IsSuccessStatusCode)
-        {
-            Task<bool> schema = response.Result.Content.ReadFromJsonAsync<bool>();
-            return new JsonResult(schema.Result);
-        }
-
-        return null;
+        return new JsonResult(FrontHandler.RustHandler.Settings.DebugState);
     }
 
     public IActionResult OnGetFov()
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/Fov");
-        if (response.Result.IsSuccessStatusCode)
-        {
-            Task<int> schema = response.Result.Content.ReadFromJsonAsync<int>();
-            return new JsonResult(schema.Result);
-        }
-
-        return null;
+        return new JsonResult(FrontHandler.RustHandler.Settings.Fov);
     }
 
     public IActionResult OnGetSensitivity()
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/Sensitivity");
-        if (response.Result.IsSuccessStatusCode)
-        {
-            Task<double> schema = response.Result.Content.ReadFromJsonAsync<double>();
-            return new JsonResult(schema.Result);
-        }
-
-        return null;
+        return new JsonResult(FrontHandler.RustHandler.Settings.Sensitivity);
     }
 
     public IActionResult OnGetSmoothness()
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/Smoothness");
-        if (response.Result.IsSuccessStatusCode)
-        {
-            Task<int> schema = response.Result.Content.ReadFromJsonAsync<int>();
-            return new JsonResult(schema.Result);
-        }
-
-        return null;
+        return new JsonResult(FrontHandler.RustHandler.Settings.Smoothness);
     }
 
     public IActionResult OnGetHorizontal()
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/HorizontalModifier");
-        if (response.Result.IsSuccessStatusCode)
-        {
-            Task<double> schema = response.Result.Content.ReadFromJsonAsync<double>();
-            return new JsonResult(schema.Result);
-        }
-
-        return null;
+        return new JsonResult(FrontHandler.RustHandler.Settings.RecoilModifier.Item1);
     }
 
     public IActionResult OnGetVertical()
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/VerticalModifier");
-        if (response.Result.IsSuccessStatusCode)
-        {
-            Task<double> schema = response.Result.Content.ReadFromJsonAsync<double>();
-            return new JsonResult(schema.Result);
-        }
-
-        return null;
+        return new JsonResult(FrontHandler.RustHandler.Settings.RecoilModifier.Item2);
     }
 
     public IActionResult OnGetInfiniteAmmo()
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/InfiniteAmmo");
-        if (response.Result.IsSuccessStatusCode)
-        {
-            Task<bool> schema = response.Result.Content.ReadFromJsonAsync<bool>();
-            return new JsonResult(schema.Result);
-        }
-
-        return null;
+        return new JsonResult(FrontHandler.RustHandler.Settings.InfiniteAmmo);
     }
 
     public IActionResult OnGetTapping()
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/Tapping");
-        if (response.Result.IsSuccessStatusCode)
-        {
-            Task<bool> schema = response.Result.Content.ReadFromJsonAsync<bool>();
-            return new JsonResult(schema.Result);
-        }
-
-        return null;
+        return new JsonResult(FrontHandler.RustHandler.Settings.Tapping);
     }
 
     public IActionResult OnGetRandomization()
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/Randomization");
-        if (response.Result.IsSuccessStatusCode)
-        {
-            Task<bool> schema = response.Result.Content.ReadFromJsonAsync<bool>();
-            return new JsonResult(schema.Result);
-        }
-
-        return null;
+        return new JsonResult(FrontHandler.RustHandler.Settings.Randomization);
     }
 
     public IActionResult OnGetReverseRandomization()
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/ReverseRandomization");
-        if (response.Result.IsSuccessStatusCode)
-        {
-            Task<bool> schema = response.Result.Content.ReadFromJsonAsync<bool>();
-            return new JsonResult(schema.Result);
-        }
-
-        return null;
+        return new JsonResult(FrontHandler.RustHandler.Settings.ReverseRandomization);
     }
 
     public IActionResult OnGetRandomizationX()
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/RandomizationX");
-        if (response.Result.IsSuccessStatusCode)
-        {
-            Task<RandomizationSchema> schema = response.Result.Content.ReadFromJsonAsync<RandomizationSchema>();
-            if (schema.Result != null)
-            {
-                return new JsonResult(schema.Result);
-            }
-        }
-
-        return null;
+        return new JsonResult(JsonSerializer.Serialize(FrontHandler.RustHandler.Settings.RandomizationX));
     }
 
     public IActionResult OnGetRandomizationY()
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/RandomizationY");
-        if (response.Result.IsSuccessStatusCode)
-        {
-            Task<RandomizationSchema> schema = response.Result.Content.ReadFromJsonAsync<RandomizationSchema>();
-            if (schema.Result != null)
-            {
-                return new JsonResult(schema.Result);
-            }
-        }
-
-        return null;
+        return new JsonResult(JsonSerializer.Serialize(FrontHandler.RustHandler.Settings.RandomizationY));
     }
 
     public IActionResult OnGetGun()
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/Gun");
-        if (response.Result.IsSuccessStatusCode)
-        {
-            Task<string> schema = response.Result.Content.ReadFromJsonAsync<string>();
-            return new JsonResult(schema.Result);
-        }
-        return null;
+        return new JsonResult(FrontHandler.RustHandler.Settings.Gun.Item1.ToString());
     }
-    
+
     public IActionResult OnGetScope()
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/Scope");
-        if (response.Result.IsSuccessStatusCode)
+        if (FrontHandler.RustHandler.Settings.GunScope == null)
         {
-            Task<string> schema = response.Result.Content.ReadFromJsonAsync<string>();
-            return new JsonResult(schema.Result);
+            return new JsonResult("EmptyScope");
         }
 
-        return new JsonResult("EmptyScope");
+        return new JsonResult(FrontHandler.RustHandler.Settings.GunScope.ToString());
     }
-    
+
     public IActionResult OnGetAttachment()
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        Task<HttpResponseMessage> response = client.GetAsync("/api/settings/rust/Attachment");
-        if (response.Result.IsSuccessStatusCode)
+        if (FrontHandler.RustHandler.Settings.GunAttachment == null)
         {
-            Task<string> schema = response.Result.Content.ReadFromJsonAsync<string>();
-            return new JsonResult(schema.Result);
+            return new JsonResult("EmptyAttachment");
         }
 
-        return new JsonResult("EmptyAttachment");
+        return new JsonResult(FrontHandler.RustHandler.Settings.GunAttachment.ToString());
     }
-    
+
     #endregion
 
     #region Post

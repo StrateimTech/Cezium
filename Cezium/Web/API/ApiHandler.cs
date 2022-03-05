@@ -11,11 +11,13 @@ public class ApiHandler
     public static RustHandler RustHandler;
     public static HidHandler HidHandler;
     private readonly IHost _builder;
+    private static ushort[] _ports;
 
-    public ApiHandler(RustHandler rustHandler, HidHandler hidHandler)
+    public ApiHandler(ushort[] ports, RustHandler rustHandler, HidHandler hidHandler)
     {
         RustHandler = rustHandler;
         HidHandler = hidHandler;
+        _ports = ports;
         _builder = CreateHostBuilder().Build();
     }
 
@@ -34,7 +36,7 @@ public class ApiHandler
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.ConfigureLogging(_ => _.ClearProviders());
-                webBuilder.UseUrls("http://*:300;https://*:301");
+                webBuilder.UseUrls($"http://*:{_ports[0]};https://*:{_ports[1]}");
                 webBuilder.UseStartup<ApiStartup>();
             });
 }

@@ -68,13 +68,15 @@ namespace Cezium
                 IsBackground = true
             }.Start();
 
-            var apiHandler = new ApiHandler(rustHandler, hidHandler);
+            var apiPorts = new ushort[] {300, 301};
+            var apiHandler = new ApiHandler(apiPorts, rustHandler, hidHandler);
             new Thread(() => apiHandler.Start())
             {
                 IsBackground = true
             }.Start();
 
-            var frontHandler = new FrontHandler();
+            var frontPorts = new ushort[] {80, 443};
+            var frontHandler = new FrontHandler(frontPorts, rustHandler, hidHandler);
             new Thread(() => frontHandler.Start())
             {
                 IsBackground = true

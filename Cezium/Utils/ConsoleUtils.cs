@@ -10,7 +10,7 @@ namespace Cezium.Utils
             {
                 Console.Write($" > {line}");
                 var dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local);
-                var formattedTime = $"> {dateTime:MM/dd/yy HH:mm:ss} <";
+                var formattedTime = $"{dateTime:MM/dd/yy HH:mm:ss} <";
                 Console.SetCursorPosition(Console.WindowWidth - formattedTime.Length, Console.CursorTop);
                 Console.WriteLine(formattedTime);
                 return;

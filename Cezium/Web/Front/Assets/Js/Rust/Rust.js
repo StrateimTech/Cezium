@@ -1,6 +1,6 @@
 ﻿function handleLoad() {
     handleDataUpdate();
-    // setInterval(handleDataUpdate, 5000);
+    // setInterval(handleDataUpdate, 500);
 }
 
 function handleDataUpdate() {
@@ -160,13 +160,13 @@ function handleDataUpdate() {
             RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
         },
         success: function (data) {
-            let json = JSON.parse(JSON.stringify(data));
+            let json = JSON.parse(data);
 
             const minRandomizationXScale = document.getElementById("MinRandomizationXScale");
             const maxRandomizationXScale = document.getElementById("MaxRandomizationXScale");
 
-            minRandomizationXScale.value = json.item1;
-            maxRandomizationXScale.value = json.item2;
+            minRandomizationXScale.value = json.Item1;
+            maxRandomizationXScale.value = json.Item2;
 
             const minRandomizationXValue = document.getElementById("MinRandomizationXValue");
             minRandomizationXValue.innerHTML = minRandomizationXScale.value;
@@ -183,13 +183,13 @@ function handleDataUpdate() {
             RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
         },
         success: function (data) {
-            let json = JSON.parse(JSON.stringify(data));
-
+            let json = JSON.parse(data);
+            
             const minRandomizationYScale = document.getElementById("MinRandomizationYScale");
             const maxRandomizationYScale = document.getElementById("MaxRandomizationYScale");
 
-            minRandomizationYScale.value = json.item1;
-            maxRandomizationYScale.value = json.item2;
+            minRandomizationYScale.value = json.Item1;
+            maxRandomizationYScale.value = json.Item2;
 
             const minRandomizationYValue = document.getElementById("MinRandomizationYValue");
             minRandomizationYValue.innerHTML = minRandomizationYScale.value;

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.IO;
+using Cezium.Rust;
+using Cezium.Utils;
+using HID_API;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
@@ -12,8 +15,15 @@ public class FrontHandler
     private readonly IHost _builder;
     public static readonly string Server = "http://127.0.0.1:300/";
 
-    public FrontHandler()
+    public static RustHandler RustHandler;
+    public static HidHandler HidHandler;
+    private static ushort[] _ports;
+
+    public FrontHandler(ushort[] ports, RustHandler rustHandler, HidHandler hidHandler)
     {
+        RustHandler = rustHandler;
+        HidHandler = hidHandler;
+        _ports = ports;
         _builder = CreateHostBuilder().Build();
     }
 
@@ -34,7 +44,7 @@ public class FrontHandler
                 webBuilder.UseContentRoot(
                     $"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}Web{Path.DirectorySeparatorChar}Front");
                 webBuilder.ConfigureLogging(_ => _.ClearProviders());
-                webBuilder.UseUrls("http://*:80;https://*:443");
+                webBuilder.UseUrls($"http://*:{_ports[0]};https://*:{_ports[1]}");
                 webBuilder.UseStartup<FrontStartup>();
             });
 }

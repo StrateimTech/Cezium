@@ -18,7 +18,7 @@
 </head>
 <body onload="handleLoad()">
 
-<div> 
+<div>
 <div class="flex-container">
     <div style="height: 40px">
         <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
@@ -96,109 +96,111 @@
         <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
             WEAPON
         </div>
-        
+
         <div class="noselect">
-            <input id="GunSelect" class="select-box-input" type="checkbox">
-            <label for="GunSelect" class="select-box" tabindex="-1">
-                <input id="ASSAULT_RIFLE" type="radio" name="GunSelect" checked onchange="handleWeaponChange(this.id)">
-                <label for="ASSAULT_RIFLE">
-                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
-                        Assault Rifle
-                    </div>
+            <div class="select-box-flex-container">
+                <input id="GunSelect" class="select-box-input" type="checkbox">
+                <label for="GunSelect" class="select-box" tabindex="-1" style="margin-left: 1px">
+                    <input id="ASSAULT_RIFLE" type="radio" name="GunSelect" checked onchange="handleWeaponChange(this.id)">
+                    <label for="ASSAULT_RIFLE">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Assault Rifle
+                        </div>
+                    </label>
+                    <input id="M249" type="radio" name="GunSelect" onchange="handleWeaponChange(this.id)">
+                    <label for="M249">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            M249
+                        </div>
+                    </label>
+                    <input id="LR300" type="radio" name="GunSelect" onchange="handleWeaponChange(this.id)">
+                    <label for="LR300">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            LR300
+                        </div>
+                    </label>
+                    <input id="MP5" type="radio" name="GunSelect" onchange="handleWeaponChange(this.id)">
+                    <label for="MP5">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            MP5
+                        </div>
+                    </label>
+                    <input id="CUSTOM" type="radio" name="GunSelect" onchange="handleWeaponChange(this.id)">
+                    <label for="CUSTOM">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Custom
+                        </div>
+                    </label>
+                    <input id="THOMPSON" type="radio" name="GunSelect" onchange="handleWeaponChange(this.id)">
+                    <label for="THOMPSON">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Thompson
+                        </div>
+                    </label>
                 </label>
-                <input id="M249" type="radio" name="GunSelect" onchange="handleWeaponChange(this.id)">
-                <label for="M249">
-                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
-                        M249
-                    </div>
-                </label>
-                <input id="LR300" type="radio" name="GunSelect" onchange="handleWeaponChange(this.id)">
-                <label for="LR300">
-                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
-                        LR300
-                    </div>
-                </label>
-                <input id="MP5" type="radio" name="GunSelect" onchange="handleWeaponChange(this.id)">
-                <label for="MP5">
-                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
-                        MP5
-                    </div>
-                </label>
-                <input id="CUSTOM" type="radio" name="GunSelect" onchange="handleWeaponChange(this.id)">
-                <label for="CUSTOM">
-                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
-                        Custom
-                    </div>
-                </label>
-                <input id="THOMPSON" type="radio" name="GunSelect" onchange="handleWeaponChange(this.id)">
-                <label for="THOMPSON">
-                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
-                        Thompson
-                    </div>
-                </label>
-            </label>
 
-            <input id="ScopeSelect" class="select-box-input select-box-input-scope" type="checkbox">
-            <label for="ScopeSelect" class="select-box" tabindex="-1">
-                <input id="EmptyScope" type="radio" checked name="ScopeSelect" onchange="handleScopeChange(this.id)">
-                <label for="EmptyScope">
-                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
-                        Empty
-                    </div>
+                <input id="ScopeSelect" class="select-box-input select-box-input-scope" type="checkbox">
+                <label for="ScopeSelect" class="select-box" tabindex="-1">
+                    <input id="EmptyScope" type="radio" checked name="ScopeSelect" onchange="handleScopeChange(this.id)">
+                    <label for="EmptyScope">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Empty
+                        </div>
+                    </label>
+                    <input id="Scope8X" type="radio" name="ScopeSelect" onchange="handleScopeChange(this.id)">
+                    <label for="Scope8X">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            8X Scope
+                        </div>
+                    </label>
+                    <input id="Scope16X" type="radio" name="ScopeSelect" onchange="handleScopeChange(this.id)">
+                    <label for="Scope16X">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            16X Scope
+                        </div>
+                    </label>
+                    <input id="Handmade" type="radio" name="ScopeSelect" onchange="handleScopeChange(this.id)">
+                    <label for="Handmade">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Handmade Sight
+                        </div>
+                    </label>
+                    <input id="Holo" type="radio" name="ScopeSelect" onchange="handleScopeChange(this.id)">
+                    <label for="Holo">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Holo Sight
+                        </div>
+                    </label>
                 </label>
-                <input id="Scope8X" type="radio" name="ScopeSelect" onchange="handleScopeChange(this.id)">
-                <label for="Scope8X">
-                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
-                        8X Scope
-                    </div>
+                
+                <input id="AttachmentSelect" class="select-box-input select-box-input-attachment" type="checkbox">
+                <label for="AttachmentSelect" class="select-box" tabindex="-1" style="margin-right: 1px">
+                    <input id="EmptyAttachment" type="radio" checked name="AttachmentSelect" onchange="handleAttachmentChange(this.id)">
+                    <label for="EmptyAttachment">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Empty
+                        </div>
+                    </label>
+                    <input id="MuzzleBoost" type="radio" name="AttachmentSelect" onchange="handleAttachmentChange(this.id)">
+                    <label for="MuzzleBoost">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Muzzle Boost
+                        </div>
+                    </label>
+                    <input id="MuzzleBrake" type="radio" name="AttachmentSelect" onchange="handleAttachmentChange(this.id)">
+                    <label for="MuzzleBrake">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Muzzle Brake
+                        </div>
+                    </label>
+                    <input id="Silencer" type="radio" name="AttachmentSelect" onchange="handleAttachmentChange(this.id)">
+                    <label for="Silencer">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Silencer
+                        </div>
+                    </label>
                 </label>
-                <input id="Scope16X" type="radio" name="ScopeSelect" onchange="handleScopeChange(this.id)">
-                <label for="Scope16X">
-                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
-                        16X Scope
-                    </div>
-                </label>
-                <input id="Handmade" type="radio" name="ScopeSelect" onchange="handleScopeChange(this.id)">
-                <label for="Handmade">
-                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
-                        Handmade Sight
-                    </div>
-                </label>
-                <input id="Holo" type="radio" name="ScopeSelect" onchange="handleScopeChange(this.id)">
-                <label for="Holo">
-                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
-                        Holo Sight
-                    </div>
-                </label>
-            </label>
-
-            <input id="AttachmentSelect" class="select-box-input select-box-input-attachment" type="checkbox">
-            <label for="AttachmentSelect" class="select-box" tabindex="-1">
-                <input id="EmptyAttachment" type="radio" checked name="AttachmentSelect" onchange="handleAttachmentChange(this.id)">
-                <label for="EmptyAttachment">
-                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
-                        Empty
-                    </div>
-                </label>
-                <input id="MuzzleBoost" type="radio" name="AttachmentSelect" onchange="handleAttachmentChange(this.id)">
-                <label for="MuzzleBoost">
-                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
-                        Muzzle Boost
-                    </div>
-                </label>
-                <input id="MuzzleBrake" type="radio" name="AttachmentSelect" onchange="handleAttachmentChange(this.id)">
-                <label for="MuzzleBrake">
-                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
-                        Muzzle Brake
-                    </div>
-                </label>
-                <input id="Silencer" type="radio" name="AttachmentSelect" onchange="handleAttachmentChange(this.id)">
-                <label for="Silencer">
-                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
-                        Silencer
-                    </div>
-                </label>
-            </label>
+            </div>
         </div>
 
     </div>
