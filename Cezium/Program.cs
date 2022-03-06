@@ -14,6 +14,9 @@ namespace Cezium
 {
     class Program
     {
+        public static readonly TimeZoneInfo TimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(
+            RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "America/Los_Angeles" : "Pacific Standard Time");
+        
         static void Main(string[] args)
         {
             Console.Clear();
@@ -30,7 +33,7 @@ namespace Cezium
                     ConsoleUtils.WriteCentered(figgleLines[i]);
                 }
 
-                var dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local);
+                var dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo);
                 var formattedTime = dateTime.ToString("MM/dd/yy HH:mm:ss");
                 ConsoleUtils.WriteCentered($"> {formattedTime} <\n");
             }
@@ -105,7 +108,7 @@ namespace Cezium
                 Environment.Exit(0);
             };
 
-            ConsoleUtils.WriteLine("Press any key to continue & shutdown!");
+            ConsoleUtils.WriteLine("Press Ctrl+C to continue & shutdown!");
             Console.ReadKey();
         }
     }
