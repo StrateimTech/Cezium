@@ -68,15 +68,27 @@ namespace Cezium
                 IsBackground = true
             }.Start();
 
-            var apiPorts = new ushort[] {300, 301};
-            var apiHandler = new ApiHandler(apiPorts, rustHandler, hidHandler);
-            new Thread(() => apiHandler.Start())
+            if (args.Length >= 1)
             {
-                IsBackground = true
-            }.Start();
+                foreach (var arg in args)
+                {
+                    if (arg.Equals("--api", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var apiPorts = new ushort[] {300, 301};
+                        var apiHandler = new ApiHandler(apiPorts, rustHandler, hidHandler);
+                        ConsoleUtils.WriteLine($"Starting WebAPI on port(s) ({string.Join(", ", apiPorts)})");
+                        new Thread(() => apiHandler.Start())
+                        {
+                            IsBackground = true
+                        }.Start();
+                        break;
+                    }
+                }
+            }
 
             var frontPorts = new ushort[] {80, 443};
             var frontHandler = new FrontHandler(frontPorts, rustHandler, hidHandler);
+            ConsoleUtils.WriteLine($"Starting WebServer on port(s) ({string.Join(", ", frontPorts)})");
             new Thread(() => frontHandler.Start())
             {
                 IsBackground = true
@@ -89,7 +101,6 @@ namespace Cezium
                 ConsoleUtils.WriteLine("Shutting down...");
                 hidHandler.Stop();
                 rustHandler.Stop();
-                apiHandler.Stop();
                 frontHandler.Stop();
                 Environment.Exit(0);
             };
