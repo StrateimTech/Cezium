@@ -141,182 +141,125 @@ public class Rust : PageModel
 
     public void OnPostState([FromBody] BoolSchema data)
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        var postTask = client.PostAsync($"/api/settings/rust/State?state={data.Value}", null);
-        postTask.Wait();
+        FrontHandler.RustHandler.Settings.State = data.Value;
     }
 
     public void OnPostDebug([FromBody] BoolSchema data)
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        var postTask = client.PostAsync($"/api/settings/rust/Debug?debug={data.Value}", null);
-        postTask.Wait();
+        FrontHandler.RustHandler.Settings.DebugState = data.Value;
     }
 
     public void OnPostInfiniteAmmo([FromBody] BoolSchema data)
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        var postTask = client.PostAsync($"/api/settings/rust/InfiniteAmmo?infiniteAmmo={data.Value}", null);
-        postTask.Wait();
+        FrontHandler.RustHandler.Settings.InfiniteAmmo = data.Value;
     }
 
     public void OnPostTapping([FromBody] BoolSchema data)
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        var postTask = client.PostAsync($"/api/settings/rust/Tapping?tapping={data.Value}", null);
-        postTask.Wait();
+        FrontHandler.RustHandler.Settings.Tapping = data.Value;
     }
 
     public void OnPostRandomization([FromBody] BoolSchema data)
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        var postTask = client.PostAsync($"/api/settings/rust/Randomization?randomization={data.Value}", null);
-        postTask.Wait();
+        FrontHandler.RustHandler.Settings.Randomization = data.Value;
     }
 
     public void OnPostReverseRandomization([FromBody] BoolSchema data)
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        var postTask = client.PostAsync($"/api/settings/rust/ReverseRandomization?reverseRandomization={data.Value}",
-            null);
-        postTask.Wait();
+        FrontHandler.RustHandler.Settings.ReverseRandomization = data.Value;
     }
 
     public void OnPostFov([FromBody] IntSchema data)
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        var postTask = client.PostAsync($"/api/settings/rust/Fov?fov={data.Value}",
-            null);
-        postTask.Wait();
+        FrontHandler.RustHandler.Settings.Fov = data.Value;
+        FrontHandler.RustHandler.UpdateWeapon(FrontHandler.RustHandler.Settings.Gun,
+            FrontHandler.RustHandler.Settings.GunScope, FrontHandler.RustHandler.Settings.GunAttachment);
     }
 
     public void OnPostSensitivity([FromBody] DoubleSchema data)
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        var postTask = client.PostAsync($"/api/settings/rust/Sensitivity?sensitivity={data.Value}",
-            null);
-        postTask.Wait();
+        FrontHandler.RustHandler.Settings.Sensitivity = data.Value;
+        FrontHandler.RustHandler.UpdateWeapon(FrontHandler.RustHandler.Settings.Gun,
+            FrontHandler.RustHandler.Settings.GunScope, FrontHandler.RustHandler.Settings.GunAttachment);
     }
 
     public void OnPostSmoothness([FromBody] IntSchema data)
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        var postTask = client.PostAsync($"/api/settings/rust/Smoothness?smoothness={data.Value}",
-            null);
-        postTask.Wait();
+        FrontHandler.RustHandler.Settings.Smoothness = data.Value;
     }
 
     public void OnPostHorizontal([FromBody] DoubleSchema data)
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        var postTask = client.PostAsync($"/api/settings/rust/HorizontalModifier?x={data.Value}",
-            null);
-        postTask.Wait();
+        FrontHandler.RustHandler.Settings.RecoilModifier =
+            new Tuple<double, double>(data.Value, FrontHandler.RustHandler.Settings.RecoilModifier.Item2);
     }
 
     public void OnPostVertical([FromBody] DoubleSchema data)
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        var postTask = client.PostAsync($"/api/settings/rust/VerticalModifier?y={data.Value}",
-            null);
-        postTask.Wait();
+        FrontHandler.RustHandler.Settings.RecoilModifier =
+            new Tuple<double, double>(FrontHandler.RustHandler.Settings.RecoilModifier.Item1, data.Value);
     }
 
     public void OnPostRandomizationX([FromBody] RandomizationSchema data)
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        var postTask = client.PostAsync(
-            $"/api/settings/rust/RandomizationX?min={data.Item1}&max={data.Item2}",
-            null);
-        postTask.Wait();
+        FrontHandler.RustHandler.Settings.RandomizationX = new Tuple<int, int>(data.Item1, data.Item2);
     }
 
     public void OnPostRandomizationY([FromBody] RandomizationSchema data)
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-        var postTask = client.PostAsync(
-            $"/api/settings/rust/RandomizationY?min={data.Item1}&max={data.Item2}",
-            null);
-        postTask.Wait();
+        FrontHandler.RustHandler.Settings.RandomizationY = new Tuple<int, int>(data.Item1, data.Item2);
     }
 
     public void OnPostGun([FromBody] StringSchema data)
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-
-        Task<HttpResponseMessage> postTask;
-        if (data.Value.ToLower().Contains("empty"))
+        Enum.TryParse(data.Value, out RustSettings.Guns gun);
+        var bulletCount = RustSettings.BulletCount.ASSAULT_RIFLE;
+        if (Enum.TryParse(gun.ToString(), true, out RustSettings.BulletCount bulletCountEnum))
         {
-            postTask = client.PostAsync(
-                "/api/settings/rust/Gun", null);
-        }
-        else
-        {
-            Enum.TryParse(data.Value, out RustSettings.Guns gun);
-            postTask = client.PostAsync(
-                $"/api/settings/rust/Gun?gun={(int) gun}",
-                null);
+            bulletCount = bulletCountEnum;
         }
 
-        postTask.Wait();
+        var fireRate = RustSettings.FireRate.ASSAULT_RIFLE;
+        if (Enum.TryParse(gun.ToString(), true, out RustSettings.FireRate fireRateEnum))
+        {
+            fireRate = fireRateEnum;
+        }
+
+        FrontHandler.RustHandler.Settings.Gun = new(gun, bulletCount, fireRate);
+        FrontHandler.RustHandler.UpdateWeapon(FrontHandler.RustHandler.Settings.Gun,
+            FrontHandler.RustHandler.Settings.GunScope, FrontHandler.RustHandler.Settings.GunAttachment);
     }
 
     public void OnPostScope([FromBody] StringSchema data)
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-
-        Task<HttpResponseMessage> postTask;
         if (data.Value.ToLower().Contains("empty"))
         {
-            postTask = client.PostAsync(
-                "/api/settings/rust/Scope", null);
+            FrontHandler.RustHandler.Settings.GunScope = null;
         }
         else
         {
             Enum.TryParse(data.Value, out RustSettings.Scope scope);
-            postTask = client.PostAsync(
-                $"/api/settings/rust/Scope?scope={(int) scope}",
-                null);
+            FrontHandler.RustHandler.Settings.GunScope = scope;
         }
 
-        postTask.Wait();
+        FrontHandler.RustHandler.UpdateWeapon(FrontHandler.RustHandler.Settings.Gun,
+            FrontHandler.RustHandler.Settings.GunScope, FrontHandler.RustHandler.Settings.GunAttachment);
     }
 
     public void OnPostAttachment([FromBody] StringSchema data)
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(FrontHandler.Server);
-
-        Task<HttpResponseMessage> postTask;
         if (data.Value.ToLower().Contains("empty"))
         {
-            postTask = client.PostAsync(
-                "/api/settings/rust/Attachment", null);
+            FrontHandler.RustHandler.Settings.GunAttachment = null;
         }
         else
         {
             Enum.TryParse(data.Value, out RustSettings.Attachment attachment);
-            postTask = client.PostAsync(
-                $"/api/settings/rust/Attachment?attachment={(int) attachment}",
-                null);
+            FrontHandler.RustHandler.Settings.GunAttachment = attachment;
         }
 
-        postTask.Wait();
+        FrontHandler.RustHandler.UpdateWeapon(FrontHandler.RustHandler.Settings.Gun,
+            FrontHandler.RustHandler.Settings.GunScope, FrontHandler.RustHandler.Settings.GunAttachment);
     }
 
     #endregion
