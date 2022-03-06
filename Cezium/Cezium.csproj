@@ -26,8 +26,4 @@
         <HintPath>..\..\HID-API\HID-API\bin\Debug\net6.0\HID-API.dll</HintPath>
       </Reference>
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Web\Front\Assets\Images" />
-    </ItemGroup>
 </Project>

@@ -1,26 +1,35 @@
 ﻿function openNav() {
-    if(document.getElementById("side-navbar").style.width === "250px") {
-        document.getElementById("side-navbar").style.width = "48px";
-        document.getElementById("main").style.marginLeft = "48px";
+    const sideNavbar = document.getElementById("side-navbar");
+    const main = document.getElementById("main");
 
-        document.getElementById("side-nav-expanded-content").style.visibility = "hidden";
-        document.getElementById("side-nav-expanded-content").style.opacity = "0";
+    const sideNavExpandedContent = document.getElementById("side-nav-expanded-content");
 
-        document.getElementById("hamburger-nav-button-text").style.visibility = "hidden";
-        document.getElementById("hamburger-nav-button-text").style.opacity = "0";
+    const hamburgerNavButtonText = document.getElementById("hamburger-nav-button-text");
 
-        document.getElementById("side-nav-condensed").style.display = "block";
+    const sideNavCondensed = document.getElementById("side-nav-condensed");
+
+    if(sideNavbar.style.width === "250px") {
+        sideNavbar.style.width = "48px";
+        main.style.marginLeft = "48px";
+
+        sideNavExpandedContent.style.visibility = "hidden";
+        sideNavExpandedContent.style.opacity = "0";
+
+        hamburgerNavButtonText.style.visibility = "hidden";
+        hamburgerNavButtonText.style.opacity = "0";
+
+        sideNavCondensed.style.display = "block";
     } else {
-        document.getElementById("side-navbar").style.width = "250px";
-        document.getElementById("main").style.marginLeft = "250px";
+        sideNavbar.style.width = "250px";
+        main.style.marginLeft = "250px";
 
-        document.getElementById("side-nav-expanded-content").style.height = "100%";
-        document.getElementById("side-nav-expanded-content").style.visibility = "visible";
-        document.getElementById("side-nav-expanded-content").style.opacity = "1";
+        sideNavExpandedContent.style.height = "100%";
+        sideNavExpandedContent.style.visibility = "visible";
+        sideNavExpandedContent.style.opacity = "1";
 
-        document.getElementById("hamburger-nav-button-text").style.visibility = "visible";
-        document.getElementById("hamburger-nav-button-text").style.opacity = "1";
+        hamburgerNavButtonText.style.visibility = "visible";
+        hamburgerNavButtonText.style.opacity = "1";
 
-        document.getElementById("side-nav-condensed").style.display = "none";
+        sideNavCondensed.style.display = "none";
     }
 }

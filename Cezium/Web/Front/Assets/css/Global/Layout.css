@@ -97,7 +97,6 @@
     content: "";
     display: block;
     border-bottom: 1px solid #CCC;
-    padding-top: .5rem;
 }
 
 .hamburger-nav-button:hover {
@@ -111,10 +110,6 @@
     opacity: 0;
     margin: 0 0 0 calc(25% - 20px);
     transition: 0.3s ease-in-out;
-}
-
-.hamburger-nav-button:hover .hamburger-nav-button-text {
-    color: #bfbfbf;
 }
 
 .noselect {

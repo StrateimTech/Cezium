@@ -321,7 +321,6 @@ input[type="range"]:disabled::-moz-range-thumb {
 }
 
 .select-box > input:checked + label:hover {
-    background-color: #fff;
     cursor: default;
 }
 
@@ -348,8 +347,6 @@ input[type="range"]:disabled::-moz-range-thumb {
 
 .select-box-input + label:after {
     width: 100%;
-    right: 0;
-    margin-right: 10px;
     background-position-x: left;
     background-position-y: center;
 }
