@@ -79,10 +79,15 @@ public class Rust : PageModel
     {
         return new JsonResult(FrontHandler.RustHandler.Settings.InfiniteAmmo);
     }
-
+    
     public IActionResult OnGetTapping()
     {
         return new JsonResult(FrontHandler.RustHandler.Settings.Tapping);
+    }
+    
+    public IActionResult OnGetAdjustCompensation()
+    {
+        return new JsonResult(FrontHandler.RustHandler.Settings.AdjustCompensation);
     }
 
     public IActionResult OnGetRandomization()
@@ -152,6 +157,11 @@ public class Rust : PageModel
     public void OnPostTapping([FromBody] BoolSchema data)
     {
         FrontHandler.RustHandler.Settings.Tapping = data.Value;
+    }
+    
+    public void OnPostAdjustCompensation([FromBody] BoolSchema data)
+    {
+        FrontHandler.RustHandler.Settings.AdjustCompensation = data.Value;
     }
 
     public void OnPostRandomization([FromBody] BoolSchema data)

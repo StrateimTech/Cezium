@@ -172,7 +172,7 @@
                         </div>
                     </label>
                 </label>
-                
+
                 <input id="AttachmentSelect" class="select-box-input select-box-input-attachment" type="checkbox">
                 <label for="AttachmentSelect" class="select-box" tabindex="-1" style="margin-right: 1px">
                     <input id="EmptyAttachment" type="radio" checked name="AttachmentSelect" onchange="handleAttachmentChange(this.id)">
@@ -208,7 +208,7 @@
         <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative; height: 0px;">
             AMMO
         </div>
-        
+
         <div class="noselect" style="margin-top: 10px;">
             <div style="display: inline-block; margin-right: 8px;">
                 <label class="switch" for="InfiniteAmmo" style="display: inline-block">
@@ -227,6 +227,16 @@
                 </label>
                 <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
                     Tapping
+                </div>
+            </div>
+
+            <div style="display: inline-block; margin-right: 8px;">
+                <label class="switch" for="AdjustCompensation" style="display: inline-block">
+                    <input type="checkbox" id="AdjustCompensation" onclick='handleAdjustCompensation(this);'/>
+                    <div class="slider round"></div>
+                </label>
+                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
+                    AdjustCompensation
                 </div>
             </div>
         </div>

@@ -148,20 +148,48 @@ namespace Cezium.Rust
                         ConsoleUtils.WriteLine(
                             $"Timing: {timing}, Sleep: {sleep}, PixelControlTiming: {pixelControlTiming} \n");
                     }
-                    
+
+                    double totalAdjustX = 0;
+                    double totalAdjustY = 0;
+
                     for (int i = 0; i < smoothing; i++)
                     {
-                        if((!_hidHandler.HidMouseHandlers[0].Mouse.LeftButton || !_hidHandler.HidMouseHandlers[0].Mouse.RightButton) && Settings.Tapping)
+                        if ((!_hidHandler.HidMouseHandlers[0].Mouse.LeftButton ||
+                             !_hidHandler.HidMouseHandlers[0].Mouse.RightButton) && Settings.Tapping)
                             continue;
+                        var intX = Convert.ToInt16(gunPixelX / smoothing);
+                        var intY = Convert.ToInt16(gunPixelY / smoothing);
+                        totalAdjustX = (gunPixelX / smoothing) - intX;
+                        totalAdjustY = (gunPixelY / smoothing) - intY;
+
                         _hidHandler.WriteMouseReport(_hidHandler.HidMouseHandlers[0].Mouse with
                         {
-                            X = Convert.ToInt16(gunPixelX / smoothing),
-                            Y = Convert.ToInt16(gunPixelY / smoothing),
+                            X = intX,
+                            Y = intY,
                             Wheel = 0
                         });
 
                         var stopwatch = Stopwatch.StartNew();
                         while (stopwatch.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= sleep * 1000) ;
+                    }
+
+                    if (Settings.AdjustCompensation)
+                    {
+                        var adjustedX = Convert.ToInt16(totalAdjustX * smoothing);
+                        var adjustedY = Convert.ToInt16(totalAdjustY * smoothing);
+
+                        if (Settings.DebugState)
+                        {
+                            ConsoleUtils.WriteLine($"TotalX: {totalAdjustX} TotalY: {totalAdjustY}");
+                            ConsoleUtils.WriteLine($"AdjustedX: {adjustedX} AdjustedY: {adjustedY}\n");
+                        }
+
+                        _hidHandler.WriteMouseReport(_hidHandler.HidMouseHandlers[0].Mouse with
+                        {
+                            X = adjustedX,
+                            Y = adjustedY,
+                            Wheel = 0
+                        });
                     }
 
                     var stopwatch2 = Stopwatch.StartNew();
@@ -228,7 +256,8 @@ namespace Cezium.Rust
             return pixelTable;
         }
 
-        private void UpdateWeapon((RustSettings.Guns, RustSettings.BulletCount, RustSettings.FireRate) gun, double scope,
+        private void UpdateWeapon((RustSettings.Guns, RustSettings.BulletCount, RustSettings.FireRate) gun,
+            double scope,
             (double, double) attachment)
         {
             List<Tuple<double, double>> angleTable = RustTables.AssaultRifle;

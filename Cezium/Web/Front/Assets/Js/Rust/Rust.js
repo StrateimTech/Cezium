@@ -136,6 +136,18 @@ function handleDataUpdate() {
 
     $.ajax({
         type: 'GET',
+        url: '/Rust?handler=AdjustCompensation',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            const adjustCompensation = document.getElementById("AdjustCompensation");
+            adjustCompensation.checked = data;
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
         url: '/Rust?handler=Randomization',
         headers: {
             RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
@@ -259,6 +271,7 @@ function handleRustState(rustState, ignore) {
 
     const infiniteAmmo = document.getElementById("InfiniteAmmo");
     const tapping = document.getElementById("Tapping");
+    const adjustCompensation = document.getElementById("AdjustCompensation");
 
     const randomization = document.getElementById("Randomization");
 
@@ -285,6 +298,7 @@ function handleRustState(rustState, ignore) {
 
         infiniteAmmo.disabled = false;
         tapping.disabled = false;
+        adjustCompensation.disabled = false;
 
         randomization.disabled = false;
 
@@ -312,6 +326,7 @@ function handleRustState(rustState, ignore) {
 
         infiniteAmmo.disabled = true;
         tapping.disabled = true;
+        adjustCompensation.disabled = true;
 
         randomization.disabled = true;
         
@@ -461,6 +476,19 @@ function handleTapping(tapping) {
     $.ajax({
         type: "POST",
         url: "/Rust?handler=Tapping",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
+}
+
+function handleAdjustCompensation(adjustCompensation) {
+    const data = {"Value": adjustCompensation.checked};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=AdjustCompensation",
         contentType: "application/json; charset=utf-8",
         headers: {
             RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
