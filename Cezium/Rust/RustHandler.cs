@@ -23,7 +23,7 @@ namespace Cezium.Rust
         private readonly Stopwatch _recoilWatch = new();
 
         /// <summary>
-        /// <param name="table"> 1 x, 2 y, 3 timing
+        /// <param name="table"> 1 x, 2 y, 3 timing</param>
         /// <param name="scope">the gun's scope multiplier applied to when calculating the gun's pixel table</param>
         /// <param name="attachment">the gun's attachment (multiplier, and timings) applied to when calculating the gun's pixel table and delays between shots</param>
         /// </summary>
@@ -92,12 +92,20 @@ namespace Cezium.Rust
 
                     var gunPixelX = pixelXTable * _weapon.scope * _weapon.attachment.Item1;
                     var gunPixelY = pixelYTable * _weapon.scope * _weapon.attachment.Item1;
-                    
+
+                    var smoothing = Settings.Smoothness;
+
+                    if (Settings.DebugState)
+                    {
+                        ConsoleUtils.WriteLine(
+                            $"Bullet: {_bullet}, Smoothing: {smoothing}, X: {gunPixelX}, Y: {gunPixelY}");
+                    }
+
                     if (Settings.ReverseRandomization && Settings.Randomization && _reverseRandom)
                     {
                         var invertedLastX = _lastRandomization.Item1 * -1;
                         var invertedLastY = _lastRandomization.Item2 * -1;
-                        
+
                         if (Settings.DebugState)
                         {
                             ConsoleUtils.WriteLine(
@@ -108,14 +116,14 @@ namespace Cezium.Rust
                         gunPixelY += invertedLastY;
                         _reverseRandom = false;
                     }
-                    
+
                     if (Settings.Randomization)
                     {
                         var xRandom = Settings.RandomizationX.Item2 != 0
-                            ? _random.Next(Settings.RandomizationX.Item1, Settings.RandomizationX.Item2+1)
+                            ? _random.Next(Settings.RandomizationX.Item1, Settings.RandomizationX.Item2 + 1)
                             : 0;
                         var yRandom = Settings.RandomizationY.Item2 != 0
-                            ? _random.Next(Settings.RandomizationY.Item1, Settings.RandomizationY.Item2+1)
+                            ? _random.Next(Settings.RandomizationY.Item1, Settings.RandomizationY.Item2 + 1)
                             : 0;
 
                         var xBool = _random.Next() > (Int32.MaxValue / 2);
@@ -137,7 +145,6 @@ namespace Cezium.Rust
                     }
 
                     var delay = 60000.0 / (int) Settings.Gun.Item3;
-                    var smoothing = Settings.Smoothness;
 
                     var timing = delay - pixelControlTiming;
                     if (Settings.Randomization)
@@ -161,24 +168,47 @@ namespace Cezium.Rust
                     if (Settings.DebugState)
                     {
                         ConsoleUtils.WriteLine(
-                            $"Bullet: {_bullet}, Smoothing: {smoothing}, X: {gunPixelX}, Y: {gunPixelY}");
-                        ConsoleUtils.WriteLine(
                             $"Timing: {timing}, Sleep: {sleep}, PixelControlTiming: {pixelControlTiming} \n");
                     }
 
-                    double totalAdjustX = 0;
-                    double totalAdjustY = 0;
+                    double totalLossAdjustX = 0;
+                    double totalLossAdjustY = 0;
 
                     for (int i = 0; i < smoothing; i++)
                     {
                         if ((!_hidHandler.HidMouseHandlers[0].Mouse.LeftButton ||
                              !_hidHandler.HidMouseHandlers[0].Mouse.RightButton) && Settings.Tapping)
-                            continue;
+                        {
+                            if (Settings.DebugState)
+                            {
+                                ConsoleUtils.WriteLine(
+                                    $"Tapping: {i}, CompensatedX: {gunPixelX / smoothing * i}, CompensatedY: {gunPixelY / smoothing * i}");
+                            }
+
+                            if (_bullet <= 0)
+                            {
+                                for (int j = 0; j < i; j++)
+                                {
+                                    _hidHandler.WriteMouseReport(_hidHandler.HidMouseHandlers[0].Mouse with
+                                    {
+                                        X = Convert.ToInt16(gunPixelX / smoothing * -1),
+                                        Y = Convert.ToInt16(gunPixelY / smoothing * -1),
+                                        Wheel = 0
+                                    });
+
+                                    var stopwatch3 = Stopwatch.StartNew();
+                                    while (stopwatch3.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= sleep * 1000) ;
+                                }
+                            }
+
+                            break;
+                        }
+
                         var intX = Convert.ToInt16(gunPixelX / smoothing);
                         var intY = Convert.ToInt16(gunPixelY / smoothing);
-                        
-                        totalAdjustX = gunPixelX / smoothing - intX;
-                        totalAdjustY = gunPixelY / smoothing - intY;
+
+                        totalLossAdjustX = gunPixelX / smoothing - intX;
+                        totalLossAdjustY = gunPixelY / smoothing - intY;
 
                         _hidHandler.WriteMouseReport(_hidHandler.HidMouseHandlers[0].Mouse with
                         {
@@ -193,12 +223,18 @@ namespace Cezium.Rust
 
                     if (Settings.AdjustCompensation)
                     {
-                        var adjustedX = Convert.ToInt16(totalAdjustX * smoothing);
-                        var adjustedY = Convert.ToInt16(totalAdjustY * smoothing);
+                        if ((!_hidHandler.HidMouseHandlers[0].Mouse.LeftButton ||
+                             !_hidHandler.HidMouseHandlers[0].Mouse.RightButton) && Settings.Tapping)
+                        {
+                            continue;
+                        }
+
+                        var adjustedX = Convert.ToInt16(totalLossAdjustX * smoothing);
+                        var adjustedY = Convert.ToInt16(totalLossAdjustY * smoothing);
 
                         if (Settings.DebugState)
                         {
-                            ConsoleUtils.WriteLine($"TotalX: {totalAdjustX}, TotalY: {totalAdjustY}");
+                            ConsoleUtils.WriteLine($"TotalLossX: {totalLossAdjustX}, TotalLossY: {totalLossAdjustY}");
                             ConsoleUtils.WriteLine(
                                 $"AdjustedX: {adjustedX}, AdjustedY: {adjustedY}, Multiplier: {smoothing}\n");
                         }
