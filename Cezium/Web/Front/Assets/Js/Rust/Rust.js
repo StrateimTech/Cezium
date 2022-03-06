@@ -217,6 +217,28 @@ function handleDataUpdate() {
         }
     });
 
+    $.ajax({
+        type: 'GET',
+        url: '/Rust?handler=RandomizationTiming',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            let json = JSON.parse(data);
+
+            const minRandomizationTimingScale = document.getElementById("MinRandomizationTimingScale");
+            const maxRandomizationTimingScale = document.getElementById("MaxRandomizationTimingScale");
+
+            minRandomizationTimingScale.value = json.Item1;
+            maxRandomizationTimingScale.value = json.Item2;
+
+            const minRandomizationTimingValue = document.getElementById("MinRandomizationTimingValue");
+            minRandomizationTimingValue.innerHTML = minRandomizationTimingScale.value + "%";
+
+            const maxRandomizationTimingValue = document.getElementById("MaxRandomizationTimingValue");
+            maxRandomizationTimingValue.innerHTML = maxRandomizationTimingScale.value + "%";
+        }
+    });
 
     $.ajax({
         type: 'GET',
@@ -282,6 +304,9 @@ function handleRustState(rustState, ignore) {
 
     const minRandomizationYScale = document.getElementById("MinRandomizationYScale");
     const maxRandomizationYScale = document.getElementById("MaxRandomizationYScale");
+
+    const minRandomizationTimingScale = document.getElementById("MinRandomizationTimingScale");
+    const maxRandomizationTimingScale = document.getElementById("MaxRandomizationTimingScale");
     
     if(rustState.checked) {
         content.style.opacity = "1";
@@ -310,6 +335,9 @@ function handleRustState(rustState, ignore) {
 
             minRandomizationYScale.disabled = false;
             maxRandomizationYScale.disabled = false;
+
+            minRandomizationTimingScale.disabled = false;
+            maxRandomizationTimingScale.disabled = false;
         }
     } else {
         content.style.opacity = "0.4";
@@ -338,6 +366,9 @@ function handleRustState(rustState, ignore) {
 
             minRandomizationYScale.disabled = true;
             maxRandomizationYScale.disabled = true;
+
+            minRandomizationTimingScale.disabled = true;
+            maxRandomizationTimingScale.disabled = true;
         }
     }
 
@@ -509,6 +540,8 @@ function handleRandomization(randomization, ignore) {
     const minRandomizationYScale = document.getElementById("MinRandomizationYScale");
     const maxRandomizationYScale = document.getElementById("MaxRandomizationYScale");
 
+    const minRandomizationTimingScale = document.getElementById("MinRandomizationTimingScale");
+    const maxRandomizationTimingScale = document.getElementById("MaxRandomizationTimingScale");
 
     if(randomization.checked) {
         randomizationContent.style.opacity = "1";
@@ -521,6 +554,9 @@ function handleRandomization(randomization, ignore) {
 
         minRandomizationYScale.disabled = false;
         maxRandomizationYScale.disabled = false;
+
+        minRandomizationTimingScale.disabled = false;
+        maxRandomizationTimingScale.disabled = false;
     } else {
         randomizationContent.style.opacity = "0.4";
         reverseRandomizationContent.style.opacity = "0.4";
@@ -532,6 +568,9 @@ function handleRandomization(randomization, ignore) {
 
         minRandomizationYScale.disabled = true;
         maxRandomizationYScale.disabled = true;
+
+        minRandomizationTimingScale.disabled = true;
+        maxRandomizationTimingScale.disabled = true;
     }
     
     if(ignore === false) {
@@ -622,6 +661,40 @@ function handleRandomizationY() {
     $.ajax({
         type: "POST",
         url: "/Rust?handler=RandomizationY",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
+}
+
+function handleRandomizationTimingTag() {
+    const minRandomizationTimingScale = document.getElementById("MinRandomizationTimingScale");
+    const maxRandomizationTimingScale = document.getElementById("MaxRandomizationTimingScale");
+
+    if(+minRandomizationTimingScale.value > +maxRandomizationTimingScale.value) {
+        minRandomizationTimingScale.value = +maxRandomizationTimingScale.value;
+    }
+
+    const minRandomizationTimingValue = document.getElementById("MinRandomizationTimingValue");
+    minRandomizationTimingValue.innerHTML = minRandomizationTimingScale.value + "%";
+
+    const maxRandomizationTimingValue = document.getElementById("MaxRandomizationTimingValue");
+    maxRandomizationTimingValue.innerHTML = maxRandomizationTimingScale.value + "%";
+}
+
+function handleRandomizationTiming() {
+    const minRandomizationTimingScale = document.getElementById("MinRandomizationTimingScale");
+    const maxRandomizationTimingScale = document.getElementById("MaxRandomizationTimingScale");
+
+    if(+minRandomizationTimingScale.value > +maxRandomizationTimingScale.value) {
+        minRandomizationTimingScale.value = +maxRandomizationTimingScale.value;
+    }
+    const data = {"Item1": minRandomizationTimingScale.value, "Item2": maxRandomizationTimingScale.value};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=RandomizationTiming",
         contentType: "application/json; charset=utf-8",
         headers: {
             RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()

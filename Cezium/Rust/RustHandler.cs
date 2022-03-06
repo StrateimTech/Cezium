@@ -92,12 +92,12 @@ namespace Cezium.Rust
 
                     var gunPixelX = pixelXTable * _weapon.scope * _weapon.attachment.Item1;
                     var gunPixelY = pixelYTable * _weapon.scope * _weapon.attachment.Item1;
-
+                    
                     if (Settings.ReverseRandomization && Settings.Randomization && _reverseRandom)
                     {
                         var invertedLastX = _lastRandomization.Item1 * -1;
                         var invertedLastY = _lastRandomization.Item2 * -1;
-
+                        
                         if (Settings.DebugState)
                         {
                             ConsoleUtils.WriteLine(
@@ -106,15 +106,16 @@ namespace Cezium.Rust
 
                         gunPixelX += invertedLastX;
                         gunPixelY += invertedLastY;
+                        _reverseRandom = false;
                     }
-
+                    
                     if (Settings.Randomization)
                     {
                         var xRandom = Settings.RandomizationX.Item2 != 0
-                            ? _random.Next(Settings.RandomizationX.Item1, Settings.RandomizationX.Item2)
+                            ? _random.Next(Settings.RandomizationX.Item1, Settings.RandomizationX.Item2+1)
                             : 0;
                         var yRandom = Settings.RandomizationY.Item2 != 0
-                            ? _random.Next(Settings.RandomizationY.Item1, Settings.RandomizationY.Item2)
+                            ? _random.Next(Settings.RandomizationY.Item1, Settings.RandomizationY.Item2+1)
                             : 0;
 
                         var xBool = _random.Next() > (Int32.MaxValue / 2);
@@ -139,6 +140,22 @@ namespace Cezium.Rust
                     var smoothing = Settings.Smoothness;
 
                     var timing = delay - pixelControlTiming;
+                    if (Settings.Randomization)
+                    {
+                        var timingPercentRandomization =
+                            _random.NextDouble() *
+                            (Settings.RandomizationTiming.Item2 - Settings.RandomizationTiming.Item1) +
+                            Settings.RandomizationTiming.Item1;
+
+                        if (Settings.DebugState)
+                        {
+                            ConsoleUtils.WriteLine(
+                                $"Random Timing %: {timingPercentRandomization}%, Timing {timing}, Modified Timing: {timingPercentRandomization * timing / 100}\n");
+                        }
+
+                        timing = timingPercentRandomization * timing / 100;
+                    }
+
                     var sleep = pixelControlTiming / smoothing * _weapon.attachment.Item2;
 
                     if (Settings.DebugState)
@@ -159,8 +176,9 @@ namespace Cezium.Rust
                             continue;
                         var intX = Convert.ToInt16(gunPixelX / smoothing);
                         var intY = Convert.ToInt16(gunPixelY / smoothing);
-                        totalAdjustX = (gunPixelX / smoothing) - intX;
-                        totalAdjustY = (gunPixelY / smoothing) - intY;
+                        
+                        totalAdjustX = gunPixelX / smoothing - intX;
+                        totalAdjustY = gunPixelY / smoothing - intY;
 
                         _hidHandler.WriteMouseReport(_hidHandler.HidMouseHandlers[0].Mouse with
                         {
@@ -180,8 +198,9 @@ namespace Cezium.Rust
 
                         if (Settings.DebugState)
                         {
-                            ConsoleUtils.WriteLine($"TotalX: {totalAdjustX} TotalY: {totalAdjustY}");
-                            ConsoleUtils.WriteLine($"AdjustedX: {adjustedX} AdjustedY: {adjustedY}\n");
+                            ConsoleUtils.WriteLine($"TotalX: {totalAdjustX}, TotalY: {totalAdjustY}");
+                            ConsoleUtils.WriteLine(
+                                $"AdjustedX: {adjustedX}, AdjustedY: {adjustedY}, Multiplier: {smoothing}\n");
                         }
 
                         _hidHandler.WriteMouseReport(_hidHandler.HidMouseHandlers[0].Mouse with
@@ -195,7 +214,6 @@ namespace Cezium.Rust
                     var stopwatch2 = Stopwatch.StartNew();
                     while (stopwatch2.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= timing * 1000) ;
                     _bullet++;
-                    _reverseRandom = false;
                 }
                 else
                 {

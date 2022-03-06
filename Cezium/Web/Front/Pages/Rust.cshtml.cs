@@ -109,6 +109,11 @@ public class Rust : PageModel
     {
         return new JsonResult(JsonSerializer.Serialize(FrontHandler.RustHandler.Settings.RandomizationY));
     }
+    
+    public IActionResult OnGetRandomizationTiming()
+    {
+        return new JsonResult(JsonSerializer.Serialize(FrontHandler.RustHandler.Settings.RandomizationTiming));
+    }
 
     public IActionResult OnGetGun()
     {
@@ -213,6 +218,11 @@ public class Rust : PageModel
     public void OnPostRandomizationY([FromBody] RandomizationSchema data)
     {
         FrontHandler.RustHandler.Settings.RandomizationY = new Tuple<int, int>(data.Item1, data.Item2);
+    }
+    
+    public void OnPostRandomizationTiming([FromBody] RandomizationSchema data)
+    {
+        FrontHandler.RustHandler.Settings.RandomizationTiming = new Tuple<int, int>(data.Item1, data.Item2);
     }
 
     public void OnPostGun([FromBody] StringSchema data)

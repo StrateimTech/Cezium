@@ -10,7 +10,6 @@ namespace Cezium.Web.Front;
 public class FrontHandler
 {
     private readonly IHost _builder;
-    public static readonly string Server = "http://127.0.0.1:300/";
 
     public static RustHandler RustHandler;
     public static HidHandler HidHandler;
