@@ -1,6 +1,5 @@
 ﻿function handleLoad() {
     handleDataUpdate();
-    // setInterval(handleDataUpdate, 500);
 }
 
 function handleDataUpdate() {
@@ -37,10 +36,11 @@ function handleDataUpdate() {
         },
         success: function (data) {
             const fovScale = document.getElementById("FovScale");
-            fovScale.value = data;
-
             const fovValue = document.getElementById("FovValue");
-            fovValue.innerHTML = fovScale.value;
+            if(data !== fovScale.value && fovValue.innerHTML !== data) {
+                fovScale.value = data;
+                fovValue.innerHTML = data;
+            }
         }
     });
 
@@ -52,10 +52,11 @@ function handleDataUpdate() {
         },
         success: function (data) {
             const sensitivityScale = document.getElementById("SensitivityScale");
-            sensitivityScale.value = data;
-
             const sensitivityValue = document.getElementById("SensitivityValue");
-            sensitivityValue.innerHTML = sensitivityScale.value;
+            if(data !== sensitivityScale.value && sensitivityValue.innerHTML !== data) {
+                sensitivityScale.value = data;
+                sensitivityValue.innerHTML = data;
+            }
         }
     });
 
@@ -67,10 +68,11 @@ function handleDataUpdate() {
         },
         success: function (data) {
             const smoothnessScale = document.getElementById("SmoothnessScale");
-            smoothnessScale.value = data;
-
             const smoothnessValue = document.getElementById("SmoothnessValue");
-            smoothnessValue.innerHTML = smoothnessScale.value;
+            if(data !== smoothnessScale.value && smoothnessValue.innerHTML !== data) {
+                smoothnessScale.value = data;
+                smoothnessValue.innerHTML = data;
+            }
         }
     });
 
@@ -82,10 +84,12 @@ function handleDataUpdate() {
         },
         success: function (data) {
             const horizontalScale = document.getElementById("HorizontalScale");
-            horizontalScale.value = data;
-
             const horizontalValue = document.getElementById("HorizontalValue");
-            horizontalValue.innerHTML = horizontalScale.value;
+
+            if(data !== horizontalScale.value && horizontalValue.innerHTML  !== data) {
+                horizontalScale.value = data;
+                horizontalValue.innerHTML = data;
+            }
         }
     });
 
@@ -97,10 +101,12 @@ function handleDataUpdate() {
         },
         success: function (data) {
             const verticalScale = document.getElementById("VerticalScale");
-            verticalScale.value = data;
-
             const verticalValue = document.getElementById("VerticalValue");
-            verticalValue.innerHTML = verticalScale.value;
+
+            if(data !== verticalScale.value && verticalValue.innerHTML !== data) {
+                verticalScale.value = data;
+                verticalValue.innerHTML = data;
+            }
         }
     });
 
