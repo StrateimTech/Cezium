@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Fugaz One';
+    src: url('FugazOne/FugazOne-Regular.eot');
+    src: url('FugazOne/FugazOne-Regular.eot') format('embedded-opentype'),
+    url('FugazOne/FugazOne-Regular.woff') format('woff'),
+    url('FugazOne/FugazOne-Regular.ttf') format('truetype'),
+    url('FugazOne/FugazOne-Regular.svg') format('svg');
+}

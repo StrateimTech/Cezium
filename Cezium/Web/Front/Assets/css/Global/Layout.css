@@ -1,0 +1,139 @@
+﻿.side-nav {
+    height: 100%;
+    width: 48px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(24, 24, 24);
+    overflow-x: hidden;
+    overflow-y: hidden;
+    transition: 0.5s;
+}
+
+.side-nav-expanded-content {
+    width: 100%;
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+}
+
+.side-nav-expanded-content a {
+    white-space: nowrap;
+    font-family: 'Fugaz One', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    color: white;
+}
+
+.side-nav-expanded-content-bottom {
+    position: absolute;
+    white-space: nowrap;
+    bottom: 0;
+    text-align: center;
+    margin-bottom: 66px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.side-nav-expanded-icon {
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+}
+
+.side-nav a {
+    padding: 12px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #e3e3e3;
+    display: block;
+}
+
+.side-nav a:not(:active) {
+    transition: none;
+}
+
+.side-nav a:hover {
+    color: white;
+    transition: 0.5s ease-in-out;
+}
+
+#main {
+    transition: margin-left .5s;
+    margin-left: 48px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+
+.fugaz-one-font {
+    font-family: 'Fugaz One', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    color: white;
+}
+
+.lato-font {
+    font-family: "Lato", sans-serif;
+    color: white;
+}
+
+.hamburger-nav-button {
+    cursor: pointer;
+    padding: 12px 12px 0 12px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    transition: 0.3s ease-in-out;
+}
+
+.hamburger-nav-button::after {
+    content: "";
+    display: block;
+    border-bottom: 1px solid #CCC;
+}
+
+.hamburger-nav-button:hover {
+    color: #bfbfbf;
+}
+
+.hamburger-nav-button-text {
+    display: inline-block;
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    margin: 0 0 0 calc(25% - 20px);
+    transition: 0.3s ease-in-out;
+}
+
+.noselect {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.side-nav-condensed-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.side-nav-condensed > a {
+    padding: 12px 12px 0 12px;
+}
+
+.side-nav-condensed-bottom {
+    position: absolute;
+    white-space: nowrap;
+    bottom: 0;
+    text-align: center;
+    margin-bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+}

@@ -1,0 +1,326 @@
+﻿@page "/Rust"
+@model Cezium.Web.Front.Pages.Rust
+
+@Html.AntiForgeryToken()
+
+@{
+    Layout = "_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>Cezium - Rust</title>
+    <meta name="description" content="Cezium rust settings page">
+    <link rel="stylesheet" href="~/Web/Front/Assets/css/Rust/Rust.css">
+    <script src="~/Web/Front/Assets/Js/Rust/Rust.js"></script>
+</head>
+<body onload="handleLoad()">
+
+<div>
+<div class="flex-container">
+    <div style="height: 40px">
+        <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+            RUST
+        </div>
+        <label class="switch" for="RustState" style="position: relative; right: 48px">
+            <div class="fugaz-one-font noselect" style="color: white; margin-left: 56px">
+                State
+            </div>
+            <input type="checkbox" id="RustState" checked="checked" onclick='handleRustState(this, false);'/>
+            <div class="slider round"></div>
+        </label>
+        <label class="switch" for="DebugState" id="DebugContent" style="float: right; margin-right: 56px;">
+            <div class="fugaz-one-font noselect" style="color: white; margin-left: 56px;">
+                Debug
+            </div>
+            <input type="checkbox" id="DebugState" onclick='handleDebugState(this);'/>
+            <div class="slider round"></div>
+        </label>
+    </div>
+</div>
+
+<div id="content" style="opacity: 1">
+<div class="flex-container">
+    <div>
+        <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+            GENERAL
+        </div>
+        <div class="noselect" style="margin-top: 2px">
+            <div style="display: inline-block; margin-right: 4px;">
+                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                    FOV - <text id="FovValue">90</text>
+                </div>
+                <input type="range" min="60" max="90" step="1" value="90" id="FovScale" style="width: 100%" onchange="handleFov(this);" oninput="handleFovTag(this);">
+            </div>
+            <div style="display: inline-block; margin-right: 4px">
+                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                    Sensitivity - <text id="SensitivityValue">0.5</text>
+                </div>
+                <input type="range" min="0.01" max="2" step="0.01" value="0.5" id="SensitivityScale" style="width: 100%" onchange="handleSensitivity(this);" oninput="handleSensitivityTag(this);">
+            </div>
+            <div style="display: inline-block; margin-right: 4px">
+                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                    Smoothness - <text id="SmoothnessValue">6</text>
+                </div>
+                <input type="range" min="1" max="24" step="1" value="6" id="SmoothnessScale" style="width: 100%" onchange="handleSmoothness(this);" oninput="handleSmoothnessTag(this);">
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+            MODIFIERS
+        </div>
+
+        <div class="noselect" style="margin-top: 2px">
+            <div style="display: inline-block; margin-right: 4px">
+                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                    Horizontal - <text id="HorizontalValue">1</text>
+                </div>
+                <input type="range" min="0" max="1" step="0.01" value="1" id="HorizontalScale" style="width: 100%" onchange="handleHorizontal(this);" oninput="handleHorizontalTag(this);">
+            </div>
+            <div style="display: inline-block; margin-right: 4px">
+                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                    Vertical - <text id="VerticalValue">1</text>
+                </div>
+                <input type="range" min="0" max="1" step="0.01" value="1" id="VerticalScale" style="width: 100%" onchange="handleVertical(this);" oninput="handleVerticalTag(this);">
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="flex-container">
+    <div>
+        <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+            WEAPON
+        </div>
+
+        <div class="noselect" style="margin-top: 6px">
+            <div class="select-box-flex-container">
+                <input id="GunSelect" class="select-box-input" type="checkbox">
+                <label for="GunSelect" class="select-box" tabindex="-1" style="margin-left: 1px">
+                    <input id="ASSAULT_RIFLE" type="radio" name="GunSelect" checked onchange="handleWeaponChange(this.id)">
+                    <label for="ASSAULT_RIFLE">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Assault Rifle
+                        </div>
+                    </label>
+                    <input id="M249" type="radio" name="GunSelect" onchange="handleWeaponChange(this.id)">
+                    <label for="M249">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            M249
+                        </div>
+                    </label>
+                    <input id="LR300" type="radio" name="GunSelect" onchange="handleWeaponChange(this.id)">
+                    <label for="LR300">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            LR300
+                        </div>
+                    </label>
+                    <input id="MP5" type="radio" name="GunSelect" onchange="handleWeaponChange(this.id)">
+                    <label for="MP5">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            MP5
+                        </div>
+                    </label>
+                    <input id="CUSTOM" type="radio" name="GunSelect" onchange="handleWeaponChange(this.id)">
+                    <label for="CUSTOM">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Custom
+                        </div>
+                    </label>
+                    <input id="THOMPSON" type="radio" name="GunSelect" onchange="handleWeaponChange(this.id)">
+                    <label for="THOMPSON">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Thompson
+                        </div>
+                    </label>
+                </label>
+
+                <input id="ScopeSelect" class="select-box-input select-box-input-scope" type="checkbox">
+                <label for="ScopeSelect" class="select-box" tabindex="-1">
+                    <input id="EmptyScope" type="radio" checked name="ScopeSelect" onchange="handleScopeChange(this.id)">
+                    <label for="EmptyScope">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Empty
+                        </div>
+                    </label>
+                    <input id="Scope8X" type="radio" name="ScopeSelect" onchange="handleScopeChange(this.id)">
+                    <label for="Scope8X">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            8X Scope
+                        </div>
+                    </label>
+                    <input id="Scope16X" type="radio" name="ScopeSelect" onchange="handleScopeChange(this.id)">
+                    <label for="Scope16X">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            16X Scope
+                        </div>
+                    </label>
+                    <input id="Handmade" type="radio" name="ScopeSelect" onchange="handleScopeChange(this.id)">
+                    <label for="Handmade">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Handmade Sight
+                        </div>
+                    </label>
+                    <input id="Holo" type="radio" name="ScopeSelect" onchange="handleScopeChange(this.id)">
+                    <label for="Holo">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Holo Sight
+                        </div>
+                    </label>
+                </label>
+
+                <input id="AttachmentSelect" class="select-box-input select-box-input-attachment" type="checkbox">
+                <label for="AttachmentSelect" class="select-box" tabindex="-1" style="margin-right: 1px">
+                    <input id="EmptyAttachment" type="radio" checked name="AttachmentSelect" onchange="handleAttachmentChange(this.id)">
+                    <label for="EmptyAttachment">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Empty
+                        </div>
+                    </label>
+                    <input id="MuzzleBoost" type="radio" name="AttachmentSelect" onchange="handleAttachmentChange(this.id)">
+                    <label for="MuzzleBoost">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Muzzle Boost
+                        </div>
+                    </label>
+                    <input id="MuzzleBrake" type="radio" name="AttachmentSelect" onchange="handleAttachmentChange(this.id)">
+                    <label for="MuzzleBrake">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Muzzle Brake
+                        </div>
+                    </label>
+                    <input id="Silencer" type="radio" name="AttachmentSelect" onchange="handleAttachmentChange(this.id)">
+                    <label for="Silencer">
+                        <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                            Silencer
+                        </div>
+                    </label>
+                </label>
+            </div>
+        </div>
+
+    </div>
+    <div>
+        <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative; height: 0px;">
+            AMMO
+        </div>
+
+        <div class="noselect" style="margin-top: 10px;">
+            <div style="display: inline-block; margin-right: 8px;">
+                <label class="switch" for="InfiniteAmmo" style="display: inline-block">
+                    <input type="checkbox" id="InfiniteAmmo" onclick='handleInfiniteAmmo(this);'/>
+                    <div class="slider round"></div>
+                </label>
+                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
+                    Infinite Ammo
+                </div>
+            </div>
+
+            <div style="display: inline-block; margin-right: 8px;">
+                <label class="switch" for="Tapping" style="display: inline-block">
+                    <input type="checkbox" id="Tapping" onclick='handleTapping(this);'/>
+                    <div class="slider round"></div>
+                </label>
+                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
+                    Tapping
+                </div>
+            </div>
+
+            <div style="display: inline-block; margin-right: 8px;">
+                <label class="switch" for="AdjustCompensation" style="display: inline-block">
+                    <input type="checkbox" id="AdjustCompensation" onclick='handleAdjustCompensation(this);'/>
+                    <div class="slider round"></div>
+                </label>
+                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
+                    Adjust Compensation
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="flex-container">
+    <div>
+        <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+            RANDOMIZATION
+        </div>
+
+        <div class="noselect" style="margin-top: 6px;">
+            <div style="display: inline-block; margin-right: 8px;">
+                <label class="switch" for="Randomization" style="display: inline-block">
+                    <input type="checkbox" id="Randomization" onclick='handleRandomization(this, false);'/>
+                    <div class="slider round"></div>
+                </label>
+                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
+                    Randomization
+                </div>
+            </div>
+
+            <div style="display: inline-block; margin-right: 8px; opacity: 0.4" id="ReverseRandomizationContent">
+                <label class="switch" for="ReverseRandomization" style="display: inline-block">
+                    <input type="checkbox" id="ReverseRandomization" onclick='handleReverseRandomization(this);' disabled="disabled"/>
+                    <div class="slider round"></div>
+                </label>
+                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
+                    Reverse Randomization
+                </div>
+            </div>
+        </div>
+        <div id="RandomizationContent" style="opacity: 0.4" class="noselect">
+            <div class="noselect">
+                <div style="display: inline-block; margin-right: 4px">
+                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                        Min Randomization X - <text id="MinRandomizationXValue">0</text>
+                    </div>
+                    <input type="range" min="0" max="12" step="1" value="0" id="MinRandomizationXScale" style="width: 100%" disabled="disabled" onchange="handleRandomizationX();" oninput="handleRandomizationXTag();">
+                </div>
+                <div style="display: inline-block; margin-right: 4px">
+                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                        Max Randomization X - <text id="MaxRandomizationXValue">6</text>
+                    </div>
+                    <input type="range" min="0" max="12" step="1" value="6" id="MaxRandomizationXScale" style="width: 100%" disabled="disabled" onchange="handleRandomizationX();" oninput="handleRandomizationXTag();">
+                </div>
+            </div>
+
+            <div class="noselect">
+                <div style="display: inline-block; margin-right: 4px">
+                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                        Min Randomization Y - <text id="MinRandomizationYValue">0</text>
+                    </div>
+                    <input type="range" min="0" max="12" step="1" value="0" id="MinRandomizationYScale" style="width: 100%" disabled="disabled" onchange="handleRandomizationY();" oninput="handleRandomizationYTag();">
+                </div>
+
+                <div style="display: inline-block; margin-right: 4px">
+                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                        Max Randomization Y - <text id="MaxRandomizationYValue">6</text>
+                    </div>
+                    <input type="range" min="0" max="12" step="1" value="6" id="MaxRandomizationYScale" style="width: 100%" disabled="disabled" onchange="handleRandomizationY();" oninput="handleRandomizationYTag();">
+                </div>
+            </div>
+
+            <div class="noselect">
+                <div style="display: inline-block; margin-right: 4px">
+                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                        Min Randomization Timing - <text id="MinRandomizationTimingValue">100%</text>
+                    </div>
+                    <input type="range" min="90" max="100" step="1" value="100" id="MinRandomizationTimingScale" style="width: 100%" disabled="disabled" onchange="handleRandomizationTiming();" oninput="handleRandomizationTimingTag();">
+                </div>
+
+                <div style="display: inline-block; margin-right: 4px">
+                    <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                        Max Randomization Timing - <text id="MaxRandomizationTimingValue">100%</text>
+                    </div>
+                    <input type="range" min="90" max="100" step="1" value="100" id="MaxRandomizationTimingScale" style="width: 100%" disabled="disabled" onchange="handleRandomizationTiming();" oninput="handleRandomizationTimingTag();">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</body>
+</html>
