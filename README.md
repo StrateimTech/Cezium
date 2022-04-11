@@ -3,7 +3,7 @@ External hardware peripheral proxy cheat which provides recoil compensation by h
 
 # Features
 - Web interface
-- Web API for developers wanting to work with Cezium or make there own interface? ;)
+- Web API for developers wanting to work with Cezium or make their own interface? ;)
 - All attachments & scopes in any configuration are supported and should work as expected.
 - Automatic calculations using in game FOV & Sensitivity values (No more need to mess with DPI or use proprietary sensitivity systems other recoil scripts use) 
 - Recoil smoothing to make it seem more legit (Will cause loss of accuracy to produce a visually real recoil compensation)
@@ -23,9 +23,12 @@ External hardware peripheral proxy cheat which provides recoil compensation by h
 - Cezium needs at least a single core free in a RaspberryPi to perform at most optimal levels (This should support 1000Hz mouses without a hitch).
 
 ## Notes / FAQ
-- Do mouse macros/extra mouse keys work? Yes & no, Mouse macro's that are built into the mouse such as sending keystrokes from a mouse button will work as long as you add the keyboard device file that the mouse provides in /dev/input/by-id/...event-kbd/ (sometimes its if01-event-kbd). Now do extra mouse keys work the short answer is no only Left/Right/Middle buttons will be sent to the host along with X/Y/Wheel data.
-- Does this affect latency? No it shouldn't add a substantial amount of latency to the mouses inputs it should be unnoticeable to the eye unless you're running Cezium alongside other programs on the RaspberryPi which might bottleneck it and cause hitching / queue lag spikes.
-- At the moment only automatic guns are supported by Cezium I do have plans in the future to support it if it works to a decent degree. (Assault Rifle, LR300, Mp5, M249, Thompson, and Custom)
+- Do mouse macros/extra mouse keys work? Yes & no, Mouse macros that are built into the mouse, such as sending keystrokes from a mouse button, will work as long as you add the keyboard device file that the mouse provides in /dev/input/by-id/...event-kbd/ (sometimes its if01-event-kbd). Now do extra mouse keys work? The short answer is no only Left/Right/Middle buttons will be sent to the host alongside with X/Y/Wheel data.
+- Does this affect latency? No it shouldn't add a substantial amount of latency to the mouse's inputs. It should be unnoticeable to the eye unless you're running Cezium alongside other programs on the RaspberryPi which might bottleneck it and cause hitching / queue lag spikes.
+- At the moment, only automatic guns are supported by Cezium I do have plans in the future to support semi automatic weapons if they work to a certain degree. (Assault Rifle, LR300, Mp5, M249, Thompson, and Custom)
+
+## Installation
+TBD...
 
 # How it works
 ![Picture alt](https://media.strateim.tech/img/TgJjo7kzyvt_zAt9.png)
