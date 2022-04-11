@@ -90,7 +90,7 @@ namespace Cezium
             }
 
             var frontPorts = new ushort[] {80, 443};
-            var frontHandler = new FrontHandler(frontPorts, rustHandler, hidHandler);
+            var frontHandler = new FrontHandler(frontPorts, rustHandler);
             ConsoleUtils.WriteLine($"Starting WebServer on port(s) ({string.Join(", ", frontPorts)})");
             new Thread(() => frontHandler.Start())
             {

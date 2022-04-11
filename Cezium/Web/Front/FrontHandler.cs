@@ -12,13 +12,11 @@ public class FrontHandler
     private readonly IHost _builder;
 
     public static RustHandler RustHandler;
-    public static HidHandler HidHandler;
     private static ushort[] _ports;
 
-    public FrontHandler(ushort[] ports, RustHandler rustHandler, HidHandler hidHandler)
+    public FrontHandler(ushort[] ports, RustHandler rustHandler)
     {
         RustHandler = rustHandler;
-        HidHandler = hidHandler;
         _ports = ports;
         _builder = CreateHostBuilder().Build();
     }

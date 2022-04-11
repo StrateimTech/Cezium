@@ -237,6 +237,7 @@ namespace Cezium.Rust
                             ConsoleUtils.WriteLine($"TotalLossX: {totalLossAdjustX}, TotalLossY: {totalLossAdjustY}");
                             ConsoleUtils.WriteLine(
                                 $"AdjustedX: {adjustedX}, AdjustedY: {adjustedY}, Multiplier: {smoothing}\n");
+                            ConsoleUtils.WriteLine($"{adjustedX / smoothing} {adjustedY / smoothing}");
                         }
 
                         _hidHandler.WriteMouseReport(_hidHandler.HidMouseHandlers[0].Mouse with
