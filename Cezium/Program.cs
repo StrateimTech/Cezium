@@ -53,6 +53,7 @@ namespace Cezium
 
             ConsoleUtils.WriteLine("Starting...");
 
+            // TODO: Implement a better arguments system instead of hardcoding path values (for me)
             var hidHandler = new HidHandler(
                 new[]
                 {
@@ -70,7 +71,8 @@ namespace Cezium
             {
                 IsBackground = true
             }.Start();
-
+            
+            // TODO: Same thing here > Implement a better arguments system
             if (args.Length >= 1)
             {
                 foreach (var arg in args)
@@ -99,6 +101,7 @@ namespace Cezium
 
             ConsoleUtils.WriteLine("Successfully started!");
 
+            // TODO: Implement setting saving to a file (json)
             Console.CancelKeyPress += (_, _) =>
             {
                 ConsoleUtils.WriteLine("Shutting down...");
