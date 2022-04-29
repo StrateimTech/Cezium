@@ -28,7 +28,7 @@ External hardware peripheral proxy cheat which provides recoil compensation by h
 
 ## Cons
 - At the moment, only automatic guns are supported by Cezium I do have plans in the future to support semi automatic weapons if they work to a certain degree. (Assault Rifle, LR300, Mp5, M249, Thompson, and Custom)
-- Requires hardware for something a simple script on the Host PC could easily perform
+- Requires hardware for something a simple script on the Host PC could easily perform, although without the insurance of it being "undetectable"
 - Due to Cezium being completely external it doesn't know whether you're focused on the game window or not
 
 ## Pros
