@@ -17,7 +17,7 @@ External hardware peripheral proxy cheat which provides recoil compensation by h
 ## Requirements
 - Common sense & Linux knowledge (How to SSH into your pi, navigate through the file system, and downloading/fetching a file or transferring through FileZilla)
 - A mouse (Optionally a keyboard) (Wireless keyboard/mouses will depend on if you can connect them to your linux distribution & get a device file to be present in /dev/input/ for them respectively)
-- Raspberry Pi 4 Model B (It has support for OTG built into the USB-C Port) (or Linux alternative with hardware support for OTG(On-The-GO) as a B-Device, read more https://en.wikipedia.org/wiki/USB_On-The-Go)
+- Raspberry Pi 4 Model B (It has support for OTG built into the USB-C Port) (or computer alternative with hardware support for OTG(On-The-GO) as a B-Device, read more https://en.wikipedia.org/wiki/USB_On-The-Go)
 - Local ethernet connection to the RaspberryPi to access the settings API or webpage. (Optional if you have access to the RaspberryPi through a GUI/Desktop environment in which case you can access the webpage through the pi's browser.)
 - A cable to connect the two computers (Host & Slave) (I you're using a RaspberryPi then you'll need a USB-C male to USB-A female adapter if your computer doesn't directly have USB-C ports)
 - Cezium needs at least a single core free in a RaspberryPi to perform at most optimal levels (This should support 1000Hz mouses without a hitch).
