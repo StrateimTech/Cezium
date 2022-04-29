@@ -25,7 +25,15 @@ External hardware peripheral proxy cheat which provides recoil compensation by h
 ## Notes / FAQ
 - Do mouse macros/extra mouse keys work? Yes & no, Mouse macros that are built into the mouse, such as sending keystrokes from a mouse button, will work as long as you add the keyboard device file that the mouse provides in /dev/input/by-id/...event-kbd/ (sometimes its if01-event-kbd). Now do extra mouse keys work? The short answer is no only Left/Right/Middle buttons will be sent to the host alongside with X/Y/Wheel data.
 - Does this affect latency? No it shouldn't add a substantial amount of latency to the mouse's inputs. It should be unnoticeable to the eye unless you're running Cezium alongside other programs on the RaspberryPi which might bottleneck it and cause hitching / queue lag spikes.
+
+## Cons
 - At the moment, only automatic guns are supported by Cezium I do have plans in the future to support semi automatic weapons if they work to a certain degree. (Assault Rifle, LR300, Mp5, M249, Thompson, and Custom)
+- Requires hardware for something a simple script on the Host PC could easily perform
+- Due to Cezium being completely external it doesn't know whether you're focused on the game window or not
+
+## Pros
+- In theory Cezium should be undetectable due to it's complete external isolation on a separate computer
+- Nothing is running on the main Host PC making it easily hideable from screensharing server admins or streamers
 
 ## Installation
 TBD...
