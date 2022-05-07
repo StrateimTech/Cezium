@@ -41,13 +41,14 @@
     </div>
 </div>
 
-<div id="content" style="opacity: 1">
+<div id="content">
 <div class="flex-container">
     <div>
-        <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+        <div class="fugaz-one-font noselect" style="color: white; height: 32px">
             GENERAL
         </div>
-        <div class="noselect" style="margin-top: 2px">
+        
+        <div class="noselect" style="margin-top: 2px;">
             <div style="display: inline-block; margin-right: 4px;">
                 <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                     FOV - <text id="FovValue">90</text>
@@ -70,11 +71,11 @@
     </div>
 
     <div>
-        <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+        <div class="fugaz-one-font noselect" style="color: white; height: 32px">
             MODIFIERS
         </div>
 
-        <div class="noselect" style="margin-top: 2px">
+        <div class="noselect" style="margin-top: 2px;">
             <div style="display: inline-block; margin-right: 4px">
                 <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
                     Horizontal - <text id="HorizontalValue">1</text>
@@ -93,11 +94,11 @@
 </div>
 <div class="flex-container">
     <div>
-        <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+        <div class="fugaz-one-font noselect" style="color: white; height: 32px">
             WEAPON
         </div>
 
-        <div class="noselect" style="margin-top: 6px">
+        <div class="noselect">
             <div class="select-box-flex-container">
                 <input id="GunSelect" class="select-box-input" type="checkbox">
                 <label for="GunSelect" class="select-box" tabindex="-1" style="margin-left: 1px">
@@ -205,37 +206,37 @@
 
     </div>
     <div>
-        <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative; height: 0px;">
+        <div class="fugaz-one-font noselect" style="color: white; height: 32px">
             AMMO
         </div>
 
-        <div class="noselect" style="margin-top: 10px;">
+        <div class="noselect">
             <div style="display: inline-block; margin-right: 8px;">
-                <label class="switch" for="InfiniteAmmo" style="display: inline-block">
+                <label class="switch" for="InfiniteAmmo" style="display: inline-block; transform: translateY(1px);">
                     <input type="checkbox" id="InfiniteAmmo" onclick='handleInfiniteAmmo(this);'/>
                     <div class="slider round"></div>
                 </label>
-                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
+                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-5px); height: 0">
                     Infinite Ammo
                 </div>
             </div>
 
             <div style="display: inline-block; margin-right: 8px;">
-                <label class="switch" for="Tapping" style="display: inline-block">
+                <label class="switch" for="Tapping" style="display: inline-block; transform: translateY(1px);">
                     <input type="checkbox" id="Tapping" onclick='handleTapping(this);'/>
                     <div class="slider round"></div>
                 </label>
-                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
+                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-5px); height: 0">
                     Tapping
                 </div>
             </div>
-
+            
             <div style="display: inline-block; margin-right: 8px;">
-                <label class="switch" for="AdjustCompensation" style="display: inline-block">
+                <label class="switch" for="AdjustCompensation" style="display: inline-block; transform: translateY(1px);">
                     <input type="checkbox" id="AdjustCompensation" onclick='handleAdjustCompensation(this);'/>
                     <div class="slider round"></div>
                 </label>
-                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
+                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-5px); height: 0">
                     Adjust Compensation
                 </div>
             </div>
@@ -244,32 +245,42 @@
 </div>
 <div class="flex-container">
     <div>
-        <div class="fugaz-one-font noselect" style="color: white; display: inline-block; left: 50%; transform: translateX(-50%); position: relative;">
+        <div class="fugaz-one-font noselect" style="color: white; height: 32px">
             RANDOMIZATION
         </div>
 
-        <div class="noselect" style="margin-top: 6px;">
+        <div class="noselect" style="margin-bottom: 16px;">
             <div style="display: inline-block; margin-right: 8px;">
-                <label class="switch" for="Randomization" style="display: inline-block">
+                <label class="switch" for="Randomization" style="display: inline-block; transform: translateY(1px)">
                     <input type="checkbox" id="Randomization" onclick='handleRandomization(this, false);'/>
                     <div class="slider round"></div>
                 </label>
-                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
+                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-5px); height: 0">
                     Randomization
                 </div>
             </div>
 
             <div style="display: inline-block; margin-right: 8px; opacity: 0.4" id="ReverseRandomizationContent">
-                <label class="switch" for="ReverseRandomization" style="display: inline-block">
+                <label class="switch" for="ReverseRandomization" style="display: inline-block; transform: translateY(1px)">
                     <input type="checkbox" id="ReverseRandomization" onclick='handleReverseRandomization(this);' disabled="disabled"/>
                     <div class="slider round"></div>
                 </label>
-                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)">
+                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-5px); height: 0">
                     Reverse Randomization
                 </div>
             </div>
+
+            @* <div style="display: inline-block; margin-right: 8px; opacity: 0.4" id="ReverseRandomizationContent"> *@
+            @*     <label class="switch" for="ReverseRandomization" style="display: inline-block"> *@
+            @*         <input type="checkbox" id="ReverseRandomization" onclick='handleReverseRandomization(this);' disabled="disabled"/> *@
+            @*         <div class="slider round"></div> *@
+            @*     </label> *@
+            @*     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-6px)"> *@
+            @*         Static Randomization *@
+            @*     </div> *@
+            @* </div> *@
         </div>
-        <div id="RandomizationContent" style="opacity: 0.4" class="noselect">
+        <div id="RandomizationContent" style="opacity: 0.4;" class="noselect">
             <div class="noselect">
                 <div style="display: inline-block; margin-right: 4px">
                     <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">

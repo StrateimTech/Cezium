@@ -221,6 +221,8 @@ namespace Cezium.Rust
                         while (stopwatch.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= sleep * 1000) ;
                     }
 
+                    // var dostuff = true;
+
                     if (Settings.AdjustCompensation)
                     {
                         if ((!_hidHandler.HidMouseHandlers[0].Mouse.LeftButton ||
@@ -240,6 +242,37 @@ namespace Cezium.Rust
                             ConsoleUtils.WriteLine($"{adjustedX / smoothing} {adjustedY / smoothing}\n");
                         }
 
+                        // if (Math.Abs(adjustedX) > 0 || Math.Abs(adjustedY) > 0)
+                        // {
+                        //     var smoothingLoopCount = Math.Max(Math.Abs(adjustedX), Math.Abs(adjustedY));
+                        //
+                        //     var localAdjustmentSleep =
+                        //         pixelControlTiming / smoothingLoopCount * _weapon.attachment.Item2;
+                        //
+                        //     // dostuff = false;
+                        //     
+                        //     if (Settings.DebugState)
+                        //     {
+                        //         ConsoleUtils.WriteLine($"A {smoothingLoopCount} {dostuff}");
+                        //         ConsoleUtils.WriteLine($"Local Adjust Compensation sleep: {localAdjustmentSleep}");
+                        //     }
+                        //
+                        //     for (int i2 = 0; i2 < smoothingLoopCount; i2++)
+                        //     {
+                        //         _hidHandler.WriteMouseReport(_hidHandler.HidMouseHandlers[0].Mouse with
+                        //         {
+                        //             X = adjustedX > 0 ? 1 : -1,
+                        //             Y = adjustedY > 0 ? 1 : -1,
+                        //             Wheel = 0
+                        //         });
+                        //         var stopwatch3 = Stopwatch.StartNew();
+                        //         while (stopwatch3.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <=
+                        //                localAdjustmentSleep * 1000) ;
+                        //     }
+                        //     if(localAdjustmentSleep < timing)
+                        //         timing -= localAdjustmentSleep;
+                        // }
+
                         _hidHandler.WriteMouseReport(_hidHandler.HidMouseHandlers[0].Mouse with
                         {
                             X = adjustedX,
@@ -248,8 +281,11 @@ namespace Cezium.Rust
                         });
                     }
 
-                    var stopwatch2 = Stopwatch.StartNew();
-                    while (stopwatch2.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= timing * 1000) ;
+                    // if (dostuff)
+                    // {
+                        var stopwatch2 = Stopwatch.StartNew();
+                        while (stopwatch2.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= timing * 1000) ;
+                    // }
                     _bullet++;
                 }
                 else

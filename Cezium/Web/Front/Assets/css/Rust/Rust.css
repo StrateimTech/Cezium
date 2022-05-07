@@ -24,7 +24,7 @@
     margin: 0 8px 0 0;
 }
 
-@media screen and (max-width: 675px) {
+@media screen and (max-width: 705px) {
     .select-box-flex-container {
         flex-direction: column;
     }
@@ -46,13 +46,16 @@
 }
 
 .slider {
-    background-color: rgb(64, 64, 64);
-    bottom: 0;
     cursor: pointer;
-    left: 0;
+    background-color: rgb(64, 64, 64);
+    
     position: absolute;
+    
     right: 0;
     top: 0;
+    bottom: 0;
+    left: 0;
+    
     transition: .4s;
 }
 
@@ -158,9 +161,7 @@ input[type="range"]::-webkit-slider-thumb {
     --box-fill: calc(-100vmax - var(--thumb-width, var(--thumb-height))) 0 0 100vmax currentColor;
 
     width: var(--thumb-width, var(--thumb-height));
-    background: linear-gradient(currentColor 0 0) scroll no-repeat left center /
-		50% calc(var(--track-height) + 1px);
-    background-color: currentColor;
+    background: currentColor linear-gradient(currentColor 0 0) no-repeat scroll left center;
     box-shadow: var(--box-fill);
     border-radius: var(--thumb-width, var(--thumb-height));
 
@@ -271,10 +272,9 @@ input[type="range"]:disabled::-moz-range-thumb {
     padding: 40px 0 0;
 
     box-sizing: border-box;
-    border-radius: 6px;
+    border-radius: 4px;
     outline: none;
     overflow: hidden;
-    box-shadow: 0 0 0 1px rgb(12, 12, 12);
     vertical-align: top;
     transition: .6s;
 
