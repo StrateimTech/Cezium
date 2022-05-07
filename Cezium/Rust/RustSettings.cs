@@ -129,6 +129,8 @@ namespace Cezium.Rust
 
         public bool ReverseRandomization = false;
         
+        public bool StaticRandomization = false;
+        
         public Tuple<int, int> RandomizationTiming = new(100, 100);
 
         public Tuple<int, int> RandomizationX = new(1, 5);

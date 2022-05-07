@@ -99,6 +99,11 @@ public class Rust : PageModel
     {
         return new JsonResult(FrontHandler.RustHandler.Settings.ReverseRandomization);
     }
+    
+    public IActionResult OnGetStaticRandomization()
+    {
+        return new JsonResult(FrontHandler.RustHandler.Settings.StaticRandomization);
+    }
 
     public IActionResult OnGetRandomizationX()
     {
@@ -177,6 +182,15 @@ public class Rust : PageModel
     public void OnPostReverseRandomization([FromBody] BoolSchema data)
     {
         FrontHandler.RustHandler.Settings.ReverseRandomization = data.Value;
+    }
+    
+    public void OnPostStaticRandomization([FromBody] BoolSchema data)
+    {
+        FrontHandler.RustHandler.Settings.StaticRandomization = data.Value;
+        if (data.Value)
+        {
+            FrontHandler.RustHandler.ComputeRandomizationTable();
+        }
     }
 
     public void OnPostFov([FromBody] IntSchema data)

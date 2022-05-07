@@ -296,8 +296,8 @@ function handleRustState(rustState, ignore) {
     const adjustCompensation = document.getElementById("AdjustCompensation");
 
     const randomization = document.getElementById("Randomization");
-
     const reverseRandomization = document.getElementById("ReverseRandomization");
+    const staticRandomization = document.getElementById("StaticRandomization");
 
     const minRandomizationXScale = document.getElementById("MinRandomizationXScale");
     const maxRandomizationXScale = document.getElementById("MaxRandomizationXScale");
@@ -329,6 +329,7 @@ function handleRustState(rustState, ignore) {
 
         if(randomization.checked) {
             reverseRandomization.disabled = false;
+            staticRandomization.disabled = false;
 
             minRandomizationXScale.disabled = false;
             maxRandomizationXScale.disabled = false;
@@ -360,6 +361,7 @@ function handleRustState(rustState, ignore) {
         
         if(randomization.checked) {
             reverseRandomization.disabled = true;
+            staticRandomization.disabled = true;
 
             minRandomizationXScale.disabled = true;
             maxRandomizationXScale.disabled = true;
@@ -531,8 +533,10 @@ function handleAdjustCompensation(adjustCompensation) {
 function handleRandomization(randomization, ignore) {
     const randomizationContent = document.getElementById("RandomizationContent");
     const reverseRandomizationContent = document.getElementById("ReverseRandomizationContent");
-
     const reverseRandomization = document.getElementById("ReverseRandomization");
+
+    const staticRandomizationContent = document.getElementById("StaticRandomizationContent");
+    const staticRandomization = document.getElementById("StaticRandomization");
 
     const minRandomizationXScale = document.getElementById("MinRandomizationXScale");
     const maxRandomizationXScale = document.getElementById("MaxRandomizationXScale");
@@ -546,8 +550,10 @@ function handleRandomization(randomization, ignore) {
     if(randomization.checked) {
         randomizationContent.style.opacity = "1";
         reverseRandomizationContent.style.opacity = "1";
+        staticRandomizationContent.style.opacity = "1";
         
         reverseRandomization.disabled = false;
+        staticRandomization.disabled = false;
         
         minRandomizationXScale.disabled = false;
         maxRandomizationXScale.disabled = false;
@@ -560,8 +566,10 @@ function handleRandomization(randomization, ignore) {
     } else {
         randomizationContent.style.opacity = "0.4";
         reverseRandomizationContent.style.opacity = "0.4";
+        staticRandomizationContent.style.opacity = "0.4";
 
         reverseRandomization.disabled = true;
+        staticRandomization.disabled = true;
 
         minRandomizationXScale.disabled = true;
         maxRandomizationXScale.disabled = true;
@@ -592,6 +600,19 @@ function handleReverseRandomization(reverseRandomization) {
     $.ajax({
         type: "POST",
         url: "/Rust?handler=ReverseRandomization",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
+}
+
+function handleStaticRandomization(staticRandomization) {
+    const data = {"Value": staticRandomization.checked};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=StaticRandomization",
         contentType: "application/json; charset=utf-8",
         headers: {
             RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()

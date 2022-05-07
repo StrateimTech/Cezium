@@ -29,6 +29,7 @@ namespace Cezium.Rust
         /// </summary>
         private (List<Tuple<double, double, double>> table, double scope, (double, double) attachment) _weapon;
 
+        private List<Tuple<int, int, double>> _randomizationTable = new();
         private Tuple<int, int> _lastRandomization = new(0, 0);
         private bool _reverseRandom;
 
@@ -119,22 +120,33 @@ namespace Cezium.Rust
 
                     if (Settings.Randomization)
                     {
-                        var xRandom = Settings.RandomizationX.Item2 != 0
-                            ? _random.Next(Settings.RandomizationX.Item1, Settings.RandomizationX.Item2 + 1)
-                            : 0;
-                        var yRandom = Settings.RandomizationY.Item2 != 0
-                            ? _random.Next(Settings.RandomizationY.Item1, Settings.RandomizationY.Item2 + 1)
-                            : 0;
+                        int xRandom;
+                        int yRandom;
+                        
+                        if (Settings.StaticRandomization)
+                        {
+                            xRandom = _randomizationTable[_bullet].Item1;
+                            yRandom = _randomizationTable[_bullet].Item2;
+                        }
+                        else
+                        {
+                            xRandom = Settings.RandomizationX.Item2 != 0
+                                ? _random.Next(Settings.RandomizationX.Item1, Settings.RandomizationX.Item2 + 1)
+                                : 0;
+                            yRandom = Settings.RandomizationY.Item2 != 0
+                                ? _random.Next(Settings.RandomizationY.Item1, Settings.RandomizationY.Item2 + 1)
+                                : 0;
 
-                        var xBool = _random.Next() > (Int32.MaxValue / 2);
-                        var yBool = _random.Next() > (Int32.MaxValue / 2);
+                            bool xBool = _random.Next() > (Int32.MaxValue / 2);
+                            bool yBool = _random.Next() > (Int32.MaxValue / 2);
 
-                        xRandom = xBool ? xRandom : xRandom * -1;
-                        yRandom = yBool ? yRandom : yRandom * -1;
+                            xRandom = xBool ? xRandom : xRandom * -1;
+                            yRandom = yBool ? yRandom : yRandom * -1;
+                        }
 
                         if (Settings.DebugState)
                         {
-                            ConsoleUtils.WriteLine($"Randomization: xRandom: {xRandom}, yRandom: {yRandom}");
+                            ConsoleUtils.WriteLine($"Randomization: xRandom: {xRandom}, yRandom: {yRandom}, (Static: {Settings.StaticRandomization})");
                         }
 
                         gunPixelX += xRandom;
@@ -149,15 +161,23 @@ namespace Cezium.Rust
                     var timing = delay - pixelControlTiming;
                     if (Settings.Randomization)
                     {
-                        var timingPercentRandomization =
-                            _random.NextDouble() *
-                            (Settings.RandomizationTiming.Item2 - Settings.RandomizationTiming.Item1) +
-                            Settings.RandomizationTiming.Item1;
+                        double timingPercentRandomization;
+                        if (Settings.StaticRandomization)
+                        {
+                            timingPercentRandomization = _randomizationTable[_bullet].Item3;
+                        }
+                        else
+                        {
+                            timingPercentRandomization =
+                                _random.NextDouble() *
+                                (Settings.RandomizationTiming.Item2 - Settings.RandomizationTiming.Item1) +
+                                Settings.RandomizationTiming.Item1;
+                        }
 
                         if (Settings.DebugState)
                         {
                             ConsoleUtils.WriteLine(
-                                $"Random Timing %: {timingPercentRandomization}%, Timing {timing}, Modified Timing: {timingPercentRandomization * timing / 100}\n");
+                                $"Random Timing %: {timingPercentRandomization}%, Timing {timing}, Modified Timing: {timingPercentRandomization * timing / 100}, (Static: {Settings.StaticRandomization})\n");
                         }
 
                         timing = timingPercentRandomization * timing / 100;
@@ -283,8 +303,8 @@ namespace Cezium.Rust
 
                     // if (dostuff)
                     // {
-                        var stopwatch2 = Stopwatch.StartNew();
-                        while (stopwatch2.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= timing * 1000) ;
+                    var stopwatch2 = Stopwatch.StartNew();
+                    while (stopwatch2.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= timing * 1000) ;
                     // }
                     _bullet++;
                 }
@@ -396,6 +416,30 @@ namespace Cezium.Rust
             }
 
             UpdateWeapon(gun, scopeValue, attachmentValue);
+        }
+        
+        public void ComputeRandomizationTable()
+        {
+            for (int i = 0; i < (int) Settings.Gun.Item2 - 1; i++)
+            {
+                var xRandom = Settings.RandomizationX.Item2 != 0
+                    ? _random.Next(Settings.RandomizationX.Item1, Settings.RandomizationX.Item2 + 1)
+                    : 0;
+                var yRandom = Settings.RandomizationY.Item2 != 0
+                    ? _random.Next(Settings.RandomizationY.Item1, Settings.RandomizationY.Item2 + 1)
+                    : 0;
+
+                var xBool = _random.Next() > (Int32.MaxValue / 2);
+                var yBool = _random.Next() > (Int32.MaxValue / 2);
+
+                xRandom = xBool ? xRandom : xRandom * -1;
+                yRandom = yBool ? yRandom : yRandom * -1;
+
+                var timingPercentRandomization =
+                    _random.NextDouble() * (Settings.RandomizationTiming.Item2 - Settings.RandomizationTiming.Item1) +
+                    Settings.RandomizationTiming.Item1;
+                _randomizationTable.Add(new Tuple<int, int, double>(xRandom, yRandom, timingPercentRandomization));
+            }
         }
     }
 }
