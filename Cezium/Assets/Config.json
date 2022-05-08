@@ -5,18 +5,18 @@
     "FireRate": "ASSAULT_RIFLE"
   },
   "GunAttachment": null,
-  "GunScope": null,
+  "GunScope": 2,
   "Smoothness": 6,
   "Sensitivity": 0.5,
   "Fov": 90,
-  "DebugState": false,
+  "DebugState": true,
   "State": true,
-  "InfiniteAmmo": false,
-  "Tapping": false,
+  "InfiniteAmmo": true,
+  "Tapping": true,
   "AdjustCompensation": true,
-  "Randomization": false,
-  "ReverseRandomization": false,
-  "StaticRandomization": false,
+  "Randomization": true,
+  "ReverseRandomization": true,
+  "StaticRandomization": true,
   "RandomizationTiming": {
     "Item1": 100,
     "Item2": 100
@@ -29,6 +29,153 @@
     "Item1": 1,
     "Item2": 5
   },
+  "RandomizationTable": [
+    {
+      "Item1": 3,
+      "Item2": -3,
+      "Item3": 100
+    },
+    {
+      "Item1": 5,
+      "Item2": 1,
+      "Item3": 100
+    },
+    {
+      "Item1": -5,
+      "Item2": 5,
+      "Item3": 100
+    },
+    {
+      "Item1": -5,
+      "Item2": -1,
+      "Item3": 100
+    },
+    {
+      "Item1": 5,
+      "Item2": 1,
+      "Item3": 100
+    },
+    {
+      "Item1": -1,
+      "Item2": -5,
+      "Item3": 100
+    },
+    {
+      "Item1": 3,
+      "Item2": -5,
+      "Item3": 100
+    },
+    {
+      "Item1": -5,
+      "Item2": 2,
+      "Item3": 100
+    },
+    {
+      "Item1": 5,
+      "Item2": 4,
+      "Item3": 100
+    },
+    {
+      "Item1": -5,
+      "Item2": 3,
+      "Item3": 100
+    },
+    {
+      "Item1": -1,
+      "Item2": 1,
+      "Item3": 100
+    },
+    {
+      "Item1": 1,
+      "Item2": 3,
+      "Item3": 100
+    },
+    {
+      "Item1": -5,
+      "Item2": 5,
+      "Item3": 100
+    },
+    {
+      "Item1": 5,
+      "Item2": 1,
+      "Item3": 100
+    },
+    {
+      "Item1": -5,
+      "Item2": -4,
+      "Item3": 100
+    },
+    {
+      "Item1": -2,
+      "Item2": -3,
+      "Item3": 100
+    },
+    {
+      "Item1": -2,
+      "Item2": 3,
+      "Item3": 100
+    },
+    {
+      "Item1": 3,
+      "Item2": 4,
+      "Item3": 100
+    },
+    {
+      "Item1": -2,
+      "Item2": 2,
+      "Item3": 100
+    },
+    {
+      "Item1": -3,
+      "Item2": 5,
+      "Item3": 100
+    },
+    {
+      "Item1": -1,
+      "Item2": -4,
+      "Item3": 100
+    },
+    {
+      "Item1": -3,
+      "Item2": 5,
+      "Item3": 100
+    },
+    {
+      "Item1": 3,
+      "Item2": 2,
+      "Item3": 100
+    },
+    {
+      "Item1": -5,
+      "Item2": 4,
+      "Item3": 100
+    },
+    {
+      "Item1": -4,
+      "Item2": -4,
+      "Item3": 100
+    },
+    {
+      "Item1": -3,
+      "Item2": -4,
+      "Item3": 100
+    },
+    {
+      "Item1": 2,
+      "Item2": 4,
+      "Item3": 100
+    },
+    {
+      "Item1": 5,
+      "Item2": -3,
+      "Item3": 100
+    },
+    {
+      "Item1": -5,
+      "Item2": 3,
+      "Item3": 100
+    }
+  ],
   "RecoilModifier": {
     "Item1": 1,
     "Item2": 1

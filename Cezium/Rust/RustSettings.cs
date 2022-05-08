@@ -10,9 +10,9 @@ namespace Cezium.Rust
         public (Guns, BulletCount, FireRate) Gun { get; set; } = (Guns.ASSAULT_RIFLE, BulletCount.ASSAULT_RIFLE,
             FireRate.ASSAULT_RIFLE);
 
-        public Attachment? GunAttachment { get; set; } = null;
+        public Attachment? GunAttachment { get; set; }
 
-        public Scope? GunScope { get; set; } = null;
+        public Scope? GunScope { get; set; }
 
         public int Smoothness { get; set; } = 6;
 
@@ -23,7 +23,7 @@ namespace Cezium.Rust
         /// <summary>
         /// Whether or not to output debug information to console.
         /// </summary>
-        public bool DebugState { get; set; } = false;
+        public bool DebugState { get; set; }
 
         public bool State { get; set; } = true;
 
@@ -122,17 +122,17 @@ namespace Cezium.Rust
             // M39 = 300
         }
 
-        public bool InfiniteAmmo { get; set; } = false;
+        public bool InfiniteAmmo { get; set; }
         
-        public bool Tapping { get; set; } = false;
+        public bool Tapping { get; set; }
         
         public bool AdjustCompensation { get; set; } = true;
 
-        public bool Randomization { get; set; } = false;
+        public bool Randomization { get; set; }
 
-        public bool ReverseRandomization { get; set; } = false;
+        public bool ReverseRandomization { get; set; }
         
-        public bool StaticRandomization { get; set; } = false;
+        public bool StaticRandomization { get; set; }
         
         public Tuple<int, int> RandomizationTiming { get; set; } = new(100, 100);
 
@@ -140,7 +140,8 @@ namespace Cezium.Rust
 
         public Tuple<int, int> RandomizationY { get; set; } = new(1, 5);
 
-        public List<Tuple<int, int, double>> RandomizationTable = new();
+        public List<Tuple<int, int, double>> RandomizationTable { get; set; } = new();
+        
         public Tuple<double, double> RecoilModifier { get; set; } = new(1, 1);
     }
 }

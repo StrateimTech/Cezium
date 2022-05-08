@@ -59,6 +59,7 @@ namespace Cezium.Rust
                 }
                 catch (Exception ignore)
                 {
+                    Console.WriteLine($"{ignore}");
                     // ignored
                 }
             }

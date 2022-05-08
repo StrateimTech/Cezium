@@ -10,9 +10,15 @@ public class JsonGunConverter : JsonConverter<(RustSettings.Guns, RustSettings.B
     public override (RustSettings.Guns, RustSettings.BulletCount, RustSettings.FireRate) Read(
         ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
+        (RustSettings.Guns, RustSettings.BulletCount, RustSettings.FireRate)? value = null;
         while (reader.Read())
         {
-            return JsonSerializer
+            if (reader.TokenType == JsonTokenType.EndObject && value != null)
+            {
+                return ((RustSettings.Guns, RustSettings.BulletCount, RustSettings.FireRate)) value;
+            }
+            
+            value = JsonSerializer
                 .Deserialize<(RustSettings.Guns, RustSettings.BulletCount, RustSettings.FireRate)>(
                     ref reader, options)!;
         }

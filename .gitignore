@@ -58,6 +58,7 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
+Config.json
 
 # Visual Studio 2015
 .vs/
