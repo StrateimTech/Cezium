@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using Cezium.Utils;
 using HID_API;
@@ -29,7 +32,6 @@ namespace Cezium.Rust
         /// </summary>
         private (List<Tuple<double, double, double>> table, double scope, (double, double) attachment) _weapon;
 
-        private List<Tuple<int, int, double>> _randomizationTable = new();
         private Tuple<int, int> _lastRandomization = new(0, 0);
         private bool _reverseRandom;
 
@@ -37,7 +39,31 @@ namespace Cezium.Rust
 
         public RustHandler(HidHandler hidHandler)
         {
-            UpdateWeapon(Settings.Gun, 1, (1, 1));
+            if (File.Exists("Assets/Config.json"))
+            {
+                var jsonText = File.ReadAllText("Assets/Config.json");
+                try
+                {
+                    var settings = JsonSerializer.Deserialize<RustSettings>(jsonText, new JsonSerializerOptions()
+                    {
+                        Converters = {new JsonGunConverter()}
+                    });
+                    if (settings != null)
+                    {
+                        Settings = settings;
+                        if (Settings.StaticRandomization && Settings.RandomizationTable == null)
+                        {
+                            ComputeRandomizationTable();
+                        }
+                    }
+                }
+                catch (Exception ignore)
+                {
+                    // ignored
+                }
+            }
+
+            UpdateWeapon(Settings.Gun, Settings.GunScope, Settings.GunAttachment);
             _hidHandler = hidHandler;
         }
 
@@ -122,11 +148,11 @@ namespace Cezium.Rust
                     {
                         int xRandom;
                         int yRandom;
-                        
+
                         if (Settings.StaticRandomization)
                         {
-                            xRandom = _randomizationTable[_bullet].Item1;
-                            yRandom = _randomizationTable[_bullet].Item2;
+                            xRandom = Settings.RandomizationTable[_bullet].Item1;
+                            yRandom = Settings.RandomizationTable[_bullet].Item2;
                         }
                         else
                         {
@@ -146,7 +172,8 @@ namespace Cezium.Rust
 
                         if (Settings.DebugState)
                         {
-                            ConsoleUtils.WriteLine($"Randomization: xRandom: {xRandom}, yRandom: {yRandom}, (Static: {Settings.StaticRandomization})");
+                            ConsoleUtils.WriteLine(
+                                $"Randomization: xRandom: {xRandom}, yRandom: {yRandom}, (Static: {Settings.StaticRandomization})");
                         }
 
                         gunPixelX += xRandom;
@@ -164,7 +191,7 @@ namespace Cezium.Rust
                         double timingPercentRandomization;
                         if (Settings.StaticRandomization)
                         {
-                            timingPercentRandomization = _randomizationTable[_bullet].Item3;
+                            timingPercentRandomization = Settings.RandomizationTable[_bullet].Item3;
                         }
                         else
                         {
@@ -327,6 +354,19 @@ namespace Cezium.Rust
         public void Stop()
         {
             _state = false;
+            try
+            {
+                var serializedSettings = JsonSerializer.Serialize(Settings, new JsonSerializerOptions()
+                {
+                    WriteIndented = true,
+                    Converters = {new JsonGunConverter()}
+                });
+                File.WriteAllText("Assets/Config.json", serializedSettings);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         private List<Tuple<double, double, double>> CalculateTables(List<Tuple<double, double>> angleTable)
@@ -417,11 +457,13 @@ namespace Cezium.Rust
 
             UpdateWeapon(gun, scopeValue, attachmentValue);
         }
-        
+
         public void ComputeRandomizationTable()
         {
+            Console.WriteLine($"{Settings.Gun.Item2}");
             for (int i = 0; i < (int) Settings.Gun.Item2 - 1; i++)
             {
+                Console.WriteLine("a");
                 var xRandom = Settings.RandomizationX.Item2 != 0
                     ? _random.Next(Settings.RandomizationX.Item1, Settings.RandomizationX.Item2 + 1)
                     : 0;
@@ -438,8 +480,11 @@ namespace Cezium.Rust
                 var timingPercentRandomization =
                     _random.NextDouble() * (Settings.RandomizationTiming.Item2 - Settings.RandomizationTiming.Item1) +
                     Settings.RandomizationTiming.Item1;
-                _randomizationTable.Add(new Tuple<int, int, double>(xRandom, yRandom, timingPercentRandomization));
+                Settings.RandomizationTable.Add(new Tuple<int, int, double>(xRandom, yRandom,
+                    timingPercentRandomization));
             }
+
+            Console.WriteLine($"A {Settings.RandomizationTable.Count}");
         }
     }
 }

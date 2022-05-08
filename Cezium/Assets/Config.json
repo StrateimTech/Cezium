@@ -1,0 +1,36 @@
+{
+  "Gun": {
+    "Gun": "ASSAULT_RIFLE",
+    "BulletCount": "LR300",
+    "FireRate": "ASSAULT_RIFLE"
+  },
+  "GunAttachment": null,
+  "GunScope": null,
+  "Smoothness": 6,
+  "Sensitivity": 0.5,
+  "Fov": 90,
+  "DebugState": false,
+  "State": true,
+  "InfiniteAmmo": false,
+  "Tapping": false,
+  "AdjustCompensation": true,
+  "Randomization": false,
+  "ReverseRandomization": false,
+  "StaticRandomization": false,
+  "RandomizationTiming": {
+    "Item1": 100,
+    "Item2": 100
+  },
+  "RandomizationX": {
+    "Item1": 1,
+    "Item2": 5
+  },
+  "RandomizationY": {
+    "Item1": 1,
+    "Item2": 5
+  },
+  "RecoilModifier": {
+    "Item1": 1,
+    "Item2": 1
+  }
+}

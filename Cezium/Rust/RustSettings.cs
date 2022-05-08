@@ -1,28 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Cezium.Rust
 {
     public class RustSettings
     {
-        public (Guns, BulletCount, FireRate) Gun = (Guns.ASSAULT_RIFLE, BulletCount.ASSAULT_RIFLE,
+        public (Guns, BulletCount, FireRate) Gun { get; set; } = (Guns.ASSAULT_RIFLE, BulletCount.ASSAULT_RIFLE,
             FireRate.ASSAULT_RIFLE);
 
-        public Attachment? GunAttachment = null;
+        public Attachment? GunAttachment { get; set; } = null;
 
-        public Scope? GunScope = null;
+        public Scope? GunScope { get; set; } = null;
 
-        public int Smoothness = 6;
+        public int Smoothness { get; set; } = 6;
 
-        public double Sensitivity = 0.5;
+        public double Sensitivity { get; set; } = 0.5;
 
-        public int Fov = 90;
+        public int Fov { get; set; } = 90;
 
         /// <summary>
         /// Whether or not to output debug information to console.
         /// </summary>
-        public bool DebugState = false;
+        public bool DebugState { get; set; } = false;
 
-        public bool State = true;
+        public bool State { get; set; } = true;
 
         public enum Guns
         {
@@ -119,24 +122,25 @@ namespace Cezium.Rust
             // M39 = 300
         }
 
-        public bool InfiniteAmmo = false;
+        public bool InfiniteAmmo { get; set; } = false;
         
-        public bool Tapping = false;
+        public bool Tapping { get; set; } = false;
         
-        public bool AdjustCompensation = true;
+        public bool AdjustCompensation { get; set; } = true;
 
-        public bool Randomization = false;
+        public bool Randomization { get; set; } = false;
 
-        public bool ReverseRandomization = false;
+        public bool ReverseRandomization { get; set; } = false;
         
-        public bool StaticRandomization = false;
+        public bool StaticRandomization { get; set; } = false;
         
-        public Tuple<int, int> RandomizationTiming = new(100, 100);
+        public Tuple<int, int> RandomizationTiming { get; set; } = new(100, 100);
 
-        public Tuple<int, int> RandomizationX = new(1, 5);
+        public Tuple<int, int> RandomizationX { get; set; } = new(1, 5);
 
-        public Tuple<int, int> RandomizationY = new(1, 5);
-        
-        public Tuple<double, double> RecoilModifier = new(1, 1);
+        public Tuple<int, int> RandomizationY { get; set; } = new(1, 5);
+
+        public List<Tuple<int, int, double>> RandomizationTable = new();
+        public Tuple<double, double> RecoilModifier { get; set; } = new(1, 1);
     }
 }
