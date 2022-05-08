@@ -57,8 +57,9 @@ namespace Cezium.Rust
                         }
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    // Console.WriteLine(ex);
                     // ignored
                 }
             }
@@ -286,7 +287,7 @@ namespace Cezium.Rust
                             ConsoleUtils.WriteLine($"TotalLossX: {totalLossAdjustX}, TotalLossY: {totalLossAdjustY}");
                             ConsoleUtils.WriteLine(
                                 $"AdjustedX: {adjustedX}, AdjustedY: {adjustedY}, Multiplier: {smoothing}");
-                            ConsoleUtils.WriteLine($"{adjustedX / smoothing} {adjustedY / smoothing}\n");
+                            ConsoleUtils.WriteLine($"Lost: X: {adjustedX - (totalLossAdjustX * smoothing)} Y: {adjustedY - (totalLossAdjustY * smoothing)}\n");
                         }
 
                         // if (Math.Abs(adjustedX) > 0 || Math.Abs(adjustedY) > 0)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Cezium.Rust;
@@ -10,15 +11,10 @@ public class JsonGunConverter : JsonConverter<(RustSettings.Guns, RustSettings.B
     public override (RustSettings.Guns, RustSettings.BulletCount, RustSettings.FireRate) Read(
         ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        (RustSettings.Guns, RustSettings.BulletCount, RustSettings.FireRate)? value = null;
+        // TODO: Fix 
         while (reader.Read())
         {
-            if (reader.TokenType == JsonTokenType.EndObject && value != null)
-            {
-                return ((RustSettings.Guns, RustSettings.BulletCount, RustSettings.FireRate)) value;
-            }
-            
-            value = JsonSerializer
+            return JsonSerializer
                 .Deserialize<(RustSettings.Guns, RustSettings.BulletCount, RustSettings.FireRate)>(
                     ref reader, options)!;
         }
