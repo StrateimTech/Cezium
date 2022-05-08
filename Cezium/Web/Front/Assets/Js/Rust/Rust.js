@@ -173,6 +173,18 @@ function handleDataUpdate() {
 
     $.ajax({
         type: 'GET',
+        url: '/Rust?handler=StaticRandomization',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            const staticRandomization = document.getElementById("StaticRandomization");
+            staticRandomization.checked = data;
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
         url: '/Rust?handler=RandomizationX',
         headers: {
             RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()

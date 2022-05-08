@@ -163,6 +163,22 @@ public class SettingsController : Controller
     {
         ApiHandler.RustHandler.Settings.ReverseRandomization = reverseRandomization;
     }
+    
+    [HttpGet("/api/settings/rust/StaticRandomization/")]
+    public bool GetStaticRandomization()
+    {
+        return ApiHandler.RustHandler.Settings.StaticRandomization;
+    }
+    
+    [HttpPost("/api/settings/rust/StaticRandomization/")]
+    public void SetStaticRandomization(bool staticRandomization)
+    {
+        ApiHandler.RustHandler.Settings.StaticRandomization = staticRandomization;
+        if (staticRandomization)
+        {
+            ApiHandler.RustHandler.ComputeRandomizationTable();
+        }
+    }
 
     [HttpGet("/api/settings/rust/RandomizationX/")]
     public Tuple<int, int> GetRandomizationAmountX()

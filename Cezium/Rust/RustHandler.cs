@@ -51,7 +51,7 @@ namespace Cezium.Rust
                     if (settings != null)
                     {
                         Settings = settings;
-                        if (Settings.StaticRandomization && Settings.RandomizationTable == null)
+                        if (Settings.StaticRandomization && (Settings.RandomizationTable == null || Settings.RandomizationTable.Count <= 0))
                         {
                             ComputeRandomizationTable();
                         }
@@ -59,7 +59,6 @@ namespace Cezium.Rust
                 }
                 catch (Exception ignore)
                 {
-                    Console.WriteLine($"{ignore}");
                     // ignored
                 }
             }
@@ -461,10 +460,8 @@ namespace Cezium.Rust
 
         public void ComputeRandomizationTable()
         {
-            Console.WriteLine($"{Settings.Gun.Item2}");
             for (int i = 0; i < (int) Settings.Gun.Item2 - 1; i++)
             {
-                Console.WriteLine("a");
                 var xRandom = Settings.RandomizationX.Item2 != 0
                     ? _random.Next(Settings.RandomizationX.Item1, Settings.RandomizationX.Item2 + 1)
                     : 0;
@@ -484,8 +481,6 @@ namespace Cezium.Rust
                 Settings.RandomizationTable.Add(new Tuple<int, int, double>(xRandom, yRandom,
                     timingPercentRandomization));
             }
-
-            Console.WriteLine($"A {Settings.RandomizationTable.Count}");
         }
     }
 }
