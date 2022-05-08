@@ -57,7 +57,7 @@ namespace Cezium.Rust
                         }
                     }
                 }
-                catch (Exception ignore)
+                catch (Exception)
                 {
                     // ignored
                 }

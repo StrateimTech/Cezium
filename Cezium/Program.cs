@@ -101,7 +101,6 @@ namespace Cezium
 
             ConsoleUtils.WriteLine("Successfully started!");
 
-            // TODO: Implement setting saving to a file (json)
             Console.CancelKeyPress += (_, _) =>
             {
                 ConsoleUtils.WriteLine("Shutting down...");
