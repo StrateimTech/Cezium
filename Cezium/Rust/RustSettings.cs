@@ -14,7 +14,7 @@ namespace Cezium.Rust
 
         public Scope? GunScope { get; set; }
 
-        public int Smoothness { get; set; } = 6;
+        public int Smoothness { get; set; } = 8;
 
         public double Sensitivity { get; set; } = 0.5;
 
