@@ -51,7 +51,8 @@ namespace Cezium.Rust
                     if (settings != null)
                     {
                         Settings = settings;
-                        if (Settings.StaticRandomization && (Settings.RandomizationTable == null || Settings.RandomizationTable.Count <= 0))
+                        if (Settings.StaticRandomization && (Settings.RandomizationTable == null ||
+                                                             Settings.RandomizationTable.Count <= 0))
                         {
                             ComputeRandomizationTable();
                         }
@@ -125,6 +126,9 @@ namespace Cezium.Rust
 
                     if (Settings.DebugState)
                     {
+                        ConsoleUtils.WriteLine(
+                            $"Weapon: {Settings.Gun.Item1} | Scope: {(Settings.GunScope == null ? "Empty" : Settings.GunScope)} | Attachment: {(Settings.GunAttachment == null ? "Empty" : Settings.GunAttachment)}");
+
                         ConsoleUtils.WriteLine(
                             $"Bullet: {_bullet}, Smoothing: {smoothing}, X: {gunPixelX}, Y: {gunPixelY}");
                     }
@@ -269,8 +273,6 @@ namespace Cezium.Rust
                         while (stopwatch.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= sleep * 1000) ;
                     }
 
-                    // var dostuff = true;
-
                     if (Settings.AdjustCompensation)
                     {
                         if ((!_hidHandler.HidMouseHandlers[0].Mouse.LeftButton ||
@@ -279,47 +281,17 @@ namespace Cezium.Rust
                             continue;
                         }
 
-                        var adjustedX = Convert.ToInt16(totalLossAdjustX * smoothing);
-                        var adjustedY = Convert.ToInt16(totalLossAdjustY * smoothing);
+                        var adjustedX = Convert.ToInt32(totalLossAdjustX * smoothing);
+                        var adjustedY = Convert.ToInt32(totalLossAdjustY * smoothing);
 
                         if (Settings.DebugState)
                         {
                             ConsoleUtils.WriteLine($"TotalLossX: {totalLossAdjustX}, TotalLossY: {totalLossAdjustY}");
                             ConsoleUtils.WriteLine(
                                 $"AdjustedX: {adjustedX}, AdjustedY: {adjustedY}, Multiplier: {smoothing}");
-                            ConsoleUtils.WriteLine($"Lost: X: {adjustedX - (totalLossAdjustX * smoothing)} Y: {adjustedY - (totalLossAdjustY * smoothing)}\n");
+                            ConsoleUtils.WriteLine(
+                                $"Lost: X: {adjustedX - (totalLossAdjustX * smoothing)} Y: {adjustedY - (totalLossAdjustY * smoothing)}\n");
                         }
-
-                        // if (Math.Abs(adjustedX) > 0 || Math.Abs(adjustedY) > 0)
-                        // {
-                        //     var smoothingLoopCount = Math.Max(Math.Abs(adjustedX), Math.Abs(adjustedY));
-                        //
-                        //     var localAdjustmentSleep =
-                        //         pixelControlTiming / smoothingLoopCount * _weapon.attachment.Item2;
-                        //
-                        //     // dostuff = false;
-                        //     
-                        //     if (Settings.DebugState)
-                        //     {
-                        //         ConsoleUtils.WriteLine($"A {smoothingLoopCount} {dostuff}");
-                        //         ConsoleUtils.WriteLine($"Local Adjust Compensation sleep: {localAdjustmentSleep}");
-                        //     }
-                        //
-                        //     for (int i2 = 0; i2 < smoothingLoopCount; i2++)
-                        //     {
-                        //         _hidHandler.WriteMouseReport(_hidHandler.HidMouseHandlers[0].Mouse with
-                        //         {
-                        //             X = adjustedX > 0 ? 1 : -1,
-                        //             Y = adjustedY > 0 ? 1 : -1,
-                        //             Wheel = 0
-                        //         });
-                        //         var stopwatch3 = Stopwatch.StartNew();
-                        //         while (stopwatch3.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <=
-                        //                localAdjustmentSleep * 1000) ;
-                        //     }
-                        //     if(localAdjustmentSleep < timing)
-                        //         timing -= localAdjustmentSleep;
-                        // }
 
                         _hidHandler.WriteMouseReport(_hidHandler.HidMouseHandlers[0].Mouse with
                         {
@@ -329,11 +301,8 @@ namespace Cezium.Rust
                         });
                     }
 
-                    // if (dostuff)
-                    // {
                     var stopwatch2 = Stopwatch.StartNew();
                     while (stopwatch2.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= timing * 1000) ;
-                    // }
                     _bullet++;
                 }
                 else
@@ -379,12 +348,18 @@ namespace Cezium.Rust
 
             switch (Settings.Gun.Item1)
             {
-                case RustSettings.Guns.THOMPSON:
-                    localSens += !_weapon.Item2.Equals(RustSettings.Scopes.Holo) ? .10 : 0;
-                    break;
                 case RustSettings.Guns.CUSTOM:
-                    localSens += !_weapon.Item2.Equals(RustSettings.Scopes.Holo) ? .10 : 0;
+                case RustSettings.Guns.THOMPSON:
+                    localSens += !Settings.GunScope.Equals(RustSettings.Scope.Holo) ? .10 : 0;
                     break;
+                // case RustSettings.Guns.M249:
+                //     // Crouched
+                //     localSens += !Settings.GunScope.Equals(RustSettings.Scope.Holo) ? .40 : 0;
+                //     // Standing
+                //     localSens -= !Settings.GunScope.Equals(RustSettings.Scope.Holo) ? .07 : 0;
+                //     // Moving
+                //     localSens -= !Settings.GunScope.Equals(RustSettings.Scope.Holo) ? .30 : 0;
+                //     break;
             }
 
             foreach (var tableValue in angleTable)
