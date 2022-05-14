@@ -85,9 +85,14 @@ public class Rust : PageModel
         return new JsonResult(FrontHandler.RustHandler.Settings.Tapping);
     }
     
-    public IActionResult OnGetAdjustCompensation()
+    public IActionResult OnGetGlobalCompensation()
     {
-        return new JsonResult(FrontHandler.RustHandler.Settings.AdjustCompensation);
+        return new JsonResult(FrontHandler.RustHandler.Settings.GlobalCompensation);
+    }
+    
+    public IActionResult OnGetLocalCompensation()
+    {
+        return new JsonResult(FrontHandler.RustHandler.Settings.LocalCompensation);
     }
 
     public IActionResult OnGetRandomization()
@@ -169,9 +174,14 @@ public class Rust : PageModel
         FrontHandler.RustHandler.Settings.Tapping = data.Value;
     }
     
-    public void OnPostAdjustCompensation([FromBody] BoolSchema data)
+    public void OnPostGlobalCompensation([FromBody] BoolSchema data)
     {
-        FrontHandler.RustHandler.Settings.AdjustCompensation = data.Value;
+        FrontHandler.RustHandler.Settings.GlobalCompensation = data.Value;
+    }
+    
+    public void OnPostLocalCompensation([FromBody] BoolSchema data)
+    {
+        FrontHandler.RustHandler.Settings.LocalCompensation = data.Value;
     }
 
     public void OnPostRandomization([FromBody] BoolSchema data)

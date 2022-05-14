@@ -136,13 +136,26 @@ function handleDataUpdate() {
 
     $.ajax({
         type: 'GET',
-        url: '/Rust?handler=AdjustCompensation',
+        url: '/Rust?handler=GlobalCompensation',
         headers: {
             RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
         },
         success: function (data) {
-            const adjustCompensation = document.getElementById("AdjustCompensation");
-            adjustCompensation.checked = data;
+            const GlobalCompensation = document.getElementById("GlobalCompensation");
+            GlobalCompensation.checked = data;
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '/Rust?handler=LocalCompensation',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            const LocalCompensation = document.getElementById("LocalCompensation");
+            LocalCompensation.checked = data;
+            handleGlobalCompensation(LocalCompensation, true);
         }
     });
 
@@ -305,7 +318,8 @@ function handleRustState(rustState, ignore) {
 
     const infiniteAmmo = document.getElementById("InfiniteAmmo");
     const tapping = document.getElementById("Tapping");
-    const adjustCompensation = document.getElementById("AdjustCompensation");
+    const GlobalCompensation = document.getElementById("GlobalCompensation");
+    const LocalCompensation = document.getElementById("LocalCompensation");
 
     const randomization = document.getElementById("Randomization");
     const reverseRandomization = document.getElementById("ReverseRandomization");
@@ -335,7 +349,8 @@ function handleRustState(rustState, ignore) {
 
         infiniteAmmo.disabled = false;
         tapping.disabled = false;
-        adjustCompensation.disabled = false;
+        GlobalCompensation.disabled = false;
+        LocalCompensation.disabled = false;
 
         randomization.disabled = false;
 
@@ -367,7 +382,8 @@ function handleRustState(rustState, ignore) {
 
         infiniteAmmo.disabled = true;
         tapping.disabled = true;
-        adjustCompensation.disabled = true;
+        GlobalCompensation.disabled = true;
+        LocalCompensation.disabled = true;
 
         randomization.disabled = true;
         
@@ -529,11 +545,35 @@ function handleTapping(tapping) {
     });
 }
 
-function handleAdjustCompensation(adjustCompensation) {
-    const data = {"Value": adjustCompensation.checked};
+function handleGlobalCompensation(GlobalCompensation, ignore) {
+    const LocalCompensation = document.getElementById("LocalCompensation");
+    const LocalCompensationContent = document.getElementById("LocalCompensationContent");
+    if(GlobalCompensation.checked) {
+        LocalCompensationContent.style.opacity = "1";
+        LocalCompensation.disabled = false;
+    } else {
+        LocalCompensationContent.style.opacity = "0.4";
+        LocalCompensation.disabled = true;
+    }
+    if(ignore === false) {
+        const data = {"Value": GlobalCompensation.checked};
+        $.ajax({
+            type: "POST",
+            url: "/Rust?handler=GlobalCompensation",
+            contentType: "application/json; charset=utf-8",
+            headers: {
+                RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            data: JSON.stringify(data)
+        });
+    }
+}
+
+function handleLocalCompensation(LocalCompensation) {
+    const data = {"Value": LocalCompensation.checked};
     $.ajax({
         type: "POST",
-        url: "/Rust?handler=AdjustCompensation",
+        url: "/Rust?handler=LocalCompensation",
         contentType: "application/json; charset=utf-8",
         headers: {
             RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()

@@ -223,6 +223,9 @@ namespace Cezium.Rust
                             $"Timing: {timing}, Sleep: {sleep}, PixelControlTiming: {pixelControlTiming} \n");
                     }
 
+                    double totalLocalLossAdjustX = 0;
+                    double totalLocalLossAdjustY = 0;
+                    
                     double totalLossAdjustX = 0;
                     double totalLossAdjustY = 0;
 
@@ -258,9 +261,38 @@ namespace Cezium.Rust
 
                         var intX = Convert.ToInt16(gunPixelX / smoothing);
                         var intY = Convert.ToInt16(gunPixelY / smoothing);
-
+                        
                         totalLossAdjustX = gunPixelX / smoothing - intX;
                         totalLossAdjustY = gunPixelY / smoothing - intY;
+                        
+                        if (Settings.LocalCompensation && Settings.GlobalCompensation)
+                        {
+                            if (Settings.DebugState)
+                            {
+                                Console.WriteLine($"Adjusting (X: {intX}, Y: {intY})");
+                            }
+                            totalLocalLossAdjustX += gunPixelX / smoothing - intX;
+                            totalLocalLossAdjustY += gunPixelY / smoothing - intY;
+
+                            short abX = Convert.ToInt16(totalLocalLossAdjustX);
+                            short abY = Convert.ToInt16(totalLocalLossAdjustY);
+                            if (Math.Abs(totalLocalLossAdjustX) >= 1)
+                            {
+                                totalLocalLossAdjustX -= abX;
+                                intX += abX;
+                            }
+    
+                            if (Math.Abs(totalLocalLossAdjustY) >= 1)
+                            {
+                                totalLocalLossAdjustY -= abY;
+                                intY += abY;
+                            }
+
+                            if (Settings.DebugState)
+                            {
+                                Console.WriteLine($"Compensation Adjustment (X: {intX}, Y: {intY} | abX: {abX}, abY: {abY} | TLossAdjustX: {totalLocalLossAdjustX}, TLossAdjustY: {totalLocalLossAdjustY})");
+                            }
+                        }
 
                         _hidHandler.WriteMouseReport(_hidHandler.HidMouseHandlers[0].Mouse with
                         {
@@ -273,17 +305,17 @@ namespace Cezium.Rust
                         while (stopwatch.ElapsedTicks * 1000000.0 / Stopwatch.Frequency <= sleep * 1000) ;
                     }
 
-                    if (Settings.AdjustCompensation)
+                    if (Settings.GlobalCompensation && !Settings.LocalCompensation)
                     {
                         if ((!_hidHandler.HidMouseHandlers[0].Mouse.LeftButton ||
                              !_hidHandler.HidMouseHandlers[0].Mouse.RightButton) && Settings.Tapping)
                         {
                             continue;
                         }
-
+                    
                         var adjustedX = Convert.ToInt32(totalLossAdjustX * smoothing);
                         var adjustedY = Convert.ToInt32(totalLossAdjustY * smoothing);
-
+                    
                         if (Settings.DebugState)
                         {
                             ConsoleUtils.WriteLine($"TotalLossX: {totalLossAdjustX}, TotalLossY: {totalLossAdjustY}");
@@ -292,7 +324,7 @@ namespace Cezium.Rust
                             ConsoleUtils.WriteLine(
                                 $"Lost: X: {adjustedX - (totalLossAdjustX * smoothing)} Y: {adjustedY - (totalLossAdjustY * smoothing)}\n");
                         }
-
+                    
                         _hidHandler.WriteMouseReport(_hidHandler.HidMouseHandlers[0].Mouse with
                         {
                             X = adjustedX,

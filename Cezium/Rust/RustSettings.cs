@@ -126,7 +126,9 @@ namespace Cezium.Rust
         
         public bool Tapping { get; set; }
         
-        public bool AdjustCompensation { get; set; } = true;
+        public bool GlobalCompensation { get; set; } = true;
+        
+        public bool LocalCompensation { get; set; } = false;
 
         public bool Randomization { get; set; }
 
