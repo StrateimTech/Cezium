@@ -1,6 +1,14 @@
 # CEZIUM - External standalone Rust recoil script
 External hardware peripheral proxy cheat which provides recoil compensation by hooking into a keyboard and mouse & proxying it to a Host PC.
 
+# IMPORTANT NOTE: (06/02/22)
+As of 06/02/22 Facepunch released a new patch to the game updating the recoil of most weapons and their mechanics.
+The new mechanic involves randomization on bullet spread basically making this useless since its luck unless you legitimately cannot move your mouse.
+At the current moment I never planned on releasing Cezium privately or open source so the implementation of certain aspects such as the ASP.NET Frontend could be rewritten as its horrible.
+
+Side note... The library used to interact with linux device files (HIDAPI) will not be released.
+#
+
 # Features
 - Web interface
 - Web API for developers wanting to work with Cezium or make their own interface? ;)
@@ -33,7 +41,7 @@ External hardware peripheral proxy cheat which provides recoil compensation by h
 
 ## Pros
 - In theory Cezium should be undetectable due to it being completely external and isolated on a separate computer
-- Nothing is running on the main Host PC making it easily hideable from screensharing server admins or streamers
+- Nothing is running on the main Host PC making it easily hide able from screensharing server admins or streamers
 
 ## Installation
 TBD...
