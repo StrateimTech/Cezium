@@ -1,18 +1,14 @@
-# CEZIUM - External standalone Rust recoil script
-External hardware peripheral proxy cheat which provides recoil compensation by hooking into a keyboard and mouse & proxying it to a Host PC.
+# CEZIUM - External standalone Rust cheat (ABANDONED)
+External hardware Rust cheat which provides recoil compensation by hooking into a keyboard and mouse & passing it to a Host PC.
 
-# IMPORTANT NOTE: (06/02/22)
-As of 06/02/22 Facepunch released a new patch to the game updating the recoil of most weapons and their mechanics.
-The new mechanic involves randomization on bullet spread basically making this useless since its luck unless you legitimately cannot move your mouse.
-At the current moment I never planned on releasing Cezium privately or open source so the implementation of certain aspects such as the ASP.NET Frontend could be rewritten as its horrible.
-
-Side note... The library used to interact with linux device files (HIDAPI) will not be released.
-#
+# IMPORTANT NOTE: (6/7/2023)
+This code is old, and was never meant to be released in this state. It initially went public after Facepunch reworked it's recoil on June 2nd 2022 force wipe due to it no longer being of use to me.
+Please keep in mind I would not consider this to be one of my higher tier projects due to the awfully implemented ASP.NET web server. As for the little "update", I was interested on trying to get it working again for the new recoil it semi-works but not great, note for now it only semi-functions with AK.
 
 # Features
 - Web interface
-- Web API for developers wanting to work with Cezium or make their own interface? ;)
-- All attachments & scopes in any configuration are supported and should work as expected.
+- ~~Web API for developers wanting to work with Cezium or make their own interface? ;)~~ Api still exists.
+- ~~All attachments & scopes in any configuration are supported and should work as expected.~~ Can no longer be guaranteed.
 - Automatic calculations using in game FOV & Sensitivity values (No more need to mess with DPI or use proprietary sensitivity systems other recoil scripts use) 
 - Recoil smoothing to make it seem more legit (Will cause loss of accuracy to produce a visually real recoil compensation)
 - Recoil smoothing compensation (Will return the bullet accuracy to almost 100% while making the visual experience less smooth with more jumping around)
@@ -20,7 +16,7 @@ Side note... The library used to interact with linux device files (HIDAPI) will 
 - Tap firing support by emulating the first shot
 - Configuring how much recoil you want compensated on the X/Y Axis so you can do less work while still moving your mouse. (Good for streamers, may take some time to get used)
 - Timing randomization's to produce a more subtle X/Y randomization.
-- Control timings are used to produce a very accurate spray & visual experience.
+- ~~Control timings are used to produce a very accurate spray & visual experience.~~ Can no longer be guaranteed.
 
 ## Requirements
 - Common sense & Linux knowledge (How to SSH into your pi, navigate through the file system, and downloading/fetching a file or transferring through FileZilla)
@@ -44,7 +40,4 @@ Side note... The library used to interact with linux device files (HIDAPI) will 
 - Nothing is running on the main Host PC making it easily hide able from screensharing server admins or streamers
 
 ## Installation
-TBD...
-
-# How it works
-![Picture alt](https://media.strateim.tech/img/TgJjo7kzyvt_zAt9.png)
+dotnet 6 & [HID-API](https://github.com/StrateimTech/HID-API)
