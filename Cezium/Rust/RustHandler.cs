@@ -30,7 +30,8 @@ namespace Cezium.Rust
         /// <param name="scope">the gun's scope multiplier applied to when calculating the gun's pixel table</param>
         /// <param name="attachment">the gun's attachment (multiplier, and timings) applied to when calculating the gun's pixel table and delays between shots</param>
         /// </summary>
-        private (List<Tuple<double, double, double>> table, double scope, (double, double) attachment) _weapon;
+        // private (List<Tuple<double, double, double>> table, double scope, (double, double) attachment) _weapon;
+        private (List<Tuple<double, double>> angleTable, double scope, (double, double) attachment) _weapon;
 
         private Tuple<int, int> _lastRandomization = new(0, 0);
         private bool _reverseRandom;
@@ -39,33 +40,7 @@ namespace Cezium.Rust
 
         public RustHandler(HidHandler hidHandler)
         {
-            if (File.Exists("Assets/Config.json"))
-            {
-                var jsonText = File.ReadAllText("Assets/Config.json");
-                try
-                {
-                    var settings = JsonSerializer.Deserialize<RustSettings>(jsonText, new JsonSerializerOptions()
-                    {
-                        Converters = {new JsonGunConverter()}
-                    });
-                    if (settings != null)
-                    {
-                        Settings = settings;
-                        if (Settings.StaticRandomization && (Settings.RandomizationTable == null ||
-                                                             Settings.RandomizationTable.Count <= 0))
-                        {
-                            ComputeRandomizationTable();
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Console.WriteLine(ex);
-                    // ignored
-                }
-            }
-
-            UpdateWeapon(Settings.Gun, Settings.GunScope, Settings.GunAttachment);
+            UpdateWeapon(Settings.Gun, null, null);
             _hidHandler = hidHandler;
         }
 
@@ -93,8 +68,6 @@ namespace Cezium.Rust
                 if (_hidHandler.HidMouseHandlers[0].Mouse.LeftButton &&
                     _hidHandler.HidMouseHandlers[0].Mouse.RightButton)
                 {
-                    if (_weapon.table == null)
-                        continue;
                     if (_recoilWatch.IsRunning)
                     {
                         _recoilWatch.Reset();
@@ -112,9 +85,11 @@ namespace Cezium.Rust
                         }
                     }
 
-                    var pixelXTable = _weapon.table[_bullet].Item1;
-                    var pixelYTable = _weapon.table[_bullet].Item2;
-                    var pixelControlTiming = _weapon.table[_bullet].Item3;
+                    var calculatedRealTime = CalculatePixel(_bullet, _weapon.angleTable);
+                    
+                    var pixelXTable = calculatedRealTime.Item1;
+                    var pixelYTable = calculatedRealTime.Item2;
+                    var pixelControlTiming = calculatedRealTime.Item3;
 
                     pixelXTable *= Settings.RecoilModifier.Item1;
                     pixelYTable *= Settings.RecoilModifier.Item2;
@@ -313,8 +288,8 @@ namespace Cezium.Rust
                             continue;
                         }
                     
-                        var adjustedX = Convert.ToInt32(totalLossAdjustX * smoothing);
-                        var adjustedY = Convert.ToInt32(totalLossAdjustY * smoothing);
+                        var adjustedX = totalLossAdjustX * smoothing;
+                        var adjustedY = totalLossAdjustY * smoothing;
                     
                         if (Settings.DebugState)
                         {
@@ -324,7 +299,7 @@ namespace Cezium.Rust
                             ConsoleUtils.WriteLine(
                                 $"Lost: X: {adjustedX - (totalLossAdjustX * smoothing)} Y: {adjustedY - (totalLossAdjustY * smoothing)}\n");
                         }
-                    
+
                         _hidHandler.WriteMouseReport(_hidHandler.HidMouseHandlers[0].Mouse with
                         {
                             X = adjustedX,
@@ -356,63 +331,75 @@ namespace Cezium.Rust
         public void Stop()
         {
             _state = false;
-            try
-            {
-                var serializedSettings = JsonSerializer.Serialize(Settings, new JsonSerializerOptions()
-                {
-                    WriteIndented = true,
-                    Converters = {new JsonGunConverter()}
-                });
-                File.WriteAllText("Assets/Config.json", serializedSettings);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
         }
 
-        private List<Tuple<double, double, double>> CalculateTables(List<Tuple<double, double>> angleTable)
+        private Tuple<double, double, double> CalculatePixel(int bullet, List<Tuple<double, double>> angleTable)
         {
-            var pixelTable = new List<Tuple<double, double, double>>();
-            var lastShot = new Tuple<double, double>(0.0, 0.0);
-
             var localSens = Settings.Sensitivity;
 
-            switch (Settings.Gun.Item1)
+            // switch (Settings.Gun.Item1)
+            // {
+            //     case RustSettings.Guns.CUSTOM:
+            //     case RustSettings.Guns.THOMPSON:
+            //         localSens += !Settings.GunScope.Equals(RustSettings.Scope.Holo) ? .10 : 0;
+            //         break;
+            // }
+
+            var lastShot = new Tuple<double, double>(0.0, 0.0);
+            if (bullet != 0)
             {
-                case RustSettings.Guns.CUSTOM:
-                case RustSettings.Guns.THOMPSON:
-                    localSens += !Settings.GunScope.Equals(RustSettings.Scope.Holo) ? .10 : 0;
-                    break;
-                // case RustSettings.Guns.M249:
-                //     // Crouched
-                //     localSens += !Settings.GunScope.Equals(RustSettings.Scope.Holo) ? .40 : 0;
-                //     // Standing
-                //     localSens -= !Settings.GunScope.Equals(RustSettings.Scope.Holo) ? .07 : 0;
-                //     // Moving
-                //     localSens -= !Settings.GunScope.Equals(RustSettings.Scope.Holo) ? .30 : 0;
-                //     break;
+                lastShot = angleTable[bullet - 1];
             }
 
-            foreach (var tableValue in angleTable)
+            var tableValue = angleTable[bullet];
+            
+            var deltaX = tableValue.Item1 - lastShot.Item1;
+            var deltaY = tableValue.Item2 - lastShot.Item2;
+
+            var controlTime = Math.Sqrt(deltaX * deltaX + deltaY * deltaY) / 0.02;
+            controlTime = (60000.0 / (double)Settings.Gun.Item3) - controlTime;
+            if (bullet == 0)
             {
-                var deltaX = tableValue.Item1 - lastShot.Item1;
-                var deltaY = tableValue.Item2 - lastShot.Item2;
+                controlTime = 60000.0 / (double)Settings.Gun.Item3;
+            }
+            
+            // float anim_time = (weapon.timeToTakeMin + weapon.timeToTakeMax) * 0.5f;
 
-                var controlTime = Math.Sqrt(deltaX * deltaX + deltaY * deltaY) / 0.02;
-
-                var screenMultiplier = -0.03f * (localSens * 3.0f) * (Settings.Fov / 100.0f);
-
-                var xPixels = deltaX / screenMultiplier;
-                var yPixels = deltaY / screenMultiplier;
-
-                var tuple = new Tuple<double, double, double>(xPixels, yPixels, controlTime);
-
-                pixelTable.Add(tuple);
-                lastShot = new(tableValue.Item1, tableValue.Item2);
+            if (_hidHandler.HidKeyboardHandlers.Count > 1 && _hidHandler.HidKeyboardHandlers[1].Active)
+            {
+                var keyboard = _hidHandler.HidKeyboardHandlers[1];
+                ConsoleUtils.WriteLine("Keyboard Path: " + keyboard.Path);
+                if (keyboard.IsKeyDown(Keyboard.LinuxKeyCode.KEYLEFTCTRL))
+                {
+                    localSens *= 2;
+                }
             }
 
-            return pixelTable;
+            var divisionFactor = 1.0;
+            if (Settings.GunScope == null)
+            {
+                var zoomFactor = 1.6666666269302368;
+
+                var offset = Settings.Fov - (Settings.Fov / zoomFactor);
+                var deductedOffset = Settings.Fov - offset;
+            
+                divisionFactor = 45 / deductedOffset;
+            }
+
+            if (Settings.DebugState)
+            {
+                ConsoleUtils.WriteLine("Division Factor: " + divisionFactor);
+            }
+                
+            var screenMultiplier = -0.03 * (localSens) * 3.0 * (Settings.Fov / 100.0) / divisionFactor;
+
+            var xPixels = tableValue.Item1 / screenMultiplier;
+            var yPixels = tableValue.Item2 / screenMultiplier;
+
+            return new Tuple<double, double, double>(xPixels, yPixels,
+                Settings.Gun.Item1 == RustSettings.Guns.ASSAULT_RIFLE
+                    ? controlTime
+                    : (60000.0 / (double) Settings.Gun.Item3) - controlTime);
         }
 
         private void UpdateWeapon((RustSettings.Guns, RustSettings.BulletCount, RustSettings.FireRate) gun,
@@ -428,9 +415,8 @@ namespace Cezium.Rust
                 }
             }
 
-            var table = CalculateTables(angleTable);
             _weapon = new(
-                table,
+                angleTable,
                 scope,
                 attachment);
         }
@@ -488,6 +474,17 @@ namespace Cezium.Rust
                     Settings.RandomizationTiming.Item1;
                 Settings.RandomizationTable.Add(new Tuple<int, int, double>(xRandom, yRandom,
                     timingPercentRandomization));
+            }
+        }
+
+        public void UpdateGranularization(int Granularization)
+        {
+            if (_hidHandler != null && _hidHandler.HidMouseHandlers.Count > 0)
+            {
+                _hidHandler.HidMouseHandlers[0].Mouse = _hidHandler.HidMouseHandlers[0].Mouse with
+                {
+                    SensitivityMultiplier = Granularization
+                };
             }
         }
     }

@@ -78,6 +78,26 @@ function handleDataUpdate() {
 
     $.ajax({
         type: 'GET',
+        url: '/Rust?handler=Granularization',
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            const granularizationScale = document.getElementById("GranularizationScale");
+            const granularizationValue = document.getElementById("GranularizationValue");
+            if(data !== granularizationScale.value && granularizationValue.innerHTML !== data) {
+                granularizationScale.value = data;
+                granularizationValue.innerHTML = data;
+            }
+
+            var gameSens = calculateGranularizationGameSens();
+            const granularizationSensitivity = document.getElementById("GranularizationSensitivity");
+            granularizationSensitivity.innerHTML = gameSens;
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
         url: '/Rust?handler=Horizontal',
         headers: {
             RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
@@ -481,6 +501,35 @@ function handleSmoothness(smoothness) {
         },
         data: JSON.stringify(data)
     });
+}
+
+function handleGranularizationTag(granularization) {
+    const granularizationValue = document.getElementById("GranularizationValue");
+    granularizationValue.innerHTML = granularization.value;
+}
+
+function handleGranularization(granularization) {
+    var gameSens = calculateGranularizationGameSens();
+    const granularizationSensitivity = document.getElementById("GranularizationSensitivity");
+    granularizationSensitivity.innerHTML = gameSens;
+    
+    const data = {"Value": granularization.value};
+    $.ajax({
+        type: "POST",
+        url: "/Rust?handler=Granularization",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        data: JSON.stringify(data)
+    });
+}
+
+function calculateGranularizationGameSens() {
+    const granularizationValue = document.getElementById("GranularizationScale").value;
+    const sensitivityValue = document.getElementById("SensitivityScale").value;
+
+    return sensitivityValue/granularizationValue;
 }
 
 function handleHorizontalTag(horizontal) {

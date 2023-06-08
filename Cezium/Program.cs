@@ -42,14 +42,14 @@ namespace Cezium
                 Console.WriteLine();
                 ConsoleUtils.WriteLine("Couldn't load FiggleFont font continuing... (Assets/ANSI Shadow.flf) \n");
             }
-
-#if RELEASE
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                ConsoleUtils.WriteLine($"Platform not supported! Please use raspbian or linux alternative! ({Environment.OSVersion})");
-                return;
-            }
-#endif
+//
+// #if RELEASE
+//             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+//             {
+//                 ConsoleUtils.WriteLine($"Platform not supported! Please use raspbian or linux alternative! ({Environment.OSVersion})");
+//                 return;
+//             }
+// #endif
 
             ConsoleUtils.WriteLine("Starting...");
 
@@ -62,6 +62,7 @@ namespace Cezium
                 new[]
                 {
                     "/dev/input/by-id/usb-Logitech_G413_Silver_Mechanical_Gaming_Keyboard_1172384C3230-event-kbd",
+                    "/dev/input/by-id/usb-Keychron_K4_Keychron_K4-event-kbd",
                     "/dev/input/by-id/usb-Logitech_G502_HERO_Gaming_Mouse_0E6D395D3333-if01-event-kbd"
                 },
                 "/dev/hidg0");

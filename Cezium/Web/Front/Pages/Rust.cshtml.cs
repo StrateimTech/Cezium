@@ -65,6 +65,11 @@ public class Rust : PageModel
         return new JsonResult(FrontHandler.RustHandler.Settings.Smoothness);
     }
 
+    public IActionResult OnGetGranularization()
+    {
+        return new JsonResult(FrontHandler.RustHandler.Settings.Granularization);
+    }
+
     public IActionResult OnGetHorizontal()
     {
         return new JsonResult(FrontHandler.RustHandler.Settings.RecoilModifier.Item1);
@@ -220,6 +225,12 @@ public class Rust : PageModel
     public void OnPostSmoothness([FromBody] IntSchema data)
     {
         FrontHandler.RustHandler.Settings.Smoothness = data.Value;
+    }
+    
+    public void OnPostGranularization([FromBody] IntSchema data)
+    {
+        FrontHandler.RustHandler.Settings.Granularization = data.Value;
+        FrontHandler.RustHandler.UpdateGranularization(data.Value);
     }
 
     public void OnPostHorizontal([FromBody] DoubleSchema data)

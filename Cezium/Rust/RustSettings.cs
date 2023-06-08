@@ -16,7 +16,14 @@ namespace Cezium.Rust
 
         public int Smoothness { get; set; } = 8;
 
-        public double Sensitivity { get; set; } = 0.5;
+        public double Sensitivity { get; set; } = 0.25;
+        
+        // Granular control
+        /// <summary>
+        /// Divides the sensitivity by X granularing & multiplies the passthrough sensitivity to allow more specific control
+        /// Sensitivity / 2
+        /// </summary>
+        public int Granularization { get; set; } = 1;
 
         public int Fov { get; set; } = 90;
 
@@ -76,8 +83,11 @@ namespace Cezium.Rust
 
         public struct Scopes
         {
-            public const double Scope8X = 3.83721;
-            public const double Scope16X = 7.65116;
+            public const double Scope8X = 4.76;
+            public const double Scope16X = 9.52;
+            // public const double Scope8X = 3.83721;
+            // public const double Scope16X = 7.65116;
+            
             public const double Handmade = 0.8;
             public const double Holo = 1.18605;
         }

@@ -38,7 +38,7 @@ public class FrontHandler
                 webBuilder.UseContentRoot(
                     $"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}Web{Path.DirectorySeparatorChar}Front");
                 webBuilder.ConfigureLogging(_ => _.ClearProviders());
-                webBuilder.UseUrls($"http://*:{_ports[0]};https://*:{_ports[1]}");
+                webBuilder.UseUrls($"http://*:{_ports[0]};");
                 webBuilder.UseStartup<FrontStartup>();
             });
 }

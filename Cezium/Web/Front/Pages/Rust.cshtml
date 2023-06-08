@@ -7,15 +7,16 @@
     Layout = "_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html lang="en">
-<head>
+@section Head {
     <title>Cezium - Rust</title>
     <meta name="description" content="Cezium rust settings page">
     <link rel="stylesheet" href="~/Web/Front/Assets/css/Rust/Rust.css">
     <script src="~/Web/Front/Assets/Js/Rust/Rust.js"></script>
-</head>
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
 <body onload="handleLoad()">
 
 <div>
@@ -66,6 +67,13 @@
                     Smoothness - <text id="SmoothnessValue">6</text>
                 </div>
                 <input type="range" min="1" max="24" step="1" value="6" id="SmoothnessScale" style="width: 100%" onchange="handleSmoothness(this);" oninput="handleSmoothnessTag(this);">
+            </div>
+
+            <div style="display: inline-block; margin-right: 4px">
+                <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap;">
+                    Granularization - <text id="GranularizationValue">1</text> (<text class="select" id="GranularizationSensitivity"></text>)
+                </div>
+                <input type="range" min="1" max="8" step="1" value="1" id="GranularizationScale" style="width: 100%" onchange="handleGranularization(this);" oninput="handleGranularizationTag(this);">
             </div>
         </div>
     </div>
@@ -241,9 +249,9 @@
                 </div>
             </div>
 
-            <div style="display: inline-block; margin-right: 8px; opacity: 0.4" id="LocalCompensationContent">
+            <div style="display: inline-block; margin-right: 8px;" id="LocalCompensationContent">
                 <label class="switch" for="LocalCompensation" style="display: inline-block; transform: translateY(1px);">
-                    <input type="checkbox" id="LocalCompensation" onclick='handleLocalCompensation(this)' disabled="disabled"/>
+                    <input type="checkbox" id="LocalCompensation" onclick='handleLocalCompensation(this)'/>
                     <div class="slider round"></div>
                 </label>
                 <div class="fugaz-one-font noselect" style="color: white; white-space: nowrap; display: inline-block; margin-left: 4px; transform: translateY(-5px); height: 0">

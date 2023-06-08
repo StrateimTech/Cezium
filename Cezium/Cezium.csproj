@@ -6,6 +6,8 @@
         <TargetFramework>net6.0</TargetFramework>
         <RuntimeIdentifier>linux-arm</RuntimeIdentifier>
     </PropertyGroup>
+    <!-- win10-x64 -->
+    <!-- linux-arm -->
 
     <ItemGroup>
       <PackageReference Include="Figgle" Version="0.4.0" />
@@ -19,8 +21,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="HID-API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>..\..\HID-API\HID-API\bin\Debug\net6.0\HID-API.dll</HintPath>
-      </Reference>
+      <ProjectReference Include="..\..\HID-API\HID-API\HID-API.csproj" />
     </ItemGroup>
 </Project>

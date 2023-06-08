@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cezium", "Cezium\Cezium.csproj", "{BA80A393-A642-4437-B15C-21BED477CDA1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HID-API", "..\HID-API\HID-API\HID-API.csproj", "{7C381C25-1A71-49BB-B3F2-5E296CD5DBEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{BA80A393-A642-4437-B15C-21BED477CDA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA80A393-A642-4437-B15C-21BED477CDA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA80A393-A642-4437-B15C-21BED477CDA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C381C25-1A71-49BB-B3F2-5E296CD5DBEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C381C25-1A71-49BB-B3F2-5E296CD5DBEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C381C25-1A71-49BB-B3F2-5E296CD5DBEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C381C25-1A71-49BB-B3F2-5E296CD5DBEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
